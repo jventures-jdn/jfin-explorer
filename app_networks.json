@@ -1,16 +1,13 @@
 [
   {
     "title": "JFin Explorer",
-    "url": "https://exp.jfinchain.com",
-    "group": "Mainnets",
-    "icon": "https://exp.jfinchain.com/images/blockscout_logo-23c94b0b70798f9dce1e70f83b2a7186.svg",
-    "isActive": "true"
+    "url": "https://exp.jfinchain.com/",
+    "group": "Mainnets"
   },
   {
     "title": "JFin Chain Website",
     "url": "https://www.jfincoin.io/about-jfin-chain",
-    "group": "Mainnets",
-    "icon": "https://exp.jfinchain.com/images/blockscout_logo-23c94b0b70798f9dce1e70f83b2a7186.svg"
+    "group": "Mainnets"
   },
   {
     "title": "Join Wallet",
@@ -45,8 +42,7 @@
   },
   {
     "title": "JFin Explorer Testnet",
-    "url": "https://www.jfincoin.io/about-jfin-chain",
-    "group": "Testnets",
-    "icon": "https://exp.jfinchain.com/images/blockscout_logo-23c94b0b70798f9dce1e70f83b2a7186.svg"
+    "url": "https://exp.testnet.jfinchain.com/",
+    "group": "Testnets"
   }
 ]
