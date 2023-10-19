@@ -144,7 +144,7 @@ if (existingSAs.length === 0) {
 }
 
 const substitutions = {
-  _DOCKER_FILE: `Dockerfile`,
+  _DOCKER_FILE: `gcp/Dockerfile`,
   _SERVICE_ACCOUNT: serviceAccountEmail,
   _REGION: region,
   _SHORT_NAME: deploymentConfig.name,
@@ -156,7 +156,7 @@ console.log(substitutions);
 const gcloudBuildCommand = [
   'gcloud builds submit ../../',
   '--config',
-  '../../cloudbuild.yml',
+  '../../gcp/cloudbuild.yml',
   '--substitutions',
   Object.entries(substitutions)
     .map(([ key, value ]) => `${ key }=${ value }`)
