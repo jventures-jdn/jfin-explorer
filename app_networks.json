@@ -1,0 +1,52 @@
+[
+  {
+    "title": "JFin Explorer",
+    "url": "https://exp.jfinchain.com",
+    "group": "Mainnets",
+    "icon": "https://exp.jfinchain.com/images/blockscout_logo-23c94b0b70798f9dce1e70f83b2a7186.svg",
+    "isActive": "true"
+  },
+  {
+    "title": "JFin Chain Website",
+    "url": "https://www.jfincoin.io/about-jfin-chain",
+    "group": "Mainnets",
+    "icon": "https://exp.jfinchain.com/images/blockscout_logo-23c94b0b70798f9dce1e70f83b2a7186.svg"
+  },
+  {
+    "title": "Join Wallet",
+    "url": "https://www.joinapp.digital",
+    "group": "Mainnets",
+    "icon": "https://static.wixstatic.com/media/ff114f_72bfca7b019444939cda710b6f2dd67c~mv2.png/v1/fill/w_83,h_83,al_c,q_85,usm_0.66_1.00_0.01,enc_auto/Join%20Logo-04.png"
+  },
+  {
+    "title": "Bridge",
+    "url": "https://bridge.jfinchain.com/",
+    "group": "Mainnets"
+  },
+  {
+    "title": "Staking",
+    "url": "https://staking.jfinchain.com/",
+    "group": "Mainnets"
+  },
+  {
+    "title": "Faucet",
+    "url": "https://faucet.jfinchain.com/",
+    "group": "Mainnets"
+  },
+  {
+    "title": "Community",
+    "url": "https://www.jfincoin.io/jfin-community",
+    "group": "Mainnets"
+  },
+  {
+    "title": "Whitepaper",
+    "url": "https://www.jfincoin.io/whitepaper",
+    "group": "Mainnets"
+  },
+  {
+    "title": "JFin Explorer Testnet",
+    "url": "https://www.jfincoin.io/about-jfin-chain",
+    "group": "Testnets",
+    "icon": "https://exp.jfinchain.com/images/blockscout_logo-23c94b0b70798f9dce1e70f83b2a7186.svg"
+  }
+]
