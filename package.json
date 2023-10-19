@@ -15,6 +15,8 @@
     "start": "next start",
     "start:docker:local": "docker run -p 3000:3000 --env-file .env.local blockscout-frontend",
     "start:docker:preset": "./tools/scripts/docker.preset.sh",
+    "deploy:mainnet": "ts-node ./utils/cloud-deployer/src/deploy.js network=mainnet",
+    "deploy:testnet": "ts-node ./utils/cloud-deployer/src/deploy.js network=testnet",
     "lint:eslint": "eslint . --ext .js,.jsx,.ts,.tsx",
     "lint:eslint:fix": "eslint . --ext .js,.jsx,.ts,.tsx --fix",
     "lint:tsc": "tsc -p ./tsconfig.json",
