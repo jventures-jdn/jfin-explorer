@@ -25,13 +25,21 @@ const baseStyleList = defineStyle({
 
 const baseStyleItem = defineStyle({
   _focus: {
-    [$bg.variable]: 'colors.blue.50',
+
+    /* JFIN Mod Start */
+    [$bg.variable]: 'colors.red.50',
+
+    /* JFIN Mod End */
     _dark: {
       [$bg.variable]: 'colors.gray.800',
     },
   },
   _hover: {
-    [$bg.variable]: 'colors.blue.50',
+
+    /* JFIN Mod Start */
+    [$bg.variable]: 'colors.red.50',
+
+    /* JFIN Mod End */
     _dark: {
       [$bg.variable]: 'colors.gray.800',
     },

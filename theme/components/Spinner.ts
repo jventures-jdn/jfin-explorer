@@ -5,7 +5,11 @@ const baseStyle = defineStyle((props) => {
   const { emptyColor, color } = props;
 
   return {
-    borderColor: color || 'blue.500',
+
+    /* JFIN Mod Start */
+    borderColor: color || 'red.500',
+
+    /* JFIN Mod End */
     borderBottomColor: emptyColor || mode('blackAlpha.200', 'whiteAlpha.200')(props),
     borderLeftColor: emptyColor || mode('blackAlpha.200', 'whiteAlpha.200')(props),
   };

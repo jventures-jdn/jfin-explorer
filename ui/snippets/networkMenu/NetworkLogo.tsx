@@ -14,7 +14,11 @@ interface Props {
 
 const LogoFallback = ({ isCollapsed, isSmall }: { isCollapsed?: boolean; isSmall?: boolean }) => {
   const field = isSmall ? 'icon' : 'logo';
-  const logoColor = useColorModeValue('blue.600', 'white');
+
+  /* JFIN Mod Start */
+  const logoColor = useColorModeValue('red.600', 'white');
+
+  /* JFIN Mod End */
 
   const display = isSmall ? {
     base: 'none',

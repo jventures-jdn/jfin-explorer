@@ -29,7 +29,9 @@ const Home = () => {
             fontWeight={ 600 }
             color={ config.UI.homepage.plate.textColor }
           >
-            Welcome to { config.chain.name } explorer
+            { /* JFIN Mod Start */ }
+            { config.chain.name } explorer
+            { /* JFIN Mod End */ }
           </Heading>
           <Box display={{ base: 'none', lg: 'block' }}>
             { config.features.account.isEnabled && <ProfileMenuDesktop/> }

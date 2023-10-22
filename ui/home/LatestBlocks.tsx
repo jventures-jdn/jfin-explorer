@@ -81,9 +81,11 @@ const LatestBlocks = () => {
             <Text as="span" fontSize="sm">
               Network utilization:{ nbsp }
             </Text>
-            <Text as="span" fontSize="sm" color="blue.400" fontWeight={ 700 }>
+            { /* JFIN Mod Start */ }
+            <Text as="span" fontSize="sm" color="red.400" fontWeight={ 700 }>
               { statsQueryResult.data?.network_utilization_percentage.toFixed(2) }%
             </Text>
+            { /* JFIN Mod End */ }
           </Skeleton>
         ) }
         <VStack spacing={ 3 } mb={ 4 } overflow="hidden" alignItems="stretch">

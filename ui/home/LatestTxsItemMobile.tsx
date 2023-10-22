@@ -33,9 +33,14 @@ const LatestTxsItem = ({ tx, isLoading }: Props) => {
   return (
     <Box
       width="100%"
-      borderTop="1px solid"
-      borderColor="divider"
-      py={ 4 }
+
+      /* JFIN Mod Start */
+      boxShadow="md"
+      borderRadius="md"
+      p={ 6 }
+      mt={ 3 }
+
+      /* JFIN Mod End */
       _last={{ borderBottom: '1px solid', borderColor: 'divider' }}
       display={{ base: 'block', lg: 'none' }}
     >

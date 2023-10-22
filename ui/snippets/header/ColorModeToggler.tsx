@@ -96,7 +96,11 @@ const ColorModeToggler = forwardRef<ColorModeTogglerProps, 'input'>((props, ref)
           margin={ 2 }
           zIndex="docked"
           as={ moonIcon }
-          color={ useColorModeValue('blue.300', 'blackAlpha.900') }
+
+          /* JFIN Mod Start */
+          color={ useColorModeValue('red.300', 'blackAlpha.900') }
+
+          /* JFIN Mod End */
           { ...transitionProps }
         />
         <chakra.div
@@ -109,7 +113,11 @@ const ColorModeToggler = forwardRef<ColorModeTogglerProps, 'input'>((props, ref)
           margin={ 1.5 }
           zIndex="docked"
           as={ sunIcon }
-          color={ useColorModeValue('blackAlpha.900', 'blue.300') }
+
+          /* JFIN Mod Start */
+          color={ useColorModeValue('blackAlpha.900', 'red.300') }
+
+          /* JFIN Mod End */
           { ...transitionProps }
         />
       </chakra.div>

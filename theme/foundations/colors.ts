@@ -18,8 +18,20 @@ const colors = {
     '900': '#1A365D',
   },
   red: {
-    '500': '#E53E3E',
+
+    /* JFIN Mod Start */
+    '50': '#FFF5F5',
     '100': '#FED7D7',
+    '200': '#FEB2B2',
+    '300': '#FC8181',
+    '400': '#F56565',
+    '500': '#E53E3E',
+    '600': '#C53030',
+    '700': '#9B2C2C',
+    '800': '#822727',
+    '900': '#63171B',
+
+    /* JFIN Mod End */
   },
   orange: {
     '100': '#FEEBCB',
@@ -60,6 +72,11 @@ const colors = {
   facebook: '#4460A0',
   medium: '#231F20',
   reddit: '#FF4500',
+
+  /* JFIN Mod Start */
+  jfin: '#c60000',
+
+  /* JFIN Mod End */
 };
 
 export default colors;
