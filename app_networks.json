@@ -5,6 +5,11 @@
     "group": "Mainnets"
   },
   {
+    "title": "JFin Explorer Testnet",
+    "url": "https://exp.testnet.jfinchain.com/",
+    "group": "Testnets"
+  },
+  {
     "title": "JFin Chain Website",
     "url": "https://www.jfincoin.io/about-jfin-chain",
     "group": "Mainnets"
@@ -27,7 +32,7 @@
   },
   {
     "title": "Faucet",
-    "url": "https://faucet.jfinchain.com/",
+    "url": "https://faucet.testnet.jfinchain.com/",
     "group": "Mainnets"
   },
   {
@@ -39,10 +44,5 @@
     "title": "Whitepaper",
     "url": "https://www.jfincoin.io/whitepaper",
     "group": "Mainnets"
-  },
-  {
-    "title": "JFin Explorer Testnet",
-    "url": "https://exp.testnet.jfinchain.com/",
-    "group": "Testnets"
   }
 ]

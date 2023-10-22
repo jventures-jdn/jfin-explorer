@@ -23,7 +23,7 @@ fi
 dotenv \
   -e $config_file \
   -- bash -c './deploy/scripts/download_assets.sh ./public/assets'
-
+  
 # generate envs.js file and run the app
 dotenv \
   -e $config_file \
