@@ -42,7 +42,9 @@ const NetworkMenuPopup = ({ items, tabs }: Props) => {
     </>
   ) : (
     <>
-      <Text as="h4" fontSize="18px" lineHeight="30px" fontWeight="500">Networks</Text>
+      { /* JFIN Mod Start */ }
+      <Text as="h4" fontSize="18px" lineHeight="30px" fontWeight="500">JFIN Chain Ecosystem</Text>
+      { /* JFIN Mod End */ }
       <Tabs variant="soft-rounded" mt={ 4 } isLazy defaultIndex={ selectedTab !== -1 ? selectedTab : undefined }>
         { tabs.length > 1 && (
           <TabList>

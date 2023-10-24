@@ -19,7 +19,11 @@ export type NavItemInternal = NavItemCommon & {
 
 export type NavItemExternal = {
   text: string;
-  url: string;
+
+  /* JFIN Mod Start */
+  url?: string;
+
+  /* JFIN Mod End */
 }
 
 export type NavItem = NavItemInternal | NavItemExternal

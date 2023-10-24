@@ -1,3 +1,4 @@
+import NetworkAddToJFinWallet from 'customUI/NetworkAddToJFinWallet';
 import { useRouter } from 'next/router';
 import React from 'react';
 
@@ -10,20 +11,27 @@ import appsIcon from 'icons/apps.svg';
 import withdrawalsIcon from 'icons/arrows/north-east.svg';
 import depositsIcon from 'icons/arrows/south-east.svg';
 import blocksIcon from 'icons/block.svg';
+import contractIcon from 'icons/contract.svg';
+import discussionsIcon from 'icons/discussions.svg';
+import docsIcon from 'icons/docs.svg';
 import gearIcon from 'icons/gear.svg';
 import globeIcon from 'icons/globe-b.svg';
 import graphQLIcon from 'icons/graphQL.svg';
+import linkIcon from 'icons/link.svg';
 import outputRootsIcon from 'icons/output_roots.svg';
 import privateTagIcon from 'icons/privattags.svg';
 import publicTagIcon from 'icons/publictags.svg';
 import apiDocsIcon from 'icons/restAPI.svg';
 import rpcIcon from 'icons/RPC.svg';
 import statsIcon from 'icons/stats.svg';
+import testnetIcon from 'icons/testnet.svg';
 import tokensIcon from 'icons/token.svg';
 import topAccountsIcon from 'icons/top-accounts.svg';
 import transactionsIcon from 'icons/transactions.svg';
 import txnBatchIcon from 'icons/txn_batches.svg';
 import verifiedIcon from 'icons/verified.svg';
+import walletIcon from 'icons/wallet.svg';
+import metamaskIcon from 'icons/wallets/metamask.svg';
 import watchlistIcon from 'icons/watchlist.svg';
 import { rightLineArrow } from 'lib/html-entities';
 import UserAvatar from 'ui/shared/UserAvatar';
@@ -107,6 +115,27 @@ export default function useNavItems(): ReturnType {
       ].filter(Boolean);
     }
 
+    /* JFIN Mod Start */
+    const infomationNavItems: Array<NavItem> = [
+      {
+        text: 'JFIN Chain Website',
+        icon: globeIcon,
+        url: 'https://www.jfincoin.io/about-jfin-chain',
+      },
+      {
+        text: 'JFIN Community',
+        icon: discussionsIcon,
+        url: 'https://www.jfincoin.io/jfin-community',
+      },
+      {
+        text: 'JFIN Whitepaper',
+        icon: contractIcon,
+        url: 'https://www.jfincoin.io/whitepaper',
+      },
+    ].filter(Boolean);
+
+    /* JFIN Mod End */
+
     const apiNavItems: Array<NavItem> = [
       config.features.restApiDocs.isEnabled ? {
         text: 'REST API',
@@ -120,16 +149,25 @@ export default function useNavItems(): ReturnType {
         icon: graphQLIcon,
         isActive: pathname === '/graphiql',
       } : null,
-      !config.UI.sidebar.hiddenLinks?.rpc_api && {
-        text: 'RPC API',
-        icon: rpcIcon,
-        url: 'https://docs.blockscout.com/for-users/api/rpc-endpoints',
+
+      /* JFIN Mod Start */
+      {
+        text: 'JFIN Faucet',
+        icon: walletIcon,
+        url: 'https://faucet.testnet.jfinchain.com/',
       },
-      !config.UI.sidebar.hiddenLinks?.eth_rpc_api && {
-        text: 'Eth RPC API',
-        icon: rpcIcon,
-        url: ' https://docs.blockscout.com/for-users/api/eth-rpc',
+      {
+        text: 'JFIN Chain Testnet',
+        icon: testnetIcon,
+        url: 'https://exp.testnet.jfinchain.com/',
       },
+      {
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        text: <NetworkAddToJFinWallet/> as any,
+        icon: metamaskIcon,
+      },
+
+      /* JFIN Mod End */
     ].filter(Boolean);
 
     const mainNavItems: ReturnType['mainNavItems'] = [
@@ -157,17 +195,45 @@ export default function useNavItems(): ReturnType {
         icon: statsIcon,
         isActive: pathname === '/stats',
       } : null,
-      apiNavItems.length > 0 && {
-        text: 'API',
-        icon: apiDocsIcon,
-        isActive: apiNavItems.some(item => isInternalItem(item) && item.isActive),
-        subItems: apiNavItems,
+
+      /* JFIN Mod Start */
+      // apiNavItems.length > 0 && {
+      //   text: 'API',
+      //   icon: apiDocsIcon,
+      //   isActive: apiNavItems.some(item => isInternalItem(item) && item.isActive),
+      //   subItems: apiNavItems,
+      // },
+      {
+        text: 'Bridge',
+        icon: rpcIcon,
+        url: 'https://bridge.jfinchain.com/',
       },
+      {
+        text: 'Staking',
+        icon: linkIcon,
+        url: 'https://staking.jfinchain.com/',
+      },
+
+      /* JFIN Mod End */
       config.UI.sidebar.otherLinks.length > 0 ? {
         text: 'Other',
         icon: gearIcon,
         subItems: config.UI.sidebar.otherLinks,
       } : null,
+
+      /* JFIN Mod Start */
+      {
+        text: 'Infomation',
+        icon: docsIcon,
+        subItems: infomationNavItems,
+      },
+      {
+        text: 'Developer',
+        icon: gearIcon,
+        subItems: apiNavItems,
+      },
+
+      /* JFIN Mod End */
     ].filter(Boolean);
 
     const accountNavItems: ReturnType['accountNavItems'] = [
