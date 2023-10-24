@@ -56,7 +56,9 @@ const TxsTable = ({
               <Link onClick={ sort('val') } display="flex" justifyContent="end">
                 { sorting === 'val-asc' && <Icon boxSize={ 5 } as={ rightArrowIcon } transform="rotate(-90deg)"/> }
                 { sorting === 'val-desc' && <Icon boxSize={ 5 } as={ rightArrowIcon } transform="rotate(90deg)"/> }
-                { `Value ${ config.chain.currency.symbol }` }
+                { /* JFIN Mod Start */ }
+                Value
+                { /* JFIN Mod End */ }
               </Link>
             </Th>
           ) }
@@ -65,7 +67,9 @@ const TxsTable = ({
               <Link onClick={ sort('fee') } display="flex" justifyContent="end">
                 { sorting === 'fee-asc' && <Icon boxSize={ 5 } as={ rightArrowIcon } transform="rotate(-90deg)"/> }
                 { sorting === 'fee-desc' && <Icon boxSize={ 5 } as={ rightArrowIcon } transform="rotate(90deg)"/> }
-                { `Fee${ config.UI.views.tx.hiddenFields?.fee_currency ? '' : ` ${ config.chain.currency.symbol }` }` }
+                { /* JFIN Mod Start */ }
+                Fee
+                { /* JFIN Mod End */ }
               </Link>
             </Th>
           ) }

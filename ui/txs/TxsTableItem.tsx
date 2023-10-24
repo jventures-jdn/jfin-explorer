@@ -158,12 +158,12 @@ const TxsTableItem = ({ tx, showBlockInfo, currentAddress, enableTimeIncrement, 
       </Hide>
       { !config.UI.views.tx.hiddenFields?.value && (
         <Td isNumeric>
-          <CurrencyValue value={ tx.value } accuracy={ 8 } isLoading={ isLoading }/>
+          <CurrencyValue value={ tx.value } accuracy={ 8 } isLoading={ isLoading }/> { config.chain.currency.symbol }
         </Td>
       ) }
       { !config.UI.views.tx.hiddenFields?.tx_fee && (
         <Td isNumeric>
-          <CurrencyValue value={ tx.fee.value } accuracy={ 8 } isLoading={ isLoading }/>
+          <CurrencyValue value={ tx.fee.value } accuracy={ 8 } isLoading={ isLoading }/> { config.chain.currency.symbol }
         </Td>
       ) }
     </Tr>
