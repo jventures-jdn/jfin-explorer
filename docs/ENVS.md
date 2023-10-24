@@ -43,7 +43,7 @@ The app instance could be customized by passing following variables to NodeJS en
   - [SUAVE chain](ENVS.md#suave-chain)
   - [Sentry error monitoring](ENVS.md#sentry-error-monitoring)
 - [3rd party services configuration](ENVS.md#external-services-configuration)
-
+- [JFIN Chain Configuration](ENVS.md#jfin-chain-configuration)
 &nbsp;
 
 ## App configuration
@@ -527,3 +527,10 @@ For obtaining the variables values please refer to [reCAPTCHA documentation](htt
 | Variable | Type| Description | Compulsoriness  | Default value | Example value |
 | --- | --- | --- | --- | --- | --- |
 | NEXT_PUBLIC_RE_CAPTCHA_APP_SITE_KEY | `string` | Site key | - | - | `<your-secret>` |
+
+### JFIN Chain Configuration
+
+| Variable | Type | Description | Compulsoriness  | Default value | Example value |
+| --- | --- | --- | --- | --- | --- |
+| NEXT_PUBLIC_CHAIN_REWARD | `number` | Value for the jfin chain to set reward to 0. | - | - | `2` |
+| NEXT_PUBLIC_JFIN_REWARD | `number` | Value required to set the correct reward. | - | - | `0.6` |

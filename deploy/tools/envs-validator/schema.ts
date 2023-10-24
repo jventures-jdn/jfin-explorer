@@ -441,6 +441,10 @@ const schema = yup
 
     // Misc
     NEXT_PUBLIC_USE_NEXT_JS_PROXY: yup.boolean(),
+
+    // JFIN Chain Configuration
+    NEXT_PUBLIC_CHAIN_REWARD: yup.number(),
+    NEXT_PUBLIC_JFIN_REWARD: yup.number(),
   })
   .concat(accountSchema)
   .concat(adsBannerSchema)
