@@ -62,7 +62,7 @@ const BlockEntity = (props: EntityProps) => {
 
   return (
     <Container className={ props.className }>
-      <Icon { ...partsProps }/>
+      <Icon { ...partsProps } color="red.500"/>
       <Link { ...linkProps }>
         <Content { ...partsProps }/>
       </Link>

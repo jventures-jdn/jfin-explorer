@@ -13,6 +13,7 @@ import txIcon from 'icons/transactions.svg';
 import walletIcon from 'icons/wallet.svg';
 import useApiQuery from 'lib/api/useApiQuery';
 import { WEI } from 'lib/consts';
+import useIsMobile from 'lib/hooks/useIsMobile';
 import { HOMEPAGE_STATS } from 'stubs/stats';
 
 import StatsGasPrices from './StatsGasPrices';
@@ -27,6 +28,8 @@ const Stats = () => {
       placeholderData: HOMEPAGE_STATS,
     },
   });
+
+  const isMobile = useIsMobile();
 
   if (isError) {
     return null;
@@ -100,17 +103,21 @@ const Stats = () => {
     );
   }
 
+  /* JFIN Mod Start */
   return (
     <Grid
       gridTemplateColumns={{ lg: `repeat(${ itemsCount }, 1fr)`, base: '1fr 1fr' }}
       gridTemplateRows={{ lg: 'none', base: undefined }}
       gridGap="10px"
-      marginTop="24px"
+      marginTop={ isMobile ? '24px' : { base: -6, lg: -4 } }
+      paddingX={ isMobile ? '0px' : '48px' }
     >
       { content }
     </Grid>
 
   );
+
+  /* JFIN Mod End */
 };
 
 export default Stats;

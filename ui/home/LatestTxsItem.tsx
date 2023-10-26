@@ -77,13 +77,15 @@ const LatestTxsItem = ({ tx, isLoading }: Props) => {
         </Box>
       </Flex>
       <Grid alignItems="center" alignSelf="flex-start" templateColumns="24px auto">
+        { /* JFIN Mod Start */ }
         <Icon
           as={ rightArrowIcon }
           boxSize={ 6 }
-          color="gray.500"
+          color="red.500"
           transform="rotate(90deg)"
           isLoading={ isLoading }
         />
+        { /* JFIN Mod End */ }
         <Box overflow="hidden" ml={ 1 }>
           <AddressEntity
             isLoading={ isLoading }

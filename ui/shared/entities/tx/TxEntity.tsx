@@ -72,7 +72,9 @@ const TxEntity = (props: EntityProps) => {
 
   return (
     <Container className={ props.className }>
-      <Icon { ...partsProps }/>
+      { /* JFIN Mod Start */ }
+      <Icon { ...partsProps } color="red.500"/>
+      { /* JFIN Mod End */ }
       <Link { ...linkProps }>
         <Content { ...partsProps }/>
       </Link>

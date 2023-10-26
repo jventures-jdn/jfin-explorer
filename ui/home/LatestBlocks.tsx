@@ -82,7 +82,7 @@ const LatestBlocks = () => {
               Network utilization:{ nbsp }
             </Text>
             { /* JFIN Mod Start */ }
-            <Text as="span" fontSize="sm" color="red.400" fontWeight={ 700 }>
+            <Text as="span" fontSize="sm" color="red.500" fontWeight={ 700 }>
               { statsQueryResult.data?.network_utilization_percentage.toFixed(2) }%
             </Text>
             { /* JFIN Mod End */ }

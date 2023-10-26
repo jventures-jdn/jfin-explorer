@@ -62,7 +62,9 @@ const LatestBlocksItem = ({ block, isLoading }: Props) => {
         { !config.features.rollup.isEnabled && !config.UI.views.block.hiddenFields?.total_reward && (
           <>
             <Skeleton isLoaded={ !isLoading }>Reward</Skeleton>
-            <Skeleton isLoaded={ !isLoading } color="text_secondary"><span>{ totalReward.dp(10).toFixed() }</span></Skeleton>
+            { /* JFIN Mod Start */ }
+            <Skeleton isLoaded={ !isLoading } color="text_secondary"><span>{ totalReward.dp(10).toFixed() } { config.chain.currency.symbol }</span></Skeleton>
+            { /* JFIN Mod End */ }
           </>
         ) }
 

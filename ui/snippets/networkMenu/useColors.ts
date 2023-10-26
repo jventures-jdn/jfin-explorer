@@ -14,11 +14,11 @@ export default function useColors() {
     },
     bg: {
       'default': 'transparent',
-      active: useColorModeValue('red.50', 'gray.800'),
+      active: useColorModeValue('gray.100', 'gray.800'),
     },
     border: {
       'default': 'divider',
-      active: useColorModeValue('red.50', 'gray.800'),
+      active: useColorModeValue('gray.100', 'gray.800'),
     },
 
     /* JFIN Mod End */

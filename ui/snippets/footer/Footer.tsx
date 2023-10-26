@@ -5,17 +5,21 @@ import React from 'react';
 import type { CustomLinksGroup } from 'types/footerLinks';
 
 import config from 'configs/app';
-import discussionsIcon from 'icons/discussions.svg';
-import donateIcon from 'icons/donate.svg';
-import editIcon from 'icons/edit.svg';
-import cannyIcon from 'icons/social/canny.svg';
+// import discussionsIcon from 'icons/discussions.svg';
+// import donateIcon from 'icons/donate.svg';
+// import editIcon from 'icons/edit.svg';
+// import cannyIcon from 'icons/social/canny.svg';
 import discordIcon from 'icons/social/discord.svg';
-import gitIcon from 'icons/social/git.svg';
+// import gitIcon from 'icons/social/git.svg';
+import facebookIcon from 'icons/social/facebook_filled.svg';
+import linkedInIcon from 'icons/social/linkedin_filled.svg';
+import telegramIcon from 'icons/social/telegram_filled.svg';
 import twitterIcon from 'icons/social/tweet.svg';
+import youtubeIcon from 'icons/social/youtube.svg';
 import type { ResourceError } from 'lib/api/resources';
 import useApiQuery from 'lib/api/useApiQuery';
 import useFetch from 'lib/hooks/useFetch';
-import useIssueUrl from 'lib/hooks/useIssueUrl';
+// import useIssueUrl from 'lib/hooks/useIssueUrl';
 import NetworkAddToWallet from 'ui/shared/NetworkAddToWallet';
 
 import ColorModeToggler from '../header/ColorModeToggler';
@@ -36,51 +40,94 @@ const Footer = () => {
     },
   });
   const apiVersionUrl = getApiVersionUrl(backendVersionData?.backend_version);
-  const issueUrl = useIssueUrl(backendVersionData?.backend_version);
-  const BLOCKSCOUT_LINKS = [
+
+  /* JFIN Mod Start */
+  // const issueUrl = useIssueUrl(backendVersionData?.backend_version);
+  // const BLOCKSCOUT_LINKS = [
+  //   {
+  //     icon: editIcon,
+  //     iconSize: '16px',
+  //     text: 'Submit an issue',
+  //     url: issueUrl,
+  //   },
+  //   {
+  //     icon: cannyIcon,
+  //     iconSize: '20px',
+  //     text: 'Feature request',
+  //     url: 'https://blockscout.canny.io/feature-requests',
+  //   },
+  //   {
+  //     icon: gitIcon,
+  //     iconSize: '18px',
+  //     text: 'Contribute',
+  //     url: 'https://github.com/blockscout/blockscout',
+  //   },
+  //   {
+  //     icon: twitterIcon,
+  //     iconSize: '18px',
+  //     text: 'Twitter',
+  //     url: 'https://www.twitter.com/blockscoutcom',
+  //   },
+  //   {
+  //     icon: discordIcon,
+  //     iconSize: '18px',
+  //     text: 'Discord',
+  //     url: 'https://discord.gg/blockscout',
+  //   },
+  //   {
+  //     icon: discussionsIcon,
+  //     iconSize: '20px',
+  //     text: 'Discussions',
+  //     url: 'https://github.com/orgs/blockscout/discussions',
+  //   },
+  //   {
+  //     icon: donateIcon,
+  //     iconSize: '20px',
+  //     text: 'Donate',
+  //     url: 'https://github.com/sponsors/blockscout',
+  //   },
+  // ];
+
+  const JFIN_CHAIN_EXPLORER_LINK = [
     {
-      icon: editIcon,
-      iconSize: '16px',
-      text: 'Submit an issue',
-      url: issueUrl,
-    },
-    {
-      icon: cannyIcon,
-      iconSize: '20px',
-      text: 'Feature request',
-      url: 'https://blockscout.canny.io/feature-requests',
-    },
-    {
-      icon: gitIcon,
+      icon: discordIcon,
       iconSize: '18px',
-      text: 'Contribute',
-      url: 'https://github.com/blockscout/blockscout',
+      text: 'Discord',
+      url: 'https://discord.gg/kyuEAa69Su',
+    },
+    {
+      icon: facebookIcon,
+      iconSize: '18px',
+      text: 'Facebook',
+      url: 'https://www.facebook.com/JFINofficial',
     },
     {
       icon: twitterIcon,
       iconSize: '18px',
       text: 'Twitter',
-      url: 'https://www.twitter.com/blockscoutcom',
+      url: 'https://twitter.com/jfinofficial',
     },
     {
-      icon: discordIcon,
+      icon: telegramIcon,
       iconSize: '18px',
-      text: 'Discord',
-      url: 'https://discord.gg/blockscout',
+      text: 'Telegram',
+      url: 'https://t.me/jfinenglishcommunity',
     },
     {
-      icon: discussionsIcon,
+      icon: youtubeIcon,
       iconSize: '20px',
-      text: 'Discussions',
-      url: 'https://github.com/orgs/blockscout/discussions',
+      text: 'Youtube',
+      url: 'https://www.youtube.com/channel/UCOOLWr3PIYHFcQrRTHZpg4A',
     },
     {
-      icon: donateIcon,
+      icon: linkedInIcon,
       iconSize: '20px',
-      text: 'Donate',
-      url: 'https://github.com/sponsors/blockscout',
+      text: 'LinkedIn',
+      url: 'https://www.youtube.com/channel/UCOOLWr3PIYHFcQrRTHZpg4A',
     },
   ];
+
+  /* JFIN Mod End */
 
   const frontendLink = (() => {
     if (config.UI.footer.frontendVersion) {
@@ -120,10 +167,14 @@ const Footer = () => {
           <NetworkAddToWallet/>
         </Flex>
         <Box mt={{ base: 5, lg: '44px' }}>
-          <Link fontSize="xs" href="https://www.blockscout.com">blockscout.com</Link>
+          { /* JFIN Mod Start */ }
+          <Link fontSize="xs" href="https://exp.jfinchain.com">exp.jfinchain.com</Link>
+          { /* JFIN Mod End */ }
         </Box>
         <Text mt={ 3 } maxW={{ base: 'unset', lg: '470px' }} fontSize="xs">
-            Blockscout is a tool for inspecting and analyzing EVM based blockchains. Blockchain explorer for Ethereum Networks.
+          { /* JFIN Mod Start */ }
+          JFIN Chain Explorer is a tool for inspecting and analyzing EVM based blockchains. Blockchain explorer for JFIN Chain Networks.
+          { /* JFIN Mod End */ }
         </Text>
         <VStack spacing={ 1 } mt={ 6 } alignItems="start">
           { apiVersionUrl && (
@@ -154,7 +205,9 @@ const Footer = () => {
             gridAutoFlow={{ base: 'row', lg: config.UI.footer.links ? 'row' : 'column' }}
             mt={{ base: 0, lg: config.UI.footer.links ? 0 : '100px' }}
           >
-            { BLOCKSCOUT_LINKS.map(link => <FooterLinkItem { ...link } key={ link.text }/>) }
+            { /* JFIN Mod Start */ }
+            { JFIN_CHAIN_EXPLORER_LINK.map(link => <FooterLinkItem { ...link } key={ link.text }/>) }
+            { /* JFIN Mod End */ }
           </Grid>
         </Box>
         { config.UI.footer.links && isLoading && (

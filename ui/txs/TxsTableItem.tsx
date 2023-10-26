@@ -128,7 +128,9 @@ const TxsTableItem = ({ tx, showBlockInfo, currentAddress, enableTimeIncrement, 
           { (isIn || isOut) ?
             <InOutTag isIn={ isIn } isOut={ isOut } width="48px" mr={ 2 } isLoading={ isLoading }/> : (
               <Box mx="6px">
-                <Icon as={ rightArrowIcon } boxSize={ 6 } color="gray.500" isLoading={ isLoading }/>
+                { /* JFIN Mod Start */ }
+                <Icon as={ rightArrowIcon } boxSize={ 6 } color="red.500" isLoading={ isLoading }/>
+                { /* JFIN Mod End */ }
               </Box>
             ) }
         </Td>
@@ -139,16 +141,18 @@ const TxsTableItem = ({ tx, showBlockInfo, currentAddress, enableTimeIncrement, 
       <Hide above="xl" ssr={ false }>
         <Td colSpan={ 3 }>
           <Flex alignItems="center">
+            { /* JFIN Mod Start */ }
             { (isIn || isOut) ?
               <InOutTag isIn={ isIn } isOut={ isOut } width="48px" isLoading={ isLoading }/> : (
                 <Icon
                   as={ rightArrowIcon }
                   boxSize={ 6 }
-                  color="gray.500"
+                  color="red.500"
                   transform="rotate(90deg)"
                   isLoading={ isLoading }
                 />
               ) }
+            { /* JFIN Mod End */ }
             <VStack alignItems="start" overflow="hidden" ml={ 1 }>
               { addressFrom }
               { addressTo }

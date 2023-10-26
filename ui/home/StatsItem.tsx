@@ -36,15 +36,15 @@ const StatsItem = ({ icon, title, value, className, tooltipLabel, url, isLoading
   };
 
   /* JFIN Mod Start */
-  const bgColor = useColorModeValue('red.50', 'red.800');
+  const bgColor = useColorModeValue('white', 'gray.900');
 
-  /* JFIN Mod End */
   const loadingBgColor = useColorModeValue('blackAlpha.50', 'whiteAlpha.50');
   const infoColor = useColorModeValue('gray.600', 'gray.400');
 
   return (
     <Flex
       backgroundColor={ isLoading ? loadingBgColor : bgColor }
+      boxShadow="md"
       padding={ 3 }
       borderRadius="md"
       flexDirection="row"
@@ -88,6 +88,8 @@ const StatsItem = ({ icon, title, value, className, tooltipLabel, url, isLoading
       ) }
     </Flex>
   );
+
+  /* JFIN Mod End */
 };
 
 export default chakra(StatsItem);

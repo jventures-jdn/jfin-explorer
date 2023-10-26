@@ -17,6 +17,7 @@ const NetworkMenuLink = ({ title, icon, isActive, isMobile, url, invertIconInDar
   const colors = useColors();
   const darkModeFilter = { filter: 'brightness(0) invert(1)' };
   const style = useColorModeValue({}, invertIconInDarkMode ? darkModeFilter : {});
+  const itemHoverStyle = useColorModeValue({ bgColor: 'gray.100' }, { bgColor: 'gray.700' });
 
   const iconEl = icon ? (
     <Image w="30px" h="30px" src={ icon } alt={ `${ title } network icon` } style={ style }/>
@@ -33,23 +34,26 @@ const NetworkMenuLink = ({ title, icon, isActive, isMobile, url, invertIconInDar
       <Flex
         as="a"
         href={ url }
-        px={ isMobile ? 3 : 4 }
-        py={ 2 }
+        direction={ isMobile ? 'row' : 'column' }
+        px={ isMobile ? 3 : 0 }
+        py={ isMobile ? 2 : 2 }
+        justifyItems="center"
         alignItems="center"
         cursor="pointer"
+        height="100%"
         pointerEvents={ isActive ? 'none' : 'initial' }
         borderRadius="base"
         color={ isActive ? colors.text.active : colors.text.default }
         bgColor={ isActive ? colors.bg.active : colors.bg.default }
-        _hover={{ color: isActive ? colors.text.active : colors.text.hover }}
+        _hover={{ color: isActive ? colors.text.active : colors.text.default, ...itemHoverStyle }}
       >
         { iconEl }
         <Text
-          marginLeft={ 3 }
           fontWeight="500"
           color="inherit"
-          fontSize={ isMobile ? 'sm' : 'md' }
+          fontSize="sm"
           lineHeight={ isMobile ? '20px' : '24px' }
+          textAlign={ isMobile ? 'left' : 'center' }
         >
           { title }
         </Text>

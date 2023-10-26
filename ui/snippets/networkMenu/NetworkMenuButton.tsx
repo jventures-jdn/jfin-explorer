@@ -15,8 +15,8 @@ const NetworkMenuButton = ({ isMobile, isActive, onClick, className }: Props, re
   const defaultIconColor = useColorModeValue('gray.600', 'gray.400');
 
   /* JFIN Mod Start */
-  const bgColorMobile = useColorModeValue('red.50', 'gray.800');
-  const iconColorMobile = useColorModeValue('red.700', 'red.50');
+  const bgColorMobile = useColorModeValue('gray.100', 'gray.800');
+  const iconColorMobile = useColorModeValue('blackAlpha.700', 'red.50');
 
   /* JFIN Mod end */
 

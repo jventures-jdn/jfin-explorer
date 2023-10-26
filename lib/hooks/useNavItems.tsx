@@ -116,9 +116,9 @@ export default function useNavItems(): ReturnType {
     }
 
     /* JFIN Mod Start */
-    const infomationNavItems: Array<NavItem> = [
+    const informationNavItems: Array<NavItem> = [
       {
-        text: 'JFIN Chain Website',
+        text: 'JFIN Chain',
         icon: globeIcon,
         url: 'https://www.jfincoin.io/about-jfin-chain',
       },
@@ -223,12 +223,12 @@ export default function useNavItems(): ReturnType {
 
       /* JFIN Mod Start */
       {
-        text: 'Infomation',
+        text: 'Information',
         icon: docsIcon,
-        subItems: infomationNavItems,
+        subItems: informationNavItems,
       },
       {
-        text: 'Developer',
+        text: 'Developers',
         icon: gearIcon,
         subItems: apiNavItems,
       },

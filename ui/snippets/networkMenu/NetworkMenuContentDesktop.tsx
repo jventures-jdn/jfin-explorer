@@ -1,4 +1,4 @@
-import { PopoverContent, PopoverBody, Text, Tabs, TabList, TabPanels, TabPanel, Tab, VStack, Skeleton, Flex, useColorModeValue } from '@chakra-ui/react';
+import { PopoverContent, PopoverBody, Text, Skeleton, Flex, useColorModeValue, Grid } from '@chakra-ui/react';
 import React from 'react';
 
 import type { FeaturedNetwork, NetworkGroup } from 'types/networks';
@@ -10,9 +10,11 @@ interface Props {
   items?: Array<FeaturedNetwork>;
 }
 
-const NetworkMenuPopup = ({ items, tabs }: Props) => {
-  const selectedNetwork = items?.find(({ isActive }) => isActive);
-  const selectedTab = tabs.findIndex((tab) => selectedNetwork?.group === tab);
+const NetworkMenuPopup = ({ items }: Props) => {
+  { /* JFIN Mod Start */ }
+  // const selectedNetwork = items?.find(({ isActive }) => isActive);
+  // const selectedTab = tabs.findIndex((tab) => selectedNetwork?.group === tab);
+  { /* JFIN Mod End */ }
   const bgColor = useColorModeValue('blackAlpha.50', 'whiteAlpha.50');
 
   const content = !items || items.length === 0 ? (
@@ -44,30 +46,16 @@ const NetworkMenuPopup = ({ items, tabs }: Props) => {
     <>
       { /* JFIN Mod Start */ }
       <Text as="h4" fontSize="18px" lineHeight="30px" fontWeight="500">JFIN Chain Ecosystem</Text>
-      { /* JFIN Mod End */ }
-      <Tabs variant="soft-rounded" mt={ 4 } isLazy defaultIndex={ selectedTab !== -1 ? selectedTab : undefined }>
-        { tabs.length > 1 && (
-          <TabList>
-            { tabs.map((tab) => <Tab key={ tab } textTransform="capitalize">{ tab }</Tab>) }
-          </TabList>
-        ) }
-        <TabPanels mt={ 8 }>
-          { tabs.map((tab) => (
-            <TabPanel key={ tab } p={ 0 }>
-              <VStack as="ul" spacing={ 2 } alignItems="stretch" mt={ 4 }>
-                { items
-                  .filter((network) => network.group === tab)
-                  .map((network) => (
-                    <NetworkMenuLink
-                      key={ network.title }
-                      { ...network }
-                    />
-                  )) }
-              </VStack>
-            </TabPanel>
+      <Grid templateColumns="repeat(3, 1fr)" gap={ 4 } mt={ 6 }>
+        { items
+          .map((network) => (
+            <NetworkMenuLink
+              key={ network.title }
+              { ...network }
+            />
           )) }
-        </TabPanels>
-      </Tabs>
+      </Grid>
+      { /* JFIN Mod End */ }
     </>
   );
 

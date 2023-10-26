@@ -101,12 +101,14 @@ const TxsListItem = ({ tx, isLoading, showBlockInfo, currentAddress, enableTimeI
         { (isIn || isOut) ?
           <InOutTag isIn={ isIn } isOut={ isOut } width="48px" mx={ 2 } isLoading={ isLoading }/> : (
             <Box mx={ 2 }>
+              { /* JFIN Mod Start */ }
               <Icon
                 as={ rightArrowIcon }
                 boxSize={ 6 }
-                color="gray.500"
+                color="red.500"
                 isLoading={ isLoading }
               />
+              { /* JFIN Mod End */ }
             </Box>
           ) }
         { dataTo ? (
@@ -122,16 +124,25 @@ const TxsListItem = ({ tx, isLoading, showBlockInfo, currentAddress, enableTimeI
       </Flex>
       { !config.UI.views.tx.hiddenFields?.value && (
         <Box mt={ 2 }>
-          <Skeleton isLoaded={ !isLoading } display="inline-block" whiteSpace="pre">Value { config.chain.currency.symbol } </Skeleton>
-          <Skeleton isLoaded={ !isLoading } display="inline-block" variant="text_secondary">{ getValueWithUnit(tx.value).toFormat() }</Skeleton>
+          { /* JFIN Mod Start */ }
+          <Skeleton isLoaded={ !isLoading } display="inline-block" whiteSpace="pre">Value </Skeleton>
+          <Skeleton isLoaded={ !isLoading } display="inline-block" variant="text_secondary">
+            { getValueWithUnit(tx.value).toFormat() } { config.chain.currency.symbol }
+          </Skeleton>
+          { /* JFIN Mod End */ }
         </Box>
       ) }
       { !config.UI.views.tx.hiddenFields?.tx_fee && (
         <Box mt={ 2 } mb={ 3 }>
+          { /* JFIN Mod Start */ }
           <Skeleton isLoaded={ !isLoading } display="inline-block" whiteSpace="pre">
-            Fee{ config.UI.views.tx.hiddenFields?.fee_currency ? ' ' : ` ${ config.chain.currency.symbol } ` }
+            Fee{ ' ' }
           </Skeleton>
-          <Skeleton isLoaded={ !isLoading } display="inline-block" variant="text_secondary">{ getValueWithUnit(tx.fee.value).toFormat() }</Skeleton>
+          <Skeleton isLoaded={ !isLoading } display="inline-block" variant="text_secondary">
+            { getValueWithUnit(tx.fee.value).toFormat() }
+            { config.UI.views.tx.hiddenFields?.fee_currency ? ' ' : config.chain.currency.symbol }
+          </Skeleton>
+          { /* JFIN Mod End */ }
         </Box>
       ) }
     </ListItemMobile>

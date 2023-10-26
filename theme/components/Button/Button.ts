@@ -50,10 +50,10 @@ const variantOutline = defineStyle((props) => {
   const borderColor = isGrayTheme ? mode('gray.200', 'gray.600')(props) : mode(`${ c }.600`, `${ c }.300`)(props);
 
   /* JFIN Mod Start */
-  const activeBg = isGrayTheme ? mode('red.50', 'gray.600')(props) : mode(`${ c }.50`, 'gray.600')(props);
+  const activeBg = isGrayTheme ? mode('gray.50', 'gray.600')(props) : mode(`${ c }.50`, 'gray.600')(props);
   const activeColor = (() => {
     if (c === 'gray') {
-      return mode('red.600', 'gray.50')(props);
+      return mode('gray.600', 'gray.50')(props);
     }
     if (c === 'gray-dark') {
       return mode('red.600', 'gray.50')(props);
@@ -222,7 +222,7 @@ const Button = defineStyleConfig({
     size: 'md',
 
     /* JFIN Mod Start */
-    colorScheme: 'red',
+    colorScheme: 'gray',
 
     /* JFIN Mod End */
   },
