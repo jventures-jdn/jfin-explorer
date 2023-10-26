@@ -56,7 +56,7 @@ const variantOutline = defineStyle((props) => {
       return mode('gray.600', 'gray.50')(props);
     }
     if (c === 'gray-dark') {
-      return mode('red.600', 'gray.50')(props);
+      return mode('gray.600', 'gray.50')(props);
     }
     if (c === 'blue') {
       return mode('blue.600', 'gray.50')(props);

@@ -21,13 +21,20 @@ const ListItemMobile = ({ children, className, isAnimated }: Props) => {
       flexDirection="column"
       paddingY={ 6 }
       borderColor="divider"
-      borderTopWidth="1px"
       _last={{
         borderBottomWidth: '1px',
       }}
       className={ className }
       fontSize="16px"
       lineHeight="20px"
+
+      /* JFIN Mod Start */
+      boxShadow="md"
+      borderRadius="md"
+      p={ 6 }
+      mt={ 3 }
+
+      /* JFIN Mod End */
     >
       { children }
     </Flex>
