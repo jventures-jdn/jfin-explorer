@@ -60,7 +60,9 @@ const StatsItem = ({ icon, title, value, className, tooltipLabel, url, isLoading
         href: url,
       } : {}) }
     >
-      <Icon as={ icon } boxSize={ 7 } isLoading={ isLoading } borderRadius="base"/>
+      { /* JFIN Mod Start */ }
+      <Icon as={ icon } boxSize={ 7 } isLoading={ isLoading } borderRadius="base" color="red.500"/>
+      { /* JFIN Mod End */ }
       <Flex
         flexDirection="column"
         alignItems="start"
