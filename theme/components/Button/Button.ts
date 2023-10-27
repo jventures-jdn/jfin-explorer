@@ -61,7 +61,7 @@ const variantOutline = defineStyle((props) => {
     if (c === 'blue') {
       return mode('blue.600', 'gray.50')(props);
     }
-    return 'red.600';
+    return 'purple.600';
   })();
 
   /* JFIN Mod End */

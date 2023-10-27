@@ -60,7 +60,9 @@ const NavigationDesktop = () => {
       width={{ lg: isExpanded ? '229px' : '92px', xl: isCollapsed ? '92px' : '229px' }}
       { ...getDefaultTransitionProps({ transitionProperty: 'width, padding' }) }
     >
-      { config.chain.isTestnet && <Icon as={ testnetIcon } h="14px" w="auto" color="red.400" position="absolute" pl={ 3 } top="34px"/> }
+      { /* JFIN Mod Start */ }
+      { config.chain.isTestnet && <Icon as={ testnetIcon } h="14px" w="auto" color="purple.200" position="absolute" pl={ 3 } top="34px"/> }
+      { /* JFIN Mod End */ }
       <Box
         as="header"
         display="flex"

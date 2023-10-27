@@ -35,7 +35,7 @@ const NavigationMobile = ({ onNavLinkClick }: Props) => {
   const hasAccount = useHasAccount();
 
   /* JFIN Mod Start */
-  const iconColor = useColorModeValue('red.600', 'red.300');
+  const iconColor = useColorModeValue('purple.600', 'purple.300');
 
   /* JFIN Mod End */
 

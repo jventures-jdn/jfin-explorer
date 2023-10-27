@@ -62,7 +62,9 @@ const BlockEntity = (props: EntityProps) => {
 
   return (
     <Container className={ props.className }>
-      <Icon { ...partsProps } color="red.500"/>
+      { /* JFIN Mod Start */ }
+      <Icon { ...partsProps } color="purple.500"/>
+      { /* JFIN Mod End */ }
       <Link { ...linkProps }>
         <Content { ...partsProps }/>
       </Link>

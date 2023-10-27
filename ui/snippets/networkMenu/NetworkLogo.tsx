@@ -16,7 +16,7 @@ const LogoFallback = ({ isCollapsed, isSmall }: { isCollapsed?: boolean; isSmall
   const field = isSmall ? 'icon' : 'logo';
 
   /* JFIN Mod Start */
-  const logoColor = useColorModeValue('red.600', 'white');
+  const logoColor = useColorModeValue('purple.600', 'white');
 
   /* JFIN Mod End */
 

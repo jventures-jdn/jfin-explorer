@@ -7,7 +7,7 @@ export default function useColors() {
     text: {
       'default': useColorModeValue('gray.600', 'gray.400'),
       active: useColorModeValue('blackAlpha.900', 'whiteAlpha.900'),
-      hover: useColorModeValue('red.600', 'link_hovered'),
+      hover: useColorModeValue('purple.600', 'link_hovered'),
     },
     iconPlaceholder: {
       'default': useColorModeValue('blackAlpha.100', 'whiteAlpha.300'),

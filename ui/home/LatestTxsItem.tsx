@@ -82,7 +82,7 @@ const LatestTxsItem = ({ tx, isLoading }: Props) => {
         <Icon
           as={ rightArrowIcon }
           boxSize={ 6 }
-          color="red.500"
+          color="purple.500"
           transform="rotate(90deg)"
           isLoading={ isLoading }
         />

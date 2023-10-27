@@ -23,8 +23,8 @@ const ChartArea = ({ id, xScale, yScale, color, data, disableAnimation, ...props
 
   /* JFIN Mod Start */
   const defaultGradient = {
-    startColor: useToken('colors', useColorModeValue('red.100', 'red.400')),
-    stopColor: useToken('colors', transparentize(useColorModeValue('red.100', 'red.400'), 0)(theme)),
+    startColor: useToken('colors', useColorModeValue('purple.100', 'purple.400')),
+    stopColor: useToken('colors', transparentize(useColorModeValue('purple.100', 'purple.400'), 0)(theme)),
   };
 
   /* JFIN Mod End */

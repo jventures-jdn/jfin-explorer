@@ -27,7 +27,7 @@ const BlocksTabSlot = ({ pagination }: Props) => {
               Network utilization (last 50 blocks):{ nbsp }
           </Text>
           { /* JFIN Mod Start */ }
-          <Skeleton display="inline-block" fontSize="sm" color="red.400" fontWeight={ 600 } isLoaded={ !statsQuery.isPlaceholderData }>
+          <Skeleton display="inline-block" fontSize="sm" color="purple.400" fontWeight={ 600 } isLoaded={ !statsQuery.isPlaceholderData }>
             <span>{ statsQuery.data.network_utilization_percentage.toFixed(2) }%</span>
           </Skeleton>
           { /* JFIN Mod End */ }

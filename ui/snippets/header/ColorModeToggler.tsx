@@ -98,7 +98,7 @@ const ColorModeToggler = forwardRef<ColorModeTogglerProps, 'input'>((props, ref)
           as={ moonIcon }
 
           /* JFIN Mod Start */
-          color={ useColorModeValue('red.300', 'blackAlpha.900') }
+          color={ useColorModeValue('purple.300', 'blackAlpha.900') }
 
           /* JFIN Mod End */
           { ...transitionProps }
@@ -115,7 +115,7 @@ const ColorModeToggler = forwardRef<ColorModeTogglerProps, 'input'>((props, ref)
           as={ sunIcon }
 
           /* JFIN Mod Start */
-          color={ useColorModeValue('blackAlpha.900', 'red.300') }
+          color={ useColorModeValue('blackAlpha.900', 'purple.300') }
 
           /* JFIN Mod End */
           { ...transitionProps }
