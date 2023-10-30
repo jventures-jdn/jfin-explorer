@@ -26,7 +26,7 @@ const Home = () => {
         overflow="hidden"
       >
         <Image
-          src="/static/network-path.svg"
+          src="/static/network-path.png"
           alt="networks"
           position="absolute"
           maxWidth="950px"
@@ -34,6 +34,7 @@ const Home = () => {
           right="-13%"
           zIndex={ 1 }
           opacity={ 0.4 }
+          pointerEvents="none"
         />
         <Flex mb={{ base: 3, lg: 3 }} justifyContent="space-between" position="relative" zIndex={ 2 }>
           <Heading
