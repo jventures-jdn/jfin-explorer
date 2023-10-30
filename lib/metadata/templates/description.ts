@@ -1,8 +1,10 @@
 import type { Route } from 'nextjs-routes';
 
+// JFIN Mod Start
 // equal og:description
 // eslint-disable-next-line max-len
-const DEFAULT_TEMPLATE = 'Blockscout is the #1 open-source blockchain explorer available today. 100+ chains and counting rely on Blockscout data availability, APIs, and ecosystem tools to support their networks.';
+const DEFAULT_TEMPLATE = 'JFIN Explorer is your window to the JFIN Chain, offering streamlined tracking of transactions, NFTs, tokens, and more'; // MOCK Description
+// JFIN Mod End
 
 // FIXME all page descriptions will be updated later
 const TEMPLATE_MAP: Record<Route['pathname'], string> = {
@@ -49,6 +51,9 @@ const TEMPLATE_MAP: Record<Route['pathname'], string> = {
   '/api/healthz': DEFAULT_TEMPLATE,
   '/auth/auth0': DEFAULT_TEMPLATE,
   '/auth/unverified-email': DEFAULT_TEMPLATE,
+
+  // JFIN Mod Start
+  '/network-profiles': DEFAULT_TEMPLATE,
 };
 
 export function make(pathname: Route['pathname']) {

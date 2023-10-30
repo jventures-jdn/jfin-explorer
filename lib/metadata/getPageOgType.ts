@@ -46,6 +46,10 @@ const OG_TYPE_DICT: Record<Route['pathname'], OGPageType> = {
   '/api/healthz': 'Regular page',
   '/auth/auth0': 'Regular page',
   '/auth/unverified-email': 'Regular page',
+
+  // JFIN Mod Start
+  '/network-profiles': 'Root page',
+  // JFIN Mod end
 };
 
 export default function getPageOgType(pathname: Route['pathname']) {
