@@ -7,7 +7,7 @@ const baseStyle = defineStyle((props) => {
   return {
 
     /* JFIN Mod Start */
-    borderColor: color || 'purple.500',
+    borderColor: color || 'purple.300',
 
     /* JFIN Mod End */
     borderBottomColor: emptyColor || mode('blackAlpha.200', 'whiteAlpha.200')(props),

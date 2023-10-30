@@ -53,7 +53,7 @@ const NetworkProfile = () => {
     <>
       <PageTitle title="Network Profiles"/>
       <RoutedTabs tabs={ tabs } tabListProps={{ mt: 6 }}/>
-      <Card p="6" bgColor={ cardBackgroundColor }>
+      <Card p={ 6 } bgColor={ cardBackgroundColor }>
         <Heading as="h2" size={ HEADING_SIZE } fontWeight="semibold" mb={ 2 }>
           Overview
         </Heading>
@@ -124,7 +124,7 @@ const NetworkProfile = () => {
         <Heading as="h2" size={ HEADING_SIZE } fontWeight="semibold" mb={ 2 }>
           Smart Contract Capability
         </Heading>
-        <Text mb={ 6 }>
+        <Text>
           JFIN Chain can support smart contracts that conform to the Ethereum Virtual
           Machine (EVM) standard, which is currently the most popular solution. The existing
           applications on the EVM standard, irrespective of whether they are DeFi, GameFi,

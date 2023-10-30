@@ -61,7 +61,7 @@ const StatsItem = ({ icon, title, value, className, tooltipLabel, url, isLoading
       } : {}) }
     >
       { /* JFIN Mod Start */ }
-      <Icon as={ icon } boxSize={ 7 } isLoading={ isLoading } borderRadius="base" color="purple.500"/>
+      <Icon as={ icon } boxSize={ 7 } isLoading={ isLoading } borderRadius="base" color="purple.300"/>
       { /* JFIN Mod End */ }
       <Flex
         flexDirection="column"
