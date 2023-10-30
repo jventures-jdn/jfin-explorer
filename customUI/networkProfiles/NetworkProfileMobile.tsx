@@ -1,4 +1,5 @@
-import { Box, Text, chakra } from '@chakra-ui/react';
+/* JFIN Mod Start */
+import { Box, Link, Text, chakra } from '@chakra-ui/react';
 import React from 'react';
 
 import type { NetworkProfile } from 'types/client/networkProfiles';
@@ -54,7 +55,9 @@ const NetworkProfileMobile = ({ profile }: Props) => {
           Block explorer
         </Text>
         <Text>
-          { profile.explorerUrl }
+          <Link href={ profile.explorerUrl } target="_blank">
+            { profile.explorerUrl }
+          </Link>
           <CopyToClipboard text={ profile.explorerUrl }/>
         </Text>
       </Box>
@@ -63,7 +66,9 @@ const NetworkProfileMobile = ({ profile }: Props) => {
           Website
         </Text>
         <Text>
-          { profile.websiteUrl }
+          <Link href={ profile.websiteUrl } target="_blank">
+            { profile.websiteUrl }
+          </Link>
           <CopyToClipboard text={ profile.websiteUrl }/>
         </Text>
       </Box>
@@ -73,3 +78,5 @@ const NetworkProfileMobile = ({ profile }: Props) => {
 };
 
 export default chakra(NetworkProfileMobile);
+
+/* JFIN Mod End */

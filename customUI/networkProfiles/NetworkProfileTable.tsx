@@ -1,3 +1,4 @@
+/* JFIN Mod Start */
 import { Box, Heading, Link, Table, TableContainer, Tbody, Td, Th, Thead, Tr, chakra } from '@chakra-ui/react';
 import React from 'react';
 
@@ -80,3 +81,5 @@ const NetworkProfileTable = ({ profile }: Props) => {
 };
 
 export default chakra(NetworkProfileTable);
+
+/* JFIN Mod End */

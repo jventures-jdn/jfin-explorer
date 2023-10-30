@@ -17,12 +17,10 @@ import docsIcon from 'icons/docs.svg';
 import gearIcon from 'icons/gear.svg';
 import globeIcon from 'icons/globe-b.svg';
 import graphQLIcon from 'icons/graphQL.svg';
-import linkIcon from 'icons/link.svg';
 import outputRootsIcon from 'icons/output_roots.svg';
 import privateTagIcon from 'icons/privattags.svg';
 import publicTagIcon from 'icons/publictags.svg';
 import apiDocsIcon from 'icons/restAPI.svg';
-import rpcIcon from 'icons/RPC.svg';
 import statsIcon from 'icons/stats.svg';
 import testnetIcon from 'icons/testnet.svg';
 import tokensIcon from 'icons/token.svg';
@@ -203,16 +201,6 @@ export default function useNavItems(): ReturnType {
       //   isActive: apiNavItems.some(item => isInternalItem(item) && item.isActive),
       //   subItems: apiNavItems,
       // },
-      {
-        text: 'Bridge',
-        icon: rpcIcon,
-        url: 'https://bridge.jfinchain.com/',
-      },
-      {
-        text: 'Staking',
-        icon: linkIcon,
-        url: 'https://staking.jfinchain.com/',
-      },
 
       /* JFIN Mod End */
       config.UI.sidebar.otherLinks.length > 0 ? {
