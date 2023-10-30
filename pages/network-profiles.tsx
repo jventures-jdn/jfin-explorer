@@ -5,12 +5,12 @@ import React from 'react';
 
 import PageNextJs from 'nextjs/PageNextJs';
 
-const NetworkProfile = dynamic(() => import('ui/pages/NetworkProfile'), { ssr: false });
+const NetworkProfiles = dynamic(() => import('ui/pages/NetworkProfiles'), { ssr: false });
 
 const Page: NextPage = () => {
   return (
-    <PageNextJs pathname="/tokens">
-      <NetworkProfile/>
+    <PageNextJs pathname="/network-profiles">
+      <NetworkProfiles/>
     </PageNextJs>
   );
 };

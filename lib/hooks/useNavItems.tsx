@@ -235,8 +235,8 @@ export default function useNavItems(): ReturnType {
       {
         text: 'Network Profiles',
         icon: metamaskIcon,
-        nextRoute: { pathname: '/network-profile' as const },
-        isActive: pathname === '/network-profile',
+        nextRoute: { pathname: '/network-profiles' as const },
+        isActive: pathname === '/network-profiles',
       },
 
       /* JFIN Mod End */
