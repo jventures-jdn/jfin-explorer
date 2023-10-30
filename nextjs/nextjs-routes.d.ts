@@ -36,6 +36,7 @@ declare module "nextjs-routes" {
     | StaticRoute<"/l2-txn-batches">
     | StaticRoute<"/l2-withdrawals">
     | StaticRoute<"/login">
+    | StaticRoute<"/network-profile">
     | StaticRoute<"/search-results">
     | StaticRoute<"/stats">
     | DynamicRoute<"/token/[hash]", { "hash": string }>

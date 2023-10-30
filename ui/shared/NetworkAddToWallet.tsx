@@ -1,6 +1,8 @@
 import { Button, Icon } from '@chakra-ui/react';
 import React from 'react';
 
+import type { NetworkProfile } from 'types/client/networkProfiles';
+
 import config from 'configs/app';
 import useToast from 'lib/hooks/useToast';
 import * as mixpanel from 'lib/mixpanel/index';
@@ -10,10 +12,15 @@ import { WALLETS_INFO } from 'lib/web3/wallets';
 
 const feature = config.features.web3Wallet;
 
-const NetworkAddToWallet = () => {
+/* JFIN Mod Start */
+interface Props {
+  networkProfile?: NetworkProfile;
+}
+
+const NetworkAddToWallet = ({ networkProfile }: Props) => {
   const toast = useToast();
   const { provider, wallet } = useProvider();
-  const addOrSwitchChain = useAddOrSwitchChain();
+  const addOrSwitchChain = useAddOrSwitchChain(networkProfile);
 
   const handleClick = React.useCallback(async() => {
     if (!wallet || !provider) {
@@ -56,9 +63,11 @@ const NetworkAddToWallet = () => {
   return (
     <Button variant="outline" size="sm" onClick={ handleClick }>
       <Icon as={ WALLETS_INFO[wallet].icon } boxSize={ 5 } mr={ 2 }/>
-        Add { config.chain.name }
+        Add { networkProfile?.name || config.chain.name }
     </Button>
   );
 };
 
 export default React.memo(NetworkAddToWallet);
+
+/* JFIN Mod End */

@@ -13,8 +13,9 @@ const LayoutHome = ({ children }: Props) => {
     <Layout.Container>
       <Layout.MainArea>
         <Layout.SideBar/>
+        { /* JFIN Mod Start */ }
         <Layout.MainColumn
-          paddingTop={{ base: '88px', lg: 9 }}
+          paddingTop={{ base: '60px', lg: 9 }}
         >
           <HeaderAlert/>
           <Header isHomePage/>
@@ -22,6 +23,7 @@ const LayoutHome = ({ children }: Props) => {
             { children }
           </AppErrorBoundary>
         </Layout.MainColumn>
+        { /* JFIN Mod End */ }
       </Layout.MainArea>
       <Layout.Footer/>
     </Layout.Container>

@@ -232,6 +232,12 @@ export default function useNavItems(): ReturnType {
         icon: gearIcon,
         subItems: apiNavItems,
       },
+      {
+        text: 'Network Profiles',
+        icon: metamaskIcon,
+        nextRoute: { pathname: '/network-profile' as const },
+        isActive: pathname === '/network-profile',
+      },
 
       /* JFIN Mod End */
     ].filter(Boolean);
