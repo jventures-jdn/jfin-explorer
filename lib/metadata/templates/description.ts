@@ -3,7 +3,7 @@ import type { Route } from 'nextjs-routes';
 // JFIN Mod Start
 // equal og:description
 // eslint-disable-next-line max-len
-const DEFAULT_TEMPLATE = 'JFIN Explorer is your window to the JFIN Chain, offering streamlined tracking of transactions, NFTs, tokens, and more'; // MOCK Description
+const DEFAULT_TEMPLATE = 'JFIN Chain Explorer is a tool for inspecting and analyzing EVM based blockchains. Blockchain explorer for JFIN Chain Networks.'; // MOCK Description
 // JFIN Mod End
 
 // FIXME all page descriptions will be updated later
@@ -54,6 +54,7 @@ const TEMPLATE_MAP: Record<Route['pathname'], string> = {
 
   // JFIN Mod Start
   '/network-profiles': DEFAULT_TEMPLATE,
+  // JFIN Mod end
 };
 
 export function make(pathname: Route['pathname']) {

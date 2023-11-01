@@ -29,7 +29,7 @@ const ContentLoader = ({ className, text }: Props) => {
           top: 0,
 
           /* JFIN Mod Start */
-          backgroundColor: 'purple.300',
+          backgroundColor: 'purple.200',
 
           /* JFIN Mod End */
           borderRadius: 'full',

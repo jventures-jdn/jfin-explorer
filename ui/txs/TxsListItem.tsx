@@ -107,7 +107,7 @@ const TxsListItem = ({ tx, isLoading, showBlockInfo, currentAddress, enableTimeI
               <Icon
                 as={ rightArrowIcon }
                 boxSize={ 6 }
-                color="purple.300"
+                color="purple.200"
                 isLoading={ isLoading }
               />
               { /* JFIN Mod End */ }

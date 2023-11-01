@@ -6,6 +6,8 @@ type NavIconOrComponent = {
   icon?: React.FunctionComponent<React.SVGAttributes<SVGElement>>;
 } | {
   iconComponent?: React.FC<{size?: number}>;
+} | {
+  iconImage?: string;
 };
 
 type NavItemCommon = {

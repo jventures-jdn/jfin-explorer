@@ -17,10 +17,12 @@ import docsIcon from 'icons/docs.svg';
 import gearIcon from 'icons/gear.svg';
 import globeIcon from 'icons/globe-b.svg';
 import graphQLIcon from 'icons/graphQL.svg';
+import linkIcon from 'icons/link.svg';
 import outputRootsIcon from 'icons/output_roots.svg';
 import privateTagIcon from 'icons/privattags.svg';
 import publicTagIcon from 'icons/publictags.svg';
 import apiDocsIcon from 'icons/restAPI.svg';
+import rpcIcon from 'icons/RPC.svg';
 import statsIcon from 'icons/stats.svg';
 import testnetIcon from 'icons/testnet.svg';
 import tokensIcon from 'icons/token.svg';
@@ -32,6 +34,7 @@ import walletIcon from 'icons/wallet.svg';
 import metamaskIcon from 'icons/wallets/metamask.svg';
 import watchlistIcon from 'icons/watchlist.svg';
 import { rightLineArrow } from 'lib/html-entities';
+import useProvider from 'lib/web3/useProvider';
 import UserAvatar from 'ui/shared/UserAvatar';
 
 interface ReturnType {
@@ -51,6 +54,10 @@ export function isInternalItem(item: NavItem): item is NavItemInternal {
 export default function useNavItems(): ReturnType {
   const router = useRouter();
   const pathname = router.pathname;
+
+  // JFIN Mod Start
+  const { provider, wallet } = useProvider();
+  // JFIN Mod End
 
   return React.useMemo(() => {
     let blockchainNavItems: Array<NavItem> | Array<Array<NavItem>> = [];
@@ -74,8 +81,8 @@ export default function useNavItems(): ReturnType {
       isActive: pathname === '/txs' || pathname === '/tx/[hash]',
     };
     const verifiedContracts =
-    // eslint-disable-next-line max-len
-     { text: 'Verified contracts', nextRoute: { pathname: '/verified-contracts' as const }, icon: verifiedIcon, isActive: pathname === '/verified-contracts' };
+      // eslint-disable-next-line max-len
+      { text: 'Verified contracts', nextRoute: { pathname: '/verified-contracts' as const }, icon: verifiedIcon, isActive: pathname === '/verified-contracts' };
 
     if (config.features.rollup.isEnabled) {
       blockchainNavItems = [
@@ -129,6 +136,25 @@ export default function useNavItems(): ReturnType {
         text: 'JFIN Whitepaper',
         icon: contractIcon,
         url: 'https://www.jfincoin.io/whitepaper',
+      },
+    ].filter(Boolean);
+
+    const moreNavItems: Array<NavItem> = [
+      {
+        text: 'Bridge',
+        icon: rpcIcon,
+        url: 'https://bridge.jfinchain.com/',
+      },
+      {
+        text: 'Staking',
+        icon: linkIcon,
+        url: 'https://staking.jfinchain.com/',
+      },
+      {
+        text: 'Join Wallet',
+        // eslint-disable-next-line max-len
+        iconImage: 'https://static.wixstatic.com/media/ff114f_72bfca7b019444939cda710b6f2dd67c~mv2.png/v1/fill/w_83,h_83,al_c,q_85,usm_0.66_1.00_0.01,enc_auto/Join%20Logo-04.png',
+        url: 'https://www.joinapp.digital/',
       },
     ].filter(Boolean);
 
@@ -218,7 +244,12 @@ export default function useNavItems(): ReturnType {
       {
         text: 'Developers',
         icon: gearIcon,
-        subItems: apiNavItems,
+        subItems: !wallet || !provider ? apiNavItems.slice(0, -1) : apiNavItems,
+      },
+      {
+        text: 'More',
+        icon: appsIcon,
+        subItems: moreNavItems,
       },
       {
         text: 'Network Profiles',
@@ -275,5 +306,5 @@ export default function useNavItems(): ReturnType {
     };
 
     return { mainNavItems, accountNavItems, profileItem };
-  }, [ pathname ]);
+  }, [ pathname, provider, wallet ]);
 }

@@ -1,3 +1,4 @@
+import type { LayoutProps, ThemingProps } from '@chakra-ui/react';
 import { Button, Icon } from '@chakra-ui/react';
 import React from 'react';
 
@@ -15,9 +16,11 @@ const feature = config.features.web3Wallet;
 /* JFIN Mod Start */
 interface Props {
   networkProfile?: NetworkProfile;
+  size?: ThemingProps<'Button'>['size'];
+  width?: LayoutProps['width'];
 }
 
-const NetworkAddToWallet = ({ networkProfile }: Props) => {
+const NetworkAddToWallet = ({ networkProfile, size = 'sm', width }: Props) => {
   const toast = useToast();
   const { provider, wallet } = useProvider();
   const addOrSwitchChain = useAddOrSwitchChain(networkProfile);
@@ -61,9 +64,9 @@ const NetworkAddToWallet = ({ networkProfile }: Props) => {
   }
 
   return (
-    <Button variant="outline" size="sm" onClick={ handleClick }>
+    <Button variant="outline" size={ size } onClick={ handleClick } width={ width }>
       <Icon as={ WALLETS_INFO[wallet].icon } boxSize={ 5 } mr={ 2 }/>
-        Add { networkProfile?.name || config.chain.name }
+      Add { networkProfile?.name || config.chain.name }
     </Button>
   );
 };

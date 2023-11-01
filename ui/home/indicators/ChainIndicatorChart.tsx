@@ -22,7 +22,7 @@ const ChainIndicatorChart = ({ data }: Props) => {
   const overlayRef = React.useRef<SVGRectElement>(null);
 
   /* JFIN Mod Start */
-  const lineColor = useToken('colors', 'purple.300');
+  const lineColor = useToken('colors', 'purple.200');
 
   /* JFIN Mod End */
 

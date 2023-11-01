@@ -47,6 +47,7 @@ export const PAGE_TYPE_DICT: Record<Route['pathname'], string> = {
 
   // JFIN Mod Start
   '/network-profiles': 'Network Profiles',
+  // JFIN Mod End
 };
 
 export default function getPageType(pathname: Route['pathname']) {

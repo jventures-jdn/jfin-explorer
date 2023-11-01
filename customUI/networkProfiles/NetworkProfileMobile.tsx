@@ -4,6 +4,7 @@ import React from 'react';
 
 import type { NetworkProfile } from 'types/client/networkProfiles';
 
+import useIsMobile from 'lib/hooks/useIsMobile';
 import CopyToClipboard from 'ui/shared/CopyToClipboard';
 import NetworkAddToWallet from 'ui/shared/NetworkAddToWallet';
 
@@ -12,6 +13,7 @@ type Props = {
 }
 
 const NetworkProfileMobile = ({ profile }: Props) => {
+  const isMobile = useIsMobile();
   return (
     <Box mb={ 6 }>
       <Box mb={ 4 }>
@@ -72,7 +74,7 @@ const NetworkProfileMobile = ({ profile }: Props) => {
           <CopyToClipboard text={ profile.websiteUrl }/>
         </Text>
       </Box>
-      <NetworkAddToWallet networkProfile={ profile }/>
+      <NetworkAddToWallet networkProfile={ profile } size={ isMobile ? 'md' : 'sm' } width={ isMobile ? '100%' : 'auto' }/>
     </Box>
   );
 };

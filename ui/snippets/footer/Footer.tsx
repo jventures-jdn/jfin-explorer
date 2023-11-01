@@ -123,7 +123,7 @@ const Footer = () => {
       icon: linkedInIcon,
       iconSize: '20px',
       text: 'LinkedIn',
-      url: 'https://www.youtube.com/channel/UCOOLWr3PIYHFcQrRTHZpg4A',
+      url: 'https://www.linkedin.com/company/jventuresofficial',
     },
   ];
 

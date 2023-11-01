@@ -1,18 +1,23 @@
 [
   {
-    "title": "JFin Explorer",
-    "url": "https://exp.jfinchain.com/",
-    "group": "Mainnets"
-  },
-  {
-    "title": "JFin Explorer Testnet",
-    "url": "https://exp.testnet.jfinchain.com/",
-    "group": "Testnets"
-  },
-  {
-    "title": "JFin Chain",
+    "title": "JFIN Chain",
     "url": "https://www.jfincoin.io/about-jfin-chain",
-    "group": "Mainnets"
+    "group": "Mainnets",
+    "icon": "https://cdn.discordapp.com/attachments/1164767344497795207/1169141158010687518/JFIN_Chain-05.png"
+  },
+  {
+    "title": "Bridge",
+    "url": "https://bridge.jfinchain.com/",
+    "group": "Mainnets",
+    "icon": "https://cdn.discordapp.com/attachments/1164767344497795207/1169141735222427668/RPC.svg?ex=65545317&is=6541de17&hm=de78f8de323c7d4db9e97f01eb201d61986d14c4d216823bc11d4ea853c549cb&",
+    "invertIconInDarkMode": "true"
+  },
+  {
+    "title": "Staking",
+    "url": "https://staking.jfinchain.com/",
+    "group": "Mainnets",
+    "icon": "https://cdn.discordapp.com/attachments/1164767344497795207/1169144735093501972/link.svg",
+    "invertIconInDarkMode": "true"
   },
   {
     "title": "Join Wallet",
@@ -21,28 +26,38 @@
     "icon": "https://static.wixstatic.com/media/ff114f_72bfca7b019444939cda710b6f2dd67c~mv2.png/v1/fill/w_83,h_83,al_c,q_85,usm_0.66_1.00_0.01,enc_auto/Join%20Logo-04.png"
   },
   {
-    "title": "Bridge",
-    "url": "https://bridge.jfinchain.com/",
-    "group": "Mainnets"
-  },
-  {
-    "title": "Staking",
-    "url": "https://staking.jfinchain.com/",
-    "group": "Mainnets"
-  },
-  {
-    "title": "Faucet",
-    "url": "https://faucet.testnet.jfinchain.com/",
-    "group": "Mainnets"
-  },
-  {
     "title": "Community",
     "url": "https://www.jfincoin.io/jfin-community",
-    "group": "Mainnets"
+    "group": "Mainnets",
+    "icon": "https://cdn.discordapp.com/attachments/1164767344497795207/1169142205244506162/discussions.svg",
+    "invertIconInDarkMode": "true"
   },
   {
     "title": "Whitepaper",
     "url": "https://www.jfincoin.io/whitepaper",
-    "group": "Mainnets"
+    "group": "Mainnets",
+    "icon": "https://cdn.discordapp.com/attachments/1164767344497795207/1169142460316909630/contract.svg",
+    "invertIconInDarkMode": "true"
+  },
+  {
+    "title": "Faucet",
+    "url": "https://faucet.testnet.jfinchain.com/",
+    "group": "Mainnets",
+    "icon": "https://cdn.discordapp.com/attachments/1164767344497795207/1169142634946756639/wallet.svg",
+    "invertIconInDarkMode": "true"
+  },
+  {
+    "title": "Explorer",
+    "url": "https://exp.jfinchain.com/",
+    "group": "Mainnets",
+    "icon": "https://cdn.discordapp.com/attachments/1164767344497795207/1169141157561901056/explorer.svg",
+    "invertIconInDarkMode": "true"
+  },
+  {
+    "title": "Testnet",
+    "url": "https://exp.testnet.jfinchain.com/",
+    "group": "Testnets",
+    "icon": "https://cdn.discordapp.com/attachments/1164767344497795207/1169145427732484136/building-construction-icon.svg",
+    "invertIconInDarkMode": "true"
   }
 ]

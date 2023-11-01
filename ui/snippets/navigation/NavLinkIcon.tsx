@@ -1,4 +1,4 @@
-import { Icon } from '@chakra-ui/react';
+import { Icon, Image } from '@chakra-ui/react';
 import React from 'react';
 
 import type { NavItem, NavGroupItem } from 'types/client/navigation-items';
@@ -10,6 +10,9 @@ const NavLinkIcon = ({ item }: { item: NavItem | NavGroupItem}) => {
   if ('iconComponent' in item && item.iconComponent) {
     const IconComponent = item.iconComponent;
     return <IconComponent size={ 30 }/>;
+  }
+  if ('iconImage' in item && item.iconImage) {
+    return <Image src={ item.iconImage } maxW="30px" maxH="30px" alt="nav-icon"/>;
   }
 
   return null;

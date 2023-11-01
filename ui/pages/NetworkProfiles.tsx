@@ -16,7 +16,7 @@ import RoutedTabs from 'ui/shared/Tabs/RoutedTabs';
 
 const NETWORK_PROFILES: NetworkProfiles = {
   mainnet: {
-    name: 'JFIN Chain',
+    name: '🌏 JFIN Chain',
     token: 'JFIN',
     rpc: 'https://rpc.jfinchain.com',
     chainId: '3501',
@@ -24,7 +24,7 @@ const NETWORK_PROFILES: NetworkProfiles = {
     websiteUrl: 'https://jfinchain.com',
   },
   testnet: {
-    name: 'JFIN Chain Testnet',
+    name: '🏗️ JFIN Chain Testnet',
     token: 'JFIN',
     rpc: 'https://rpc.testnet.jfinchain.com',
     chainId: '3502',
@@ -41,11 +41,18 @@ const NetworkProfile = () => {
     return isMobile ? <NetworkProfileMobile profile={ profile }/> : <NetworkProfileTable profile={ profile }/>;
   };
 
-  const tabs: Array<RoutedTab> = Object.keys(NETWORK_PROFILES).map(network => ({
-    id: NETWORK_PROFILES[network].name.split(' ').join('-').toLocaleLowerCase(),
-    title: NETWORK_PROFILES[network].name,
-    component: getProfileComponent(NETWORK_PROFILES[network]),
-  }));
+  const tabs: Array<RoutedTab> = Object.keys(NETWORK_PROFILES).map(network => {
+    const { name, ...otherProps } = NETWORK_PROFILES[network];
+    // Cleaning up the network name by removing emojis and extraneous whitespace
+    const cleanName = name.replace(/[^\w\s]/g, '').trim();
+    // Creating a slug for the ID
+    const slugId = cleanName.split(' ').join('-').toLowerCase();
+    return {
+      id: slugId,
+      title: name,
+      component: getProfileComponent({ name: cleanName, ...otherProps }),
+    };
+  });
 
   const HEADING_SIZE: ThemingProps<'Heading'>['size'] = 'sm';
 
@@ -54,31 +61,6 @@ const NetworkProfile = () => {
       <PageTitle title="Network Profiles"/>
       <RoutedTabs tabs={ tabs } tabListProps={{ mt: 6 }}/>
       <Card p={ 6 } bgColor={ cardBackgroundColor }>
-        <Heading as="h2" size={ HEADING_SIZE } fontWeight="semibold" mb={ 2 }>
-          Overview
-        </Heading>
-        <Text mb={ 6 }>
-          JFIN Chain is a proof-of-stake blockchain that was developed by J Ventures Co., Ltd., (&quot;JVC&quot;), and will be transferred to JDN Co., Ltd. (&quot;JDN&quot;), an affiliate of JVC, under the management and system maintenance by JVC. Both companies have recognized the opportunities and user needs for a network to support decentralized applications with a variety of functions and utilities, especially DeFi, GameFi, NFTs, and Metaverse, which have grown significantly over the past 2 years. JFIN Chain will use JFIN tokens as its native tokens for transactions (gas fee)
-        </Text>
-        <Heading as="h2" size={ HEADING_SIZE } fontWeight="semibold" mb={ 2 }>
-          Background of The Project
-        </Heading>
-        <Text mb={ 6 }>
-          In February 2018, JVC underwent an initial public offering of 100,000,000 digital
-          tokens called &quot;JFIN Token&quot; (out of a total supply of 300,000,000 pre-mined tokens)
-          under the ERC-20 standard, with the objective at that time being to develop a peerto-peer lending platform that includes a transaction validation function and data
-          storage on a blockchain system, with JFIN Tokens as a gas fee for using the
-          blockchain system. JFIN Tokens that are received from blockchain users will be paid
-          as rewards to users who participate as transaction validators under the proof-ofstake (POS) concept.
-          Over the past 4 years, JVC has recognized the opportunities and needs for more
-          diversity in the usage of blockchain systems and technologies, which is not limited
-          to lending, but can be developed into other forms of decentralized financial
-          services, decentralized hybrid games applications (GameFi), the issuance of nonfungible tokens (NFT), and the development of Metaverse. JVC is therefore focusing
-          on developing JFIN Chain, enabling it to support a greater variety of transactions,
-          activities, and services. Nevertheless, users of JFIN Chain who participate in the
-          validation of transactions on the blockchain system will remain entitled to receive
-          JFIN Tokens as gas fees, as per the details set out below.
-        </Text>
         <Heading as="h2" size={ HEADING_SIZE } fontWeight="semibold" mb={ 2 }>
           Technical Information of JFIN Tokens
         </Heading>
@@ -115,24 +97,11 @@ const NetworkProfile = () => {
             • 60.3 percent to the holders of JFIN Tokens staked on the nodes that are granted the right to create the blocks.`
           }
         </Text>
-        <Text mb={ 6 }>
+        <Text>
           <Text as="span" fontWeight="bold">Governance:</Text> Validator nodes will have the right to call for a vote to increase
           or decrease the number of validators, and to activate or deactivate the
           node. The voting power will be calculated from the total number of JFIN
           Tokens delegated to that validation node.
-        </Text>
-        <Heading as="h2" size={ HEADING_SIZE } fontWeight="semibold" mb={ 2 }>
-          Smart Contract Capability
-        </Heading>
-        <Text>
-          JFIN Chain can support smart contracts that conform to the Ethereum Virtual
-          Machine (EVM) standard, which is currently the most popular solution. The existing
-          applications on the EVM standard, irrespective of whether they are DeFi, GameFi,
-          NFT, or Metaverse applications, can be used on JFIN Chain immediately in the form of
-          decentralized applications (&quot;dAPPs&quot;) that are connected to the Web 3 standard
-          blockchain. JFIN Chain can support tokens mined under ERC-20, ERC-721, and
-          ERC-1155 standards, as well as other tokens that conform to the standards to be
-          introduced by Ethereum in the future.
         </Text>
       </Card>
     </>
