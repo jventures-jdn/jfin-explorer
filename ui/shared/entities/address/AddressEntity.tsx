@@ -7,6 +7,7 @@ import type { AddressParam } from 'types/api/addressParams';
 
 import { route } from 'nextjs-routes';
 
+import config from 'configs/app';
 import iconSafe from 'icons/brands/safe.svg';
 import iconContractVerified from 'icons/contract_verified.svg';
 import iconContract from 'icons/contract.svg';
@@ -89,6 +90,7 @@ const Icon = (props: IconProps) => {
   return (
     <Tooltip label={ props.address.implementation_name }>
       <Flex marginRight={ styles.marginRight }>
+
         <AddressIdenticon
           size={ props.iconSize === 'lg' ? 30 : 20 }
           hash={ props.address.hash }
@@ -147,6 +149,14 @@ export interface EntityProps extends EntityBase.EntityBaseProps {
 const AddressEntry = (props: EntityProps) => {
   const linkProps = _omit(props, [ 'className' ]);
   const partsProps = _omit(props, [ 'className', 'onClick' ]);
+
+  // JFIN Mod Start
+  for (const [ key, value ] of Object.entries(config.validatorWallets)) {
+    if (key.toLowerCase() === props.address.hash.toLowerCase()) {
+      props.address.name = value.name;
+    }
+  }
+  // JFIN Mod End
 
   return (
     <Container className={ props.className }>
