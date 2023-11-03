@@ -1,5 +1,4 @@
-import { Box, Select, VStack, Skeleton, Flex } from '@chakra-ui/react';
-import capitalize from 'lodash/capitalize';
+import { Box, VStack, Skeleton, Flex } from '@chakra-ui/react';
 import React from 'react';
 
 import type { NetworkGroup, FeaturedNetwork } from 'types/networks';
@@ -11,19 +10,9 @@ interface Props {
   items?: Array<FeaturedNetwork>;
 }
 
-const NetworkMenuContentMobile = ({ items, tabs }: Props) => {
-  const selectedNetwork = items?.find(({ isActive }) => isActive);
-  const [ selectedTab, setSelectedTab ] = React.useState<NetworkGroup>('Mainnets');
-
-  React.useEffect(() => {
-    if (items) {
-      setSelectedTab(tabs.find((tab) => selectedNetwork?.group === tab) || 'Mainnets');
-    }
-  }, [ items, selectedNetwork?.group, tabs ]);
-
-  const handleSelectChange = React.useCallback((event: React.ChangeEvent<HTMLSelectElement>) => {
-    setSelectedTab(event.target.value as NetworkGroup);
-  }, []);
+const NetworkMenuContentMobile = ({ items }: Props) => {
+  {/* JFIN Mod Start */}
+  {/* JFIN Mod End */}
 
   const content = !items || items.length === 0 ? (
     <>
@@ -45,12 +34,9 @@ const NetworkMenuContentMobile = ({ items, tabs }: Props) => {
     </>
   ) : (
     <>
-      <Select size="xs" borderRadius="base" value={ selectedTab } onChange={ handleSelectChange } focusBorderColor="none">
-        { tabs.map((tab) => <option key={ tab } value={ tab }>{ capitalize(tab) }</option>) }
-      </Select>
-      <VStack as="ul" spacing={ 2 } alignItems="stretch" mt={ 6 }>
+      { /* JFIN Mod Start */ }
+      <VStack as="ul" spacing={ 2 } alignItems="stretch">
         { items
-          .filter(({ group }) => group === selectedTab)
           .map((network) => (
             <NetworkMenuLink
               key={ network.title }
@@ -60,6 +46,7 @@ const NetworkMenuContentMobile = ({ items, tabs }: Props) => {
           ))
         }
       </VStack>
+      { /* JFIN Mod End */ }
     </>
   );
 

@@ -23,7 +23,7 @@
     "title": "Join Wallet",
     "url": "https://www.joinapp.digital",
     "group": "Mainnets",
-    "icon": "https://static.wixstatic.com/media/ff114f_72bfca7b019444939cda710b6f2dd67c~mv2.png/v1/fill/w_83,h_83,al_c,q_85,usm_0.66_1.00_0.01,enc_auto/Join%20Logo-04.png"
+    "icon": "https://cdn.discordapp.com/attachments/1164767344497795207/1169703611052331069/joinwallet.png"
   },
   {
     "title": "Community",
@@ -40,11 +40,10 @@
     "invertIconInDarkMode": "true"
   },
   {
-    "title": "Faucet",
-    "url": "https://faucet.testnet.jfinchain.com/",
+    "title": "Network Profiles",
+    "url": "/network-profiles",
     "group": "Mainnets",
-    "icon": "https://cdn.discordapp.com/attachments/1164767344497795207/1169142634946756639/wallet.svg",
-    "invertIconInDarkMode": "true"
+    "icon": "https://cdn.discordapp.com/attachments/1164767344497795207/1169702185479716994/metamask.svg"
   },
   {
     "title": "Explorer",

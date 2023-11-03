@@ -173,7 +173,8 @@ const Footer = () => {
         </Box>
         <Text mt={ 3 } maxW={{ base: 'unset', lg: '470px' }} fontSize="xs">
           { /* JFIN Mod Start */ }
-          JFIN Chain Explorer is a tool for inspecting and analyzing EVM based blockchains. Blockchain explorer for JFIN Chain Networks.
+          A powerful tool designed for inspecting and analyzing EVM based blockchains,
+          offering an insightful blockchain exploration experience tailored for JFIN Chain.
           { /* JFIN Mod End */ }
         </Text>
         <VStack spacing={ 1 } mt={ 6 } alignItems="start">

@@ -57,7 +57,7 @@ const Home = () => {
           color={ config.UI.homepage.plate.textColor }
           mb={{ base: 6, lg: 6 }}
         >
-          Inspecting and analyzing EVM based
+          Unlocking the Future, Navigating the Blockchain Revolution with Precision and Insight.
         </Heading>
         <Box position="relative" zIndex={ 2 } >
           <LightMode>

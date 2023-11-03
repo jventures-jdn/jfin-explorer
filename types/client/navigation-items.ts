@@ -24,6 +24,7 @@ export type NavItemExternal = {
 
   /* JFIN Mod Start */
   url?: string;
+  group?: string;
 
   /* JFIN Mod End */
 }

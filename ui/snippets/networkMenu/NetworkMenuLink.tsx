@@ -54,6 +54,7 @@ const NetworkMenuLink = ({ title, icon, isActive, isMobile, url, invertIconInDar
           fontSize="sm"
           lineHeight={ isMobile ? '20px' : '24px' }
           textAlign={ isMobile ? 'left' : 'center' }
+          ml={ isMobile ? 4 : 0 }
         >
           { title }
         </Text>

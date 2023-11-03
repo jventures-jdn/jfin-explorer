@@ -211,7 +211,7 @@ const featuredNetworkSchema: yup.ObjectSchema<FeaturedNetwork> = yup
   .object()
   .shape({
     title: yup.string().required(),
-    url: yup.string().test(urlTest).required(),
+    url: yup.string().required(),
     group: yup.string().oneOf(NETWORK_GROUPS).required(),
     icon: yup.string().test(urlTest),
     isActive: yup.boolean(),
@@ -222,6 +222,7 @@ const navItemExternalSchema: yup.ObjectSchema<NavItemExternal> = yup
   .object({
     text: yup.string().required(),
     url: yup.string().test(urlTest).required(),
+    group: yup.string(),
   });
 
 const footerLinkSchema: yup.ObjectSchema<CustomLink> = yup

@@ -1,8 +1,9 @@
-import { Box, Flex, Text, Icon, VStack, useColorModeValue } from '@chakra-ui/react';
+import { Box, Flex, Text, Icon, VStack, useColorModeValue, Divider } from '@chakra-ui/react';
 import { animate, motion, useMotionValue } from 'framer-motion';
 import React, { useCallback } from 'react';
 
 import chevronIcon from 'icons/arrows/east-mini.svg';
+import groupMenuItems from 'lib/groupMenuItems';
 import useHasAccount from 'lib/hooks/useHasAccount';
 import useNavItems, { isGroupItem } from 'lib/hooks/useNavItems';
 import NavLink from 'ui/snippets/navigation/NavLink';
@@ -36,6 +37,7 @@ const NavigationMobile = ({ onNavLinkClick }: Props) => {
 
   /* JFIN Mod Start */
   const iconColor = useColorModeValue('purple.600', 'purple.200');
+  const dividerColor = useColorModeValue('white', 'gray.900');
 
   /* JFIN Mod End */
 
@@ -103,11 +105,27 @@ const NavigationMobile = ({ onNavLinkClick }: Props) => {
             w="100%"
             as="ul"
           >
-            { isGroupItem(openedItem) && openedItem.subItems?.map(
-              (item, index) => Array.isArray(item) ? (
+            { isGroupItem(openedItem) && Object.entries(groupMenuItems(openedItem.subItems))?.map(([ groupName, groupItems ], groupIndex) => (
+              <Box key={ groupIndex } w="100%">
+                { groupName !== 'Ungrouped' && (
+                  <Box position="relative" my={ 6 } px={ 1 }>
+                    <Divider/>
+                    <Text
+                      bg={ dividerColor }
+                      display="inline-block"
+                      whiteSpace="nowrap"
+                      position="absolute"
+                      variant="secondary"
+                      fontSize="sm"
+                      top="-1"
+                      mt="-2"
+                      px={ 2 }
+                    >
+                      { groupName }
+                    </Text>
+                  </Box>
+                ) }
                 <Box
-                  key={ index }
-                  w="100%"
                   as="ul"
                   _notLast={{
                     mb: 2,
@@ -116,11 +134,12 @@ const NavigationMobile = ({ onNavLinkClick }: Props) => {
                     borderColor: 'divider',
                   }}
                 >
-                  { item.map(subItem => <NavLink key={ subItem.text } item={ subItem } onClick={ onNavLinkClick }/>) }
+                  { groupItems.map(item => (
+                    <NavLink key={ item.text } item={ item } isCollapsed={ false }/>
+                  )) }
                 </Box>
-              ) :
-                <NavLink key={ item.text } item={ item } mb={ 1 } onClick={ onNavLinkClick }/>,
-            ) }
+              </Box>
+            )) }
           </Box>
         </Box>
       ) }

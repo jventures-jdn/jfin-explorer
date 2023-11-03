@@ -36,8 +36,9 @@ const LatestTxsItem = ({ tx, isLoading }: Props) => {
       width="100%"
 
       /* JFIN Mod Start */
-      boxShadow="md"
       borderRadius="md"
+      border="1px"
+      borderColor="divider"
       p={ 6 }
       mt={ 3 }
 

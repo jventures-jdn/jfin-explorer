@@ -1,7 +1,7 @@
 import type { As } from '@chakra-ui/react';
-import { Box, Flex, Skeleton, Tooltip, chakra, VStack } from '@chakra-ui/react';
+import { Box, Flex, Skeleton, Tooltip, chakra, VStack, Image } from '@chakra-ui/react';
 import _omit from 'lodash/omit';
-import React from 'react';
+import React, { useMemo } from 'react';
 
 import type { AddressParam } from 'types/api/addressParams';
 
@@ -33,6 +33,7 @@ const Link = chakra((props: LinkProps) => {
 
 type IconProps = Pick<EntityProps, 'address' | 'isLoading' | 'iconSize' | 'noIcon' | 'isSafeAddress'> & {
   asProp?: As;
+  imageSrc?: string;
 };
 
 const Icon = (props: IconProps) => {
@@ -90,11 +91,17 @@ const Icon = (props: IconProps) => {
   return (
     <Tooltip label={ props.address.implementation_name }>
       <Flex marginRight={ styles.marginRight }>
-
-        <AddressIdenticon
-          size={ props.iconSize === 'lg' ? 30 : 20 }
-          hash={ props.address.hash }
-        />
+        { /* JFIN Mod Start */ }
+        { props.imageSrc ? (
+          <Image src={ props.imageSrc } borderRadius="full" w="30px" alt="Address icon"/>
+        ) : (
+          <AddressIdenticon
+            // size={ props.iconSize === 'lg' ? 30 : 20 }
+            size={ 30 }
+            hash={ props.address.hash }
+          />
+        ) }
+        { /* JFIN Mod Start */ }
       </Flex>
     </Tooltip>
   );
@@ -151,23 +158,32 @@ const AddressEntry = (props: EntityProps) => {
   const partsProps = _omit(props, [ 'className', 'onClick' ]);
 
   // JFIN Mod Start
-  for (const [ key, value ] of Object.entries(config.validatorWallets)) {
-    if (key.toLowerCase() === props.address.hash.toLowerCase()) {
-      props.address.name = value.name;
+  const [ imageSrc, updatedName ] = useMemo(() => {
+    let tempImageSrc = '';
+    let validatorName = props.address.name;
+    for (const [ key, value ] of Object.entries(config.validatorWallets)) {
+      if (key.toLowerCase() === props.address.hash.toLowerCase()) {
+        validatorName = value.name;
+        if ('image' in value) {
+          tempImageSrc = value.image;
+          break;
+        }
+      }
     }
-  }
-  // JFIN Mod End
+    return [ tempImageSrc, validatorName ];
+  }, [ props.address.hash, props.address.name ]);
 
   return (
     <Container className={ props.className }>
-      <Icon { ...partsProps }/>
+      <Icon { ...partsProps } imageSrc={ imageSrc }/>
       <Link { ...linkProps }>
-        <Content { ...partsProps }/>
+        <Content { ...partsProps } address={{ ...partsProps.address, name: updatedName }}/>
       </Link>
       <Copy { ...partsProps }/>
     </Container>
   );
 };
+  // JFIN Mod End
 
 export default React.memo(chakra(AddressEntry));
 

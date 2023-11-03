@@ -1,4 +1,3 @@
-import NetworkAddToJFinWallet from 'customUI/NetworkAddToJFinWallet';
 import { useRouter } from 'next/router';
 import React from 'react';
 
@@ -144,17 +143,44 @@ export default function useNavItems(): ReturnType {
         text: 'Bridge',
         icon: rpcIcon,
         url: 'https://bridge.jfinchain.com/',
+        group: 'Apps',
       },
       {
         text: 'Staking',
         icon: linkIcon,
         url: 'https://staking.jfinchain.com/',
+        group: 'Apps',
       },
       {
         text: 'Join Wallet',
         // eslint-disable-next-line max-len
-        iconImage: 'https://static.wixstatic.com/media/ff114f_72bfca7b019444939cda710b6f2dd67c~mv2.png/v1/fill/w_83,h_83,al_c,q_85,usm_0.66_1.00_0.01,enc_auto/Join%20Logo-04.png',
+        iconImage: '/static/apps/joinwallet.png',
         url: 'https://www.joinapp.digital/',
+        group: 'Apps',
+      },
+      {
+        text: 'Bitkub',
+        iconImage: '/static/markets/bitkub.png',
+        url: 'https://www.bitkub.com/market/JFIN',
+        group: 'JFIN Coin Markets',
+      },
+      {
+        text: 'Coinstore',
+        iconImage: '/static/markets/coinstore.png',
+        url: 'https://www.coinstore.com/#/spot/jfinusdt',
+        group: 'JFIN Coin Markets',
+      },
+      {
+        text: 'Satang Pro',
+        iconImage: '/static/markets/satang-pro.png',
+        url: 'https://satangcorp.com/exchange/trade/JFIN-THB',
+        group: 'JFIN Coin Markets',
+      },
+      {
+        text: 'Liquid Crypto',
+        iconImage: '/static/markets/liquid-crypto.png',
+        url: 'https://jfinchain.liquidcrypto.finance/swap',
+        group: 'JFIN Coin Markets',
       },
     ].filter(Boolean);
 
@@ -184,11 +210,6 @@ export default function useNavItems(): ReturnType {
         text: 'JFIN Chain Testnet',
         icon: testnetIcon,
         url: 'https://exp.testnet.jfinchain.com/',
-      },
-      {
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        text: <NetworkAddToJFinWallet/> as any,
-        icon: metamaskIcon,
       },
 
       /* JFIN Mod End */
