@@ -96,18 +96,18 @@ const Footer = () => {
 
   const fetch = useFetch();
 
-  const { isLoading, data: linksData } = useQuery<unknown, ResourceError<unknown>, Array<CustomLinksGroup>>(
-    [ 'footer-links' ],
-    async() => fetch(config.UI.footer.links || '', undefined, { resource: 'footer-links' }),
-    {
-      enabled: Boolean(config.UI.footer.links),
-      staleTime: Infinity,
-    });
+  const { isPending, data: linksData } = useQuery<unknown, ResourceError<unknown>, Array<CustomLinksGroup>>({
+    queryKey: [ 'footer-links' ],
+    queryFn: async() => fetch(config.UI.footer.links || '', undefined, { resource: 'footer-links' }),
+    enabled: Boolean(config.UI.footer.links),
+    staleTime: Infinity,
+  });
 
   return (
     <Flex
       direction={{ base: 'column', lg: 'row' }}
-      p={{ base: 4, lg: 9 }}
+      px={{ base: 4, lg: 12 }}
+      py={{ base: 4, lg: 9 }}
       borderTop="1px solid"
       borderColor="divider"
       as="footer"
@@ -116,7 +116,7 @@ const Footer = () => {
       <Box flexGrow="1" mb={{ base: 8, lg: 0 }}>
         <Flex flexWrap="wrap" columnGap={ 8 } rowGap={ 6 }>
           <ColorModeToggler/>
-          { !config.UI.indexingAlert.isHidden && <IntTxsIndexingStatus/> }
+          { !config.UI.indexingAlert.intTxs.isHidden && <IntTxsIndexingStatus/> }
           <NetworkAddToWallet/>
         </Flex>
         <Box mt={{ base: 5, lg: '44px' }}>
@@ -149,15 +149,27 @@ const Footer = () => {
           { config.UI.footer.links && <Text fontWeight={ 500 } mb={ 3 }>Blockscout</Text> }
           <Grid
             gap={ 1 }
-            gridTemplateColumns={ config.UI.footer.links ? '160px' : { base: 'repeat(auto-fill, 160px)', lg: 'repeat(4, 160px)' } }
-            gridTemplateRows={{ base: 'auto', lg: config.UI.footer.links ? 'auto' : 'repeat(2, auto)' }}
+            gridTemplateColumns={
+              config.UI.footer.links ?
+                '160px' :
+                {
+                  base: 'repeat(auto-fill, 160px)',
+                  lg: 'repeat(2, 160px)',
+                  xl: 'repeat(4, 160px)',
+                }
+            }
+            gridTemplateRows={{
+              base: 'auto',
+              lg: config.UI.footer.links ? 'auto' : 'repeat(4, auto)',
+              xl: config.UI.footer.links ? 'auto' : 'repeat(2, auto)',
+            }}
             gridAutoFlow={{ base: 'row', lg: config.UI.footer.links ? 'row' : 'column' }}
             mt={{ base: 0, lg: config.UI.footer.links ? 0 : '100px' }}
           >
             { BLOCKSCOUT_LINKS.map(link => <FooterLinkItem { ...link } key={ link.text }/>) }
           </Grid>
         </Box>
-        { config.UI.footer.links && isLoading && (
+        { config.UI.footer.links && isPending && (
           Array.from(Array(3)).map((i, index) => (
             <Box minW="160px" key={ index }>
               <Skeleton w="120px" h="20px" mb={ 6 }/>
