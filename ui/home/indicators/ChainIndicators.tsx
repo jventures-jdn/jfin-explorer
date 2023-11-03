@@ -1,4 +1,5 @@
 import { Flex, Skeleton, Text, useColorModeValue } from '@chakra-ui/react';
+import dynamic from 'next/dynamic';
 import React from 'react';
 
 import config from 'configs/app';
@@ -9,6 +10,11 @@ import ChainIndicatorChartContainer from './ChainIndicatorChartContainer';
 import ChainIndicatorItem from './ChainIndicatorItem';
 import useFetchChartData from './useFetchChartData';
 import INDICATORS from './utils/indicators';
+
+const CoinMarketCapWidget = dynamic(
+  () => import('customUI/coinMarketCap/CoinMarketCapWidget'),
+  { ssr: false },
+);
 
 const indicators = INDICATORS
   .filter(({ id }) => config.UI.homepage.charts.includes(id))
@@ -62,9 +68,9 @@ const ChainIndicators = () => {
       borderRadius={{ base: 'none', lg: 'lg' }}
       boxShadow={{ base: 'none', lg: 'xl' }}
       bgColor={{ base: bgColorMobile, lg: bgColorDesktop }}
-      columnGap={ 12 }
+      columnGap={ 6 }
       rowGap={ 0 }
-      flexDir={{ base: 'column', lg: 'row' }}
+      flexDir={{ base: 'column-reverse', lg: 'row-reverse' }}
       w="100%"
       alignItems="stretch"
       mt={ 8 }
@@ -99,6 +105,7 @@ const ChainIndicators = () => {
           )) }
         </Flex>
       ) }
+      <CoinMarketCapWidget/>
     </Flex>
   );
 };
