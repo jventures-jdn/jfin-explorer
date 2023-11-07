@@ -33,17 +33,16 @@
     "icon": "https://cdn.discordapp.com/attachments/1164767344497795207/1171294013517742080/coinmarketcap-icon.png"
   },
   {
-    "title": "Network Profiles",
+    "title": "Add Network",
     "url": "/network-profiles",
     "group": "Mainnets",
     "icon": "https://cdn.discordapp.com/attachments/1164767344497795207/1169702185479716994/metamask.svg"
   },
   {
-    "title": "Explorer",
-    "url": "https://exp.jfinchain.com/",
+    "title": "Layer 2",
+    "url": "https://j2o.io/",
     "group": "Mainnets",
-    "icon": "https://cdn.discordapp.com/attachments/1164767344497795207/1169141157561901056/explorer.svg",
-    "invertIconInDarkMode": "true"
+    "icon": "https://cdn.discordapp.com/attachments/1164767344497795207/1171454970919403580/j2o.png"
   },
   {
     "title": "Testnet",

@@ -131,6 +131,11 @@ export default function useNavItems(): ReturnType {
         icon: contractIcon,
         url: 'https://www.jfincoin.io/whitepaper',
       },
+      {
+        text: 'Coinmarketcap',
+        iconImage: 'https://cdn.discordapp.com/attachments/1164767344497795207/1171294013517742080/coinmarketcap-icon.png',
+        url: 'https://coinmarketcap.com/currencies/jfin/',
+      },
     ].filter(Boolean);
 
     const moreNavItems: Array<NavItem> = [
@@ -148,9 +153,15 @@ export default function useNavItems(): ReturnType {
       },
       {
         text: 'Join Wallet',
-        // eslint-disable-next-line max-len
         iconImage: '/static/apps/joinwallet.png',
         url: 'https://www.joinapp.digital/',
+        group: 'Apps',
+      },
+      {
+        text: 'Layer 2',
+        // eslint-disable-next-line max-len
+        iconImage: '/static/apps/j2o.png',
+        url: 'https://j2o.io/',
         group: 'Apps',
       },
       {
