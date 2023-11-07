@@ -34,6 +34,7 @@ const NetworkMenuLink = ({ title, icon, isActive, isMobile, url, invertIconInDar
       <Flex
         as="a"
         href={ url }
+        target="_blank"
         direction={ isMobile ? 'row' : 'column' }
         px={ isMobile ? 3 : 0 }
         py={ isMobile ? 2 : 2 }

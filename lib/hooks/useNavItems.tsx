@@ -33,7 +33,6 @@ import walletIcon from 'icons/wallet.svg';
 import metamaskIcon from 'icons/wallets/metamask.svg';
 import watchlistIcon from 'icons/watchlist.svg';
 import { rightLineArrow } from 'lib/html-entities';
-import useProvider from 'lib/web3/useProvider';
 import UserAvatar from 'ui/shared/UserAvatar';
 
 interface ReturnType {
@@ -53,10 +52,6 @@ export function isInternalItem(item: NavItem): item is NavItemInternal {
 export default function useNavItems(): ReturnType {
   const router = useRouter();
   const pathname = router.pathname;
-
-  // JFIN Mod Start
-  const { provider, wallet } = useProvider();
-  // JFIN Mod End
 
   return React.useMemo(() => {
     let blockchainNavItems: Array<NavItem> | Array<Array<NavItem>> = [];
@@ -122,8 +117,8 @@ export default function useNavItems(): ReturnType {
     /* JFIN Mod Start */
     const informationNavItems: Array<NavItem> = [
       {
-        text: 'JFIN Chain',
-        icon: globeIcon,
+        text: 'About JFIN',
+        iconImage: 'https://cdn.discordapp.com/attachments/1164767344497795207/1169141158010687518/JFIN_Chain-05.png',
         url: 'https://www.jfincoin.io/about-jfin-chain',
       },
       {
@@ -207,7 +202,7 @@ export default function useNavItems(): ReturnType {
         url: 'https://faucet.testnet.jfinchain.com/',
       },
       {
-        text: 'JFIN Chain Testnet',
+        text: 'Testnet',
         icon: testnetIcon,
         url: 'https://exp.testnet.jfinchain.com/',
       },
@@ -265,7 +260,7 @@ export default function useNavItems(): ReturnType {
       {
         text: 'Developers',
         icon: gearIcon,
-        subItems: !wallet || !provider ? apiNavItems.slice(0, -1) : apiNavItems,
+        subItems: apiNavItems,
       },
       {
         text: 'More',
@@ -327,5 +322,5 @@ export default function useNavItems(): ReturnType {
     };
 
     return { mainNavItems, accountNavItems, profileItem };
-  }, [ pathname, provider, wallet ]);
+  }, [ pathname ]);
 }

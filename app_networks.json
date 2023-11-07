@@ -1,6 +1,6 @@
 [
   {
-    "title": "JFIN Chain",
+    "title": "About JFIN Chain",
     "url": "https://www.jfincoin.io/about-jfin-chain",
     "group": "Mainnets",
     "icon": "https://cdn.discordapp.com/attachments/1164767344497795207/1169141158010687518/JFIN_Chain-05.png"
@@ -33,11 +33,10 @@
     "invertIconInDarkMode": "true"
   },
   {
-    "title": "Whitepaper",
-    "url": "https://www.jfincoin.io/whitepaper",
+    "title": "Coinmarketcap",
+    "url": "https://coinmarketcap.com/currencies/jfin/",
     "group": "Mainnets",
-    "icon": "https://cdn.discordapp.com/attachments/1164767344497795207/1169142460316909630/contract.svg",
-    "invertIconInDarkMode": "true"
+    "icon": "https://cdn.discordapp.com/attachments/1164767344497795207/1171294013517742080/coinmarketcap-icon.png"
   },
   {
     "title": "Network Profiles",

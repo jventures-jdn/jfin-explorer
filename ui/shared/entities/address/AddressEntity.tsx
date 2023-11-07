@@ -162,7 +162,7 @@ const AddressEntry = (props: EntityProps) => {
     let tempImageSrc = '';
     let validatorName = props.address.name;
     for (const [ key, value ] of Object.entries(config.validatorWallets)) {
-      if (key.toLowerCase() === props.address.hash.toLowerCase()) {
+      if (key.toLowerCase() === props?.address?.hash?.toLowerCase()) {
         validatorName = value.name;
         if ('image' in value) {
           tempImageSrc = value.image;

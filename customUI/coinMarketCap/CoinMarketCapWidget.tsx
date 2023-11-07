@@ -8,38 +8,12 @@ const CoinMarketCapWidget = () => {
   const fontFamily = useToken('fonts', 'fonts.body');
   const bgColor = useColorModeValue('white', 'black');
 
-  const applyBorderColor = (element: HTMLElement, newColor: string) => {
-    const style = window.getComputedStyle(element);
-    const borderValue = '1px solid rgb(225, 229, 234)'; // #e1e5ea in RGB
-    if ([ style.borderTop, style.borderRight ].includes(borderValue)) {
-      element.style.borderColor = newColor;
-    }
-  };
-
   React.useEffect(() => {
     const widgetContainer = document.getElementById('coinmarket-widget');
     const widget = document.getElementById('coinmarketcap-currency-widget');
     if (!widget || !widgetContainer) {
       return;
     }
-
-    const links = widget.getElementsByTagName('a');
-    for (const link of links) {
-      link.style.color = linkColor;
-      link.style.fontWeight = 'bold';
-    }
-
-    const firstChild = widget.getElementsByTagName('div')[0];
-    if (firstChild) {
-      firstChild.style.fontFamily = fontFamily;
-      firstChild.style.borderWidth = '0';
-    }
-
-    widget.querySelectorAll('*').forEach(el => {
-      if (el instanceof HTMLElement) {
-        applyBorderColor(el, borderColor);
-      }
-    });
 
     widgetContainer.appendChild(widget);
   }, [ borderColor, fontFamily, linkColor ]);
@@ -50,6 +24,22 @@ const CoinMarketCapWidget = () => {
       justifyContent="center"
       alignItems="center"
       bgColor={ bgColor }
+      sx={{
+        a: {
+          color: `${ linkColor }!important`,
+          fontWeight: 'bold!important',
+        },
+        '.coinmarketcap-currency-widget > div': {
+          fontFamily: `${ fontFamily }!important`,
+          border: '0!important',
+        },
+        '.coinmarketcap-currency-widget > div > div:not(:first-child)': {
+          borderTop: `1px solid ${ borderColor }!important`,
+        },
+        '.coinmarketcap-currency-widget > div > div:nth-child(2) > div': {
+          borderColor: `${ borderColor }!important`,
+        },
+      }}
     >
       <div id="coinmarket-widget" style={{ width: '100%' }}/>
     </Flex>
