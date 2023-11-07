@@ -1,11 +1,5 @@
 [
   {
-    "title": "About JFIN Chain",
-    "url": "https://www.jfincoin.io/about-jfin-chain",
-    "group": "Mainnets",
-    "icon": "https://cdn.discordapp.com/attachments/1164767344497795207/1169141158010687518/JFIN_Chain-05.png"
-  },
-  {
     "title": "Bridge",
     "url": "https://bridge.jfinchain.com/",
     "group": "Mainnets",
@@ -57,5 +51,11 @@
     "group": "Testnets",
     "icon": "https://cdn.discordapp.com/attachments/1164767344497795207/1169145427732484136/building-construction-icon.svg",
     "invertIconInDarkMode": "true"
+  },
+  {
+    "title": "About",
+    "url": "https://www.jfincoin.io/about-jfin-chain",
+    "group": "Mainnets",
+    "icon": "https://cdn.discordapp.com/attachments/1164767344497795207/1169141158010687518/JFIN_Chain-05.png"
   }
 ]

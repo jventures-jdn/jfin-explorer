@@ -117,7 +117,7 @@ export default function useNavItems(): ReturnType {
     /* JFIN Mod Start */
     const informationNavItems: Array<NavItem> = [
       {
-        text: 'About JFIN',
+        text: 'About',
         iconImage: 'https://cdn.discordapp.com/attachments/1164767344497795207/1169141158010687518/JFIN_Chain-05.png',
         url: 'https://www.jfincoin.io/about-jfin-chain',
       },
