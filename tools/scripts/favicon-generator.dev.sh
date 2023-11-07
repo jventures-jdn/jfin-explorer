@@ -1,6 +1,6 @@
 secrets_file="./configs/envs/.env.secrets"
 favicon_folder="./public/favicon/"
-master_url="https://cdn.discordapp.com/attachments/1164767344497795207/1167307102902038559/jfin.svg"
+master_url="https://cdn.discordapp.com/attachments/1164767344497795207/1169141158010687518/JFIN_Chain-05.png"
 
 if [ ! -f "$secrets_file" ]; then
     echo "Error: File '$secrets_file' not found."
