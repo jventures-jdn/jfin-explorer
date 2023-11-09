@@ -2,6 +2,7 @@ import { Box, Heading, Flex, LightMode, Image } from '@chakra-ui/react';
 import React from 'react';
 
 import config from 'configs/app';
+import useIsMobile from 'lib/hooks/useIsMobile';
 import ChainIndicators from 'ui/home/indicators/ChainIndicators';
 import LatestBlocks from 'ui/home/LatestBlocks';
 import Stats from 'ui/home/Stats';
@@ -11,6 +12,7 @@ import ProfileMenuDesktop from 'ui/snippets/profileMenu/ProfileMenuDesktop';
 import SearchBar from 'ui/snippets/searchBar/SearchBar';
 
 const Home = () => {
+  const isMobile = useIsMobile();
   return (
     <Box as="main">
       { /* JFIN Mod Start */ }
@@ -23,19 +25,28 @@ const Home = () => {
         boxShadow="md"
         data-label="hero plate"
         position="relative"
-        overflow="hidden"
       >
-        <Image
-          src="/static/network-path.png"
-          alt="networks"
+        <Box
+          overflow="hidden"
+          borderTopRightRadius="24px"
+          borderBottomRightRadius="24px"
           position="absolute"
           maxWidth="950px"
+          height="100%"
           bottom="0"
-          right="-13%"
-          zIndex={ 1 }
+          right="0"
+          zIndex={ 0 }
           opacity={ 0.4 }
           pointerEvents="none"
-        />
+        >
+          <Image
+            src="/static/network-path.png"
+            alt="networks"
+            position="relative"
+            right="-13%"
+            top={ isMobile ? '-30%' : '-100%' }
+          />
+        </Box>
         <Flex mb={{ base: 3, lg: 3 }} justifyContent="space-between" position="relative" zIndex={ 2 }>
           <Heading
             as="h1"

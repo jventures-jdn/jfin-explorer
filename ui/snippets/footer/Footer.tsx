@@ -168,7 +168,7 @@ const Footer = () => {
         </Flex>
         <Box mt={{ base: 5, lg: '44px' }}>
           { /* JFIN Mod Start */ }
-          <Link fontSize="xs" href="https://exp.jfinchain.com">exp.jfinchain.com</Link>
+          <Link fontSize="xs" href="https://jfinscan.com">jfinscan.com</Link>
           { /* JFIN Mod End */ }
         </Box>
         <Text mt={ 3 } maxW={{ base: 'unset', lg: '470px' }} fontSize="xs">

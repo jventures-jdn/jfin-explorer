@@ -29,7 +29,7 @@ const NetworkMenuLink = ({ title, icon, isActive, isMobile, url, invertIconInDar
     />
   );
 
-  return (
+  const MenuLink = () => (
     <Box as="li" listStyleType="none">
       <Flex
         as="a"
@@ -69,6 +69,8 @@ const NetworkMenuLink = ({ title, icon, isActive, isMobile, url, invertIconInDar
       </Flex>
     </Box>
   );
+
+  return <MenuLink/>;
 };
 
 export default React.memo(NetworkMenuLink);

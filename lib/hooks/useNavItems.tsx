@@ -1,4 +1,5 @@
 import { useRouter } from 'next/router';
+import jnftIcon from 'public/static/apps/jnft.svg';
 import React from 'react';
 
 import type { NavItemInternal, NavItem, NavGroupItem } from 'types/client/navigation-items';
@@ -10,9 +11,11 @@ import appsIcon from 'icons/apps.svg';
 import withdrawalsIcon from 'icons/arrows/north-east.svg';
 import depositsIcon from 'icons/arrows/south-east.svg';
 import blocksIcon from 'icons/block.svg';
+import constructionIcon from 'icons/construction.svg';
 import contractIcon from 'icons/contract.svg';
 import discussionsIcon from 'icons/discussions.svg';
 import docsIcon from 'icons/docs.svg';
+import gasIcon from 'icons/gas.svg';
 import gearIcon from 'icons/gear.svg';
 import globeIcon from 'icons/globe-b.svg';
 import graphQLIcon from 'icons/graphQL.svg';
@@ -23,13 +26,11 @@ import publicTagIcon from 'icons/publictags.svg';
 import apiDocsIcon from 'icons/restAPI.svg';
 import rpcIcon from 'icons/RPC.svg';
 import statsIcon from 'icons/stats.svg';
-import testnetIcon from 'icons/testnet.svg';
 import tokensIcon from 'icons/token.svg';
 import topAccountsIcon from 'icons/top-accounts.svg';
 import transactionsIcon from 'icons/transactions.svg';
 import txnBatchIcon from 'icons/txn_batches.svg';
 import verifiedIcon from 'icons/verified.svg';
-import walletIcon from 'icons/wallet.svg';
 import metamaskIcon from 'icons/wallets/metamask.svg';
 import watchlistIcon from 'icons/watchlist.svg';
 import { rightLineArrow } from 'lib/html-entities';
@@ -118,22 +119,22 @@ export default function useNavItems(): ReturnType {
     const informationNavItems: Array<NavItem> = [
       {
         text: 'About',
-        iconImage: 'https://cdn.discordapp.com/attachments/1164767344497795207/1169141158010687518/JFIN_Chain-05.png',
+        iconImage: '/static/jfin/jfin-chain.png',
         url: 'https://www.jfincoin.io/about-jfin-chain',
       },
       {
-        text: 'JFIN Community',
+        text: 'Community',
         icon: discussionsIcon,
         url: 'https://www.jfincoin.io/jfin-community',
       },
       {
-        text: 'JFIN Whitepaper',
+        text: 'Whitepaper',
         icon: contractIcon,
         url: 'https://www.jfincoin.io/whitepaper',
       },
       {
         text: 'Coinmarketcap',
-        iconImage: 'https://cdn.discordapp.com/attachments/1164767344497795207/1171294013517742080/coinmarketcap-icon.png',
+        iconImage: '/static/apps/coinmarketcap.png',
         url: 'https://coinmarketcap.com/currencies/jfin/',
       },
     ].filter(Boolean);
@@ -158,10 +159,17 @@ export default function useNavItems(): ReturnType {
         group: 'Apps',
       },
       {
-        text: 'Layer 2',
+        text: 'J2O (L2)',
         // eslint-disable-next-line max-len
         iconImage: '/static/apps/j2o.png',
         url: 'https://j2o.io/',
+        group: 'Apps',
+      },
+      {
+        text: 'JNFT',
+        // eslint-disable-next-line max-len
+        icon: jnftIcon,
+        url: 'https://marketplace.jnft.digital/',
         group: 'Apps',
       },
       {
@@ -205,17 +213,27 @@ export default function useNavItems(): ReturnType {
         icon: graphQLIcon,
         isActive: pathname === '/graphiql',
       } : null,
+      {
+        text: 'RPC API',
+        icon: rpcIcon,
+        url: 'https://docs.blockscout.com/for-users/api/rpc-endpoints',
+      },
+      {
+        text: 'Eth RPC API',
+        icon: rpcIcon,
+        url: 'https://ethereum.org/en/developers/docs/apis/json-rpc/',
+      },
 
       /* JFIN Mod Start */
       {
-        text: 'JFIN Faucet',
-        icon: walletIcon,
+        text: 'Faucet',
+        icon: gasIcon,
         url: 'https://faucet.testnet.jfinchain.com/',
       },
       {
         text: 'Testnet',
-        icon: testnetIcon,
-        url: 'https://exp.testnet.jfinchain.com/',
+        icon: constructionIcon,
+        url: 'https://testnet.jfinscan.com/',
       },
 
       /* JFIN Mod End */

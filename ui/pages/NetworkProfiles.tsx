@@ -20,7 +20,7 @@ const NETWORK_PROFILES: NetworkProfiles = {
     token: 'JFIN',
     rpc: 'https://rpc.jfinchain.com',
     chainId: '3501',
-    explorerUrl: 'https://exp.jfinchain.com',
+    explorerUrl: 'https://jfinscan.com',
     websiteUrl: 'https://jfinchain.com',
   },
   testnet: {
@@ -28,7 +28,7 @@ const NETWORK_PROFILES: NetworkProfiles = {
     token: 'JFIN',
     rpc: 'https://rpc.testnet.jfinchain.com',
     chainId: '3502',
-    explorerUrl: 'https://exp.testnet.jfinchain.com',
+    explorerUrl: 'https://testnet.jfinscan.com',
     websiteUrl: 'https://jfinchain.com',
   },
 };

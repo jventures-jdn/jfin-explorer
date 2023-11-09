@@ -1,7 +1,10 @@
-import { PopoverContent, PopoverBody, Text, Skeleton, Flex, useColorModeValue, Grid } from '@chakra-ui/react';
-import React from 'react';
+/* eslint-disable react/jsx-no-bind */
+import { PopoverContent, PopoverBody, Text, Skeleton, Flex, useColorModeValue, Grid, Box, Icon } from '@chakra-ui/react';
+import React, { useState } from 'react';
 
 import type { FeaturedNetwork, NetworkGroup } from 'types/networks';
+
+import chevronIcon from 'icons/arrows/east-mini.svg';
 
 import NetworkMenuLink from './NetworkMenuLink';
 
@@ -15,7 +18,20 @@ const NetworkMenuPopup = ({ items }: Props) => {
   // const selectedNetwork = items?.find(({ isActive }) => isActive);
   // const selectedTab = tabs.findIndex((tab) => selectedNetwork?.group === tab);
   { /* JFIN Mod End */ }
+  const [ selectedMenu, setSelectedMenu ] = useState<string | undefined>();
   const bgColor = useColorModeValue('blackAlpha.50', 'whiteAlpha.50');
+  const iconColor = useColorModeValue('purple.600', 'purple.200');
+
+  const handleClickMenu = (network: FeaturedNetwork) => {
+    if (!network?.subMenu) {
+      return;
+    }
+    setSelectedMenu(network.title);
+  };
+
+  const handleClickBack = () => {
+    setSelectedMenu(undefined);
+  };
 
   const content = !items || items.length === 0 ? (
     <>
@@ -45,16 +61,46 @@ const NetworkMenuPopup = ({ items }: Props) => {
   ) : (
     <>
       { /* JFIN Mod Start */ }
-      <Text as="h4" fontSize="18px" lineHeight="30px" fontWeight="500">JFIN Chain Ecosystem</Text>
-      <Grid templateColumns="repeat(3, 1fr)" gap={ 4 } mt={ 6 }>
-        { items
-          .map((network) => (
-            <NetworkMenuLink
-              key={ network.title }
-              { ...network }
-            />
-          )) }
-      </Grid>
+      {
+        selectedMenu ? (
+          <>
+            {
+              selectedMenu && (
+                <Flex alignItems="center">
+                  <Icon as={ chevronIcon } boxSize={ 6 } mr={ 2 } color={ iconColor } onClick={ handleClickBack } cursor="pointer"/>
+                  <Text as="h4" fontSize="18px" lineHeight="30px" fontWeight="500">{ selectedMenu }</Text>
+                </Flex>
+              )
+            }
+            <Grid templateColumns="repeat(3, 1fr)" gap={ 4 } mt={ 6 }>
+              { items.find((item) => item.title === selectedMenu)?.subMenu?.map(subMenu => (
+                <NetworkMenuLink
+                  group="Mainnets"
+                  key={ subMenu.title }
+                  { ...subMenu }/>
+              ),
+              ) }
+            </Grid>
+          </>
+        ) : (
+          <>
+            <Text as="h4" fontSize="18px" lineHeight="30px" fontWeight="500">JFIN Chain Ecosystem</Text>
+            <Grid templateColumns="repeat(3, 1fr)" gap={ 4 } mt={ 6 }>
+              { items
+                .map((network) => (
+                  <Box
+                    key={ network.title }
+                    onClick={ () => handleClickMenu(network) }
+                  >
+                    <NetworkMenuLink
+                      { ...network }
+                    />
+                  </Box>
+                )) }
+            </Grid>
+          </>
+        )
+      }
       { /* JFIN Mod End */ }
     </>
   );

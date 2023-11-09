@@ -1,0 +1,10 @@
+<svg class="jnft-1_svg__fill-current jnft-1_svg__text-logo-fill" fill="currentColor" viewBox="0 0 113 24" xmlns="http://www.w3.org/2000/svg">
+  <g clip-path="url(#jnft-1_svg__a)">
+    <path d="M11.746 11.746 0 0v23.497h23.497V0h-11.75v11.746ZM75.148 23.497h5.363V14.91h8.17V9.95h-8.17V4.984h8.774V.025H75.148v23.472ZM93.326.025v4.96h6.774v18.512h5.368V4.985h6.806V.025H93.326ZM65.247 11.759h-3.575L58.096.025h-5.364v23.472h5.364V11.759h3.576l3.575 11.738h5.364V.025h-5.364v11.734ZM43.168 6.183v12.474h-5.363v-5.085h-5.368v2.848c0 4.76 2.985 7.58 8.05 7.58 5.064 0 8.045-3.052 8.045-8.25V.026h-5.364v6.158Z"/>
+  </g>
+  <defs>
+    <clipPath id="jnft-1_svg__a">
+      <path class="jnft-1_svg__fill-current jnft-1_svg__text-logo-fill" d="M0 0h112.274v24H0z"/>
+    </clipPath>
+  </defs>
+</svg>

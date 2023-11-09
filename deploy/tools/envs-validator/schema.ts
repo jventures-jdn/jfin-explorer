@@ -45,7 +45,7 @@ const urlTest: yup.TestConfig = {
         new URL(value);
         return true;
       }
-    } catch (error) {}
+    } catch (error) { }
 
     return false;
   },
@@ -207,15 +207,23 @@ const accountSchema = yup
       }),
   });
 
+const featuredNetworkSubMenuSchema = yup
+  .object({
+    title: yup.string().required(),
+    url: yup.string().test(urlTest).required(),
+    icon: yup.string(),
+  });
+
 const featuredNetworkSchema: yup.ObjectSchema<FeaturedNetwork> = yup
   .object()
   .shape({
     title: yup.string().required(),
-    url: yup.string().required(),
+    url: yup.string(),
     group: yup.string().oneOf(NETWORK_GROUPS).required(),
-    icon: yup.string().test(urlTest),
+    icon: yup.string(),
     isActive: yup.boolean(),
     invertIconInDarkMode: yup.boolean(),
+    subMenu: yup.array().of(featuredNetworkSubMenuSchema),
   });
 
 const navItemExternalSchema: yup.ObjectSchema<NavItemExternal> = yup
