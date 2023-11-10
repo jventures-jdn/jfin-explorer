@@ -84,7 +84,7 @@ const NavLinkGroupDesktop = ({ item, isCollapsed }: Props) => {
               { Object.entries(groupedItems).map(([ groupName, groupItems ], groupIndex) => (
                 <Box key={ groupIndex } w="100%">
                   { groupName !== 'Ungrouped' && (
-                    <Box position="relative" my={ 6 } px={ 1 }>
+                    <Box position="relative" _notFirst={{ mt: 6 }} _first={{ mt: 3 }} mb={ 3 } px={ 1 }>
                       <Divider/>
                       <Text
                         bg={ dividerColor }

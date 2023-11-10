@@ -47,4 +47,4 @@ const CoinMarketCapWidget = () => {
 };
 
 export default chakra(CoinMarketCapWidget);
-{/* JFIN Mod Start */ }
+{/* JFIN Mod End */ }

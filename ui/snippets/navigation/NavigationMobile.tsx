@@ -1,6 +1,6 @@
 import { Box, Flex, Text, Icon, VStack, useColorModeValue, Divider } from '@chakra-ui/react';
 import { animate, motion, useMotionValue } from 'framer-motion';
-import React, { useCallback } from 'react';
+import React, { Fragment, useCallback } from 'react';
 
 import chevronIcon from 'icons/arrows/east-mini.svg';
 import groupMenuItems from 'lib/groupMenuItems';
@@ -66,7 +66,25 @@ const NavigationMobile = ({ onNavLinkClick }: Props) => {
           >
             { mainNavItems.map((item, index) => {
               if (isGroupItem(item)) {
-                return <NavLinkGroupMobile key={ item.text } item={ item } onClick={ onGroupItemOpen(index) }/>;
+                return (
+                  <Fragment key={ item.text }>
+                    { (item.text === 'Mainnet' || item.text === 'Testnet') && (
+                      <Text
+                        bg="divider"
+                        display="inline-block"
+                        whiteSpace="nowrap"
+                        variant="secondary"
+                        fontSize="2xs"
+                        borderRadius="md"
+                        px={ 2 }
+                        marginLeft={ 3 }
+                      >
+                          Network
+                      </Text>
+                    ) }
+                    <NavLinkGroupMobile key={ item.text } item={ item } onClick={ onGroupItemOpen(index) }/>
+                  </Fragment>
+                );
               } else {
                 return <NavLink key={ item.text } item={ item } onClick={ onNavLinkClick }/>;
               }

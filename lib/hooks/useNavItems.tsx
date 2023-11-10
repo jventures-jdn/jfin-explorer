@@ -1,5 +1,4 @@
 import { useRouter } from 'next/router';
-import jnftIcon from 'public/static/apps/jnft.svg';
 import React from 'react';
 
 import type { NavItemInternal, NavItem, NavGroupItem } from 'types/client/navigation-items';
@@ -160,15 +159,13 @@ export default function useNavItems(): ReturnType {
       },
       {
         text: 'J2O (L2)',
-        // eslint-disable-next-line max-len
         iconImage: '/static/apps/j2o.png',
         url: 'https://j2o.io/',
         group: 'Apps',
       },
       {
         text: 'JNFT',
-        // eslint-disable-next-line max-len
-        icon: jnftIcon,
+        iconImage: '/static/apps/jnft.png',
         url: 'https://marketplace.jnft.digital/',
         group: 'Apps',
       },
@@ -239,10 +236,27 @@ export default function useNavItems(): ReturnType {
       /* JFIN Mod End */
     ].filter(Boolean);
 
+    /* JFIN Mod Start */
+    const networkNavItems: Array<NavItem> = [
+      {
+        group: 'Mainnet',
+        text: 'JFIN Chain Mainnet',
+        icon: globeIcon,
+        url: 'https://jfinscan.com',
+      }, {
+        group: 'Testnet',
+        text: 'JFIN Chain Testnet',
+        icon: constructionIcon,
+        url: 'https://testnet.jfinscan.com',
+      },
+    ].filter(Boolean);
+
+    /* JFIN Mod End */
+
     const mainNavItems: ReturnType['mainNavItems'] = [
       {
         text: 'Blockchain',
-        icon: globeIcon,
+        icon: blocksIcon,
         isActive: blockchainNavItems.flat().some(item => isInternalItem(item) && item.isActive),
         subItems: blockchainNavItems,
       },
@@ -302,6 +316,11 @@ export default function useNavItems(): ReturnType {
         nextRoute: { pathname: '/network-profiles' as const },
         isActive: pathname === '/network-profiles',
       },
+      {
+        text: config.chain.isTestnet ? 'Testnet' : 'Mainnet',
+        icon: config.chain.isTestnet ? constructionIcon : globeIcon,
+        subItems: networkNavItems,
+      },
 
       /* JFIN Mod End */
     ].filter(Boolean);
@@ -350,6 +369,6 @@ export default function useNavItems(): ReturnType {
       isActive: pathname === '/auth/profile',
     };
 
-    return { mainNavItems, accountNavItems, profileItem };
+    return { mainNavItems, accountNavItems, profileItem, networkNavItems };
   }, [ pathname ]);
 }
