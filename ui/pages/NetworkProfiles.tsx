@@ -1,7 +1,7 @@
 /* JFIN Mod Start */
 /* eslint-disable max-len */
 import type { ThemingProps } from '@chakra-ui/react';
-import { Card, Heading, Text, useColorModeValue } from '@chakra-ui/react';
+import { Card, Heading, Link, Text, useColorModeValue } from '@chakra-ui/react';
 import NetworkProfileMobile from 'customUI/networkProfiles/NetworkProfileMobile';
 import NetworkProfileTable from 'customUI/networkProfiles/NetworkProfileTable';
 import React from 'react';
@@ -73,12 +73,10 @@ const NetworkProfile = () => {
           }
         </Text>
         <Text mb={ 2 }>
-          <Text as="span" fontWeight="bold">Validator nodes:</Text> At the initial stage, there will be 5 validator nodes.
-          The number of validator nodes will be increased by 2 every three
-          months, according to the preliminary operating plan specified herein.
-          Users of each node must stake at least 100,000 JFIN Tokens to
-          validate transactions. JFIN Token holders will also be provided with
-          opportunities to participate in the staking.
+          <Text as="span" fontWeight="bold">Validator nodes:</Text>
+          JFIN Chain network has stabilized with 11 validator nodes in operation <Link fontWeight="bold" textDecoration="underline" href="/blocks" target="_blank">here</Link>.
+          Users of each node must stake at least 100,000 JFIN Tokens to validate transactions.
+          JFIN Token holders will also be provided with opportunities to participate in the staking.
           <br/>
           <Text as="span" fontWeight="bold">Consensus:</Text> PoS consensus mechanism, whereby validator nodes with
           at least 100,000 JFIN Tokens staked and registered with the system
