@@ -78,6 +78,7 @@ const NavigationMobile = ({ onNavLinkClick }: Props) => {
                         borderRadius="md"
                         px={ 2 }
                         marginLeft={ 3 }
+                        my={ 1 }
                       >
                           Network
                       </Text>

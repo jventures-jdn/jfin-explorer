@@ -311,15 +311,15 @@ export default function useNavItems(): ReturnType {
         subItems: moreNavItems,
       },
       {
+        text: config.chain.isTestnet ? 'Testnet' : 'Mainnet',
+        icon: config.chain.isTestnet ? constructionIcon : globeIcon,
+        subItems: networkNavItems,
+      },
+      {
         text: 'Network Profiles',
         icon: metamaskIcon,
         nextRoute: { pathname: '/network-profiles' as const },
         isActive: pathname === '/network-profiles',
-      },
-      {
-        text: config.chain.isTestnet ? 'Testnet' : 'Mainnet',
-        icon: config.chain.isTestnet ? constructionIcon : globeIcon,
-        subItems: networkNavItems,
       },
 
       /* JFIN Mod End */

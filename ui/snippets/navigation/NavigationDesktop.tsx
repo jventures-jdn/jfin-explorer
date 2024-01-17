@@ -98,6 +98,7 @@ const NavigationDesktop = () => {
                         borderRadius="md"
                         px={ 2 }
                         marginLeft={ isCollapsed ? 0.5 : 3 }
+                        my={ 1 }
                       >
                       Network
                       </Text>
