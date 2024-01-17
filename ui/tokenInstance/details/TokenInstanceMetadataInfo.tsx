@@ -1,9 +1,11 @@
 import { Grid, GridItem, Skeleton, useColorModeValue } from '@chakra-ui/react';
 import React from 'react';
+import xss from 'xss';
 
 import type { TokenInstance } from 'types/api/token';
 import type { MetadataAttributes } from 'types/client/token';
 
+import xssOptions from 'configs/app/xssOptions';
 import parseMetadata from 'lib/token/parseMetadata';
 import DetailsInfoItem from 'ui/shared/DetailsInfoItem';
 import DetailsInfoItemDivider from 'ui/shared/DetailsInfoItemDivider';
@@ -93,7 +95,9 @@ const TokenInstanceMetadataInfo = ({ data, isLoading }: Props) => {
           isLoading={ isLoading }
         >
           <Skeleton isLoaded={ !isLoading }>
-            { metadata.description }
+            { /* JFIN Mod Start */ }
+            <div dangerouslySetInnerHTML={{ __html: xss(metadata?.description, xssOptions) }}/>
+            { /* JFIN Mod End */ }
           </Skeleton>
         </DetailsInfoItem>
       ) }
