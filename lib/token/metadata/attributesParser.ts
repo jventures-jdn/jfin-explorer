@@ -2,7 +2,7 @@ import _upperFirst from 'lodash/upperFirst';
 
 import type { Metadata, MetadataAttributes } from 'types/client/token';
 
-import dayjs from 'lib/date/dayjs';
+import parseDate from 'lib/parseDate';
 
 function formatValue(value: string | number, display: string | undefined, trait: string | undefined): Pick<MetadataAttributes, 'value' | 'value_type'> {
   // https://docs.opensea.io/docs/metadata-standards#attributes
@@ -20,19 +20,8 @@ function formatValue(value: string | number, display: string | undefined, trait:
 
     // JFIN Start Mod
     case 'date': {
-      const LOWER_LIMIT = 1e12; // 1 trillion, a common range for milliseconds
-      const UPPER_LIMIT = 1e15; // 1 quadrillion, a common range for seconds
-      const inputDate = Number(value);
-      let dateResult;
-      if (inputDate >= LOWER_LIMIT && inputDate <= UPPER_LIMIT) {
-        // Assuming it's milliseconds
-        dateResult = inputDate;
-      } else {
-        // Assuming it's in seconds, convert it to milliseconds
-        dateResult = inputDate * 1000;
-      }
       return {
-        value: dayjs(dateResult).format('YYYY-MM-DD'),
+        value: parseDate(value),
       };
     }
     // JFIN End Mod
@@ -73,6 +62,7 @@ export default function attributesParser(attributes: Array<unknown>): Metadata['
       return {
         ...formatValue(value, display, trait),
         trait_type: _upperFirst(trait || 'property'),
+        display_type: display,
       };
     })
     .filter(Boolean);
