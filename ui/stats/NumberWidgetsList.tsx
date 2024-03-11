@@ -25,6 +25,12 @@ const NumberWidgetsList = () => {
     if (averageBlockTimeIndex !== -1) {
       modifiedData.counters[averageBlockTimeIndex].value = '3.00';
     }
+
+    const totalNativeCoinTransfersIndex = modifiedData.counters.findIndex(counter => counter.id === 'totalNativeCoinTransfers');
+    if (totalNativeCoinTransfersIndex !== -1) {
+      modifiedData.counters[totalNativeCoinTransfersIndex].title = 'Total JFIN transfers';
+      modifiedData.counters[totalNativeCoinTransfersIndex].description = 'Number of transactions with the transfer of the JFIN';
+    }
   }
 
   return (

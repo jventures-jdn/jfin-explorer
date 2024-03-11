@@ -62,7 +62,7 @@ const Stats = () => {
           <StatsItem
             icon={ clockIcon }
             title="Average block time"
-            value={ `${ (data.average_block_time / 1000).toFixed(1) } s` }
+            value="3 s"
             isLoading={ isPlaceholderData }
           />
         ) }
