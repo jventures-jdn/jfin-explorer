@@ -18,14 +18,22 @@ const NumberWidgetsList = () => {
     return <DataFetchAlert/>;
   }
 
+  // JFIN Mod Start
+  const modifiedData = data ? { ...data } : null;
+  if (modifiedData && modifiedData.counters) {
+    const averageBlockTimeIndex = modifiedData.counters.findIndex(counter => counter.id === 'averageBlockTime');
+    if (averageBlockTimeIndex !== -1) {
+      modifiedData.counters[averageBlockTimeIndex].value = '3.00';
+    }
+  }
+
   return (
     <Grid
       gridTemplateColumns={{ base: 'repeat(2, 1fr)', lg: 'repeat(4, 1fr)' }}
       gridGap={ 4 }
     >
       {
-        data?.counters?.map(({ id, title, value, units, description }, index) => {
-
+        modifiedData?.counters?.map(({ id, title, value, units, description }, index) => {
           return (
             <NumberWidget
               key={ id + (isPlaceholderData ? index : '') }
@@ -40,5 +48,6 @@ const NumberWidgetsList = () => {
     </Grid>
   );
 };
+// JFIN Mod End
 
 export default NumberWidgetsList;
