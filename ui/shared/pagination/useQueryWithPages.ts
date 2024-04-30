@@ -11,6 +11,7 @@ import type { PaginatedResources, PaginationFilters, PaginationSorting, Resource
 import { RESOURCES, SORTING_FIELDS } from 'lib/api/resources';
 import type { Params as UseApiQueryParams } from 'lib/api/useApiQuery';
 import useApiQuery from 'lib/api/useApiQuery';
+// import useJNSName from 'lib/hooks/useJNSName';
 import getQueryParamString from 'lib/router/getQueryParamString';
 
 export interface Params<Resource extends PaginatedResources> {
@@ -28,19 +29,19 @@ function getPaginationParamsFromQuery(queryString: string | Array<string> | unde
   if (queryString) {
     try {
       return JSON.parse(decodeURIComponent(getQueryParamString(queryString))) as NextPageParams;
-    } catch (error) {}
+    } catch (error) { }
   }
 
   return {};
 }
 
 export type QueryWithPagesResult<Resource extends PaginatedResources> =
-UseQueryResult<ResourcePayload<Resource>, ResourceError<unknown>> &
-{
-  onFilterChange: (filters: PaginationFilters<Resource>) => void;
-  onSortingChange: (sorting?: PaginationSorting<Resource>) => void;
-  pagination: PaginationParams;
-}
+  UseQueryResult<ResourcePayload<Resource>, ResourceError<unknown>> &
+  {
+    onFilterChange: (filters: PaginationFilters<Resource>) => void;
+    onSortingChange: (sorting?: PaginationSorting<Resource>) => void;
+    pagination: PaginationParams;
+  }
 
 export default function useQueryWithPages<Resource extends PaginatedResources>({
   resourceName,
@@ -77,6 +78,12 @@ export default function useQueryWithPages<Resource extends PaginatedResources>({
     },
   });
   const { data } = queryResult;
+
+  // const addresses = data?.items.map(item => item?.from?.hash);
+
+  // const { names } = useJNSName(addresses || []);
+
+  // const {names} = useJNSName()
 
   const onNextPageClick = useCallback(() => {
     if (!data?.next_page_params) {
@@ -203,8 +210,8 @@ export default function useQueryWithPages<Resource extends PaginatedResources>({
       queryClient.cancelQueries({ queryKey: [ resourceName ] });
       setPage(1);
     }
-  // hook should run only when queryName has changed
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // hook should run only when queryName has changed
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [ resourceName ]);
 
   React.useEffect(() => {
