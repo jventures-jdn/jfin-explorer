@@ -3,13 +3,25 @@ import React from 'react';
 
 import useApiQuery from 'lib/api/useApiQuery';
 import useDebounce from 'lib/hooks/useDebounce';
+// JNS Mod Start
+import useJNSName from 'lib/hooks/useJNSName';
 
 export default function useQuickSearchQuery() {
   const router = useRouter();
 
   const [ searchTerm, setSearchTerm ] = React.useState('');
 
-  const debouncedSearchTerm = useDebounce(searchTerm, 300);
+  let debouncedSearchTerm = useDebounce(searchTerm, 600);
+
+  const jns = useJNSName([ debouncedSearchTerm ]);
+
+  if (jns.result.length > 0 &&
+    (jns.result?.at(jns.result.length - 1)?.address !== debouncedSearchTerm ||
+  jns.result?.at(jns.result.length - 1)?.name !== debouncedSearchTerm)) {
+    debouncedSearchTerm = jns.result.at(jns.result.length - 1)?.address || '';
+  }
+
+  // JNS Mod End
   const pathname = router.pathname;
 
   const query = useApiQuery('quick_search', {

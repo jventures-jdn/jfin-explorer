@@ -5,6 +5,8 @@ import type { TxsResponse } from 'types/api/transaction';
 import type { Sort } from 'types/client/txs-sort';
 
 import * as cookies from 'lib/cookies';
+// JNS Mod Start
+import useJNSName from 'lib/hooks/useJNSName';
 import sortTxs from 'lib/tx/sortTxs';
 
 type HookResult = UseQueryResult<TxsResponse> & {
@@ -16,6 +18,12 @@ type HookResult = UseQueryResult<TxsResponse> & {
 export default function useTxsSort(
   queryResult: UseQueryResult<TxsResponse>,
 ): HookResult {
+  const addressesFrom = queryResult.data?.items.map(item => item.from.hash) || [];
+  const addressesTo = queryResult.data?.items.map(item => item.to?.hash) || [];
+
+  const allAddresses = [ ...addressesFrom, ...addressesTo ];
+
+  const { result } = useJNSName(allAddresses.filter(address => typeof address === 'string'));
 
   const [ sorting, setSorting ] = React.useState<Sort>(cookies.get(cookies.NAMES.TXS_SORT) as Sort);
 
@@ -65,13 +73,26 @@ export default function useTxsSort(
       return { ...queryResult, setSortByField, setSortByValue, sorting };
     }
 
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const queryResultWithJNSName: any = queryResult.data.items.slice().sort(sortTxs(sorting)).map(item => ({
+      ...item,
+      to: {
+        ...item.to,
+        name: result.find(name => name.address === item.to?.hash)?.name || null,
+      },
+      from: {
+        ...item.from,
+        name: result.find(name => name.address === item.from?.hash)?.name || null,
+      },
+    }));
+
     return {
       ...queryResult,
-      data: { ...queryResult.data, items: queryResult.data.items.slice().sort(sortTxs(sorting)) },
+      data: { ...queryResult.data, items: queryResultWithJNSName },
       setSortByField,
       setSortByValue,
       sorting,
     };
-  }, [ queryResult, setSortByField, setSortByValue, sorting ]);
-
+  }, [ result, queryResult, setSortByField, setSortByValue, sorting ]);
+  // JNS Mod End
 }

@@ -59,7 +59,8 @@ const AddressPageContent = () => {
     },
   });
 
-  const { names } = useJNSName(hash);
+  // JNS Mod Start
+  const { result } = useJNSName([ hash ]);
 
   const addressTabsCountersQuery = useApiQuery('address_tabs_counters', {
     pathParams: { hash },
@@ -182,7 +183,13 @@ const AddressPageContent = () => {
   const titleSecondRow = (
     <Flex alignItems="center" w="100%" columnGap={ 2 } rowGap={ 2 } flexWrap={{ base: 'wrap', lg: 'nowrap' }}>
       <AddressEntity
-        address={{ ...addressQuery.data, name: (!addressQuery.data?.token && !addressQuery.data?.is_contract) ? names : '' }}
+        address={
+          { ...addressQuery.data, name: (
+            !addressQuery.data?.token &&
+           !addressQuery.data?.is_contract) ?
+            result.find(name => name.address === hash)?.name :
+            '' }
+        }
         isLoading={ isLoading }
         fontFamily="heading"
         fontSize="lg"
@@ -200,6 +207,7 @@ const AddressPageContent = () => {
       <NetworkExplorers type="address" pathParam={ hash } ml="auto"/>
     </Flex>
   );
+  // JNS Mod End
 
   return (
     <>

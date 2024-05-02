@@ -454,6 +454,7 @@ const schema = yup
     // JFIN Chain Configuration
     NEXT_PUBLIC_CHAIN_REWARD: yup.number(),
     NEXT_PUBLIC_JFIN_REWARD: yup.number(),
+    NEXT_PUBLIC_JNS_API_HOST: yup.string(),
   })
   .concat(accountSchema)
   .concat(adsBannerSchema)

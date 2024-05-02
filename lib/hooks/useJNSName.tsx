@@ -1,44 +1,79 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
+// JNS Mod Start
 import { useQuery } from '@tanstack/react-query';
 import axios from 'axios';
+import { useState } from 'react';
+import { isAddress } from 'viem';
 
-const getName = async(address: string): Promise<string> => {
+import { getEnvValue } from 'configs/app/utils';
+
+interface JNSName {
+  address: string;
+  name: string;
+}
+
+const JNS_API_HOST = getEnvValue('NEXT_PUBLIC_JNS_API_HOST');
+
+const instance = axios.create({
+  baseURL: JNS_API_HOST,
+  timeout: 3000,
+});
+
+const fetchJNSNames = async(addresses: Array<string>): Promise<Array<JNSName>> => {
+  const uniqueAddresses = Array.from(new Set(addresses));
+
   try {
-    const { data } = await axios.get<string>(`https://jns-bridge-testnet.jfin.workers.dev/get-name/${ address }`);
-    return data;
-  } catch (error: any) {
-    throw new Error(`Failed to fetch name for address ${ address }: ${ error.message }`);
+    const response = await instance.post<Array<string>>('/get-names', { addresses: uniqueAddresses });
+    return uniqueAddresses.map((address, index) => ({
+      address,
+      name: response.data[index],
+    }));
+  } catch (error) {
+    throw new Error('Failed to fetch JNS names');
   }
 };
 
-const getNames = async(addresses: Array<string>): Promise<Array<string>> => {
+const fetchJNSAddresses = async(names: Array<string>): Promise<Array<JNSName>> => {
+  const uniqueNames = Array.from(new Set(names)).map(name => name.endsWith('.jfin') ? name : name + '.jfin');
+
   try {
-    const { data } = await axios.post<Array<string>>('https://jns-bridge-testnet.jfin.workers.dev/get-names', { addresses });
-    return data;
-  } catch (error: any) {
-    throw new Error(`Failed to fetch names: ${ error.message }`);
+    const response = await instance.post<Array<string>>('/get-addresses', { names: uniqueNames });
+    return uniqueNames.map((name, index) => ({
+      address: response.data[index],
+      name,
+    }));
+  } catch (error) {
+    throw new Error('Failed to fetch JNS addresses');
   }
 };
 
-const useJNSName = (addresses: string | Array<string>, disabled = false): any => {
-  const addressList = Array.isArray(addresses) ? addresses : [ addresses ];
+const useJNSName = (data: Array<string> = []) => {
+  const [ previousAddresses, setPreviousAddresses ] = useState<Array<string>>([]);
+  const [ result, setResult ] = useState<Array<JNSName>>([]);
 
-  const shouldFetch = !disabled && addressList.length > 0 && addressList.every(address => address !== '' && address !== undefined);
+  const shouldFetchData = data.length > 0 && data.at(0) !== '' && JSON.stringify(data) !== JSON.stringify(previousAddresses);
 
-  const query = useQuery<string | Array<string>, unknown>(
-    [ 'jnsName', ...addressList ],
-    () => Array.isArray(addresses) ? getNames(addressList) : getName(addressList[0]),
+  const isAddresses = data.every(item => isAddress(item));
+
+  const { isLoading, isError } = useQuery<Array<JNSName>, Error>(
+    [ 'jnsNames', data ],
+    () => isAddresses ? fetchJNSNames(data) : fetchJNSAddresses(data),
     {
-      enabled: shouldFetch,
+
+      enabled: shouldFetchData,
+      onSuccess: (_result) => {
+        setPreviousAddresses(data);
+        setResult((prevNames) => [ ...prevNames, ..._result ]);
+      },
+      keepPreviousData: true,
     },
   );
 
   return {
-    names: [ query.data ] as any,
-    isLoading: shouldFetch ? query.isLoading : false,
-    isError: shouldFetch ? query.isError : false,
-    errors: shouldFetch ? query.error : [],
+    result,
+    isLoading,
+    isError,
   };
 };
 
 export default useJNSName;
+// JNS Mod End
