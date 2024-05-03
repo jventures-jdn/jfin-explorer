@@ -33,7 +33,8 @@ const fetchJNSNames = async(addresses: Array<string>): Promise<Array<JNSName>> =
 };
 
 const fetchJNSAddresses = async(names: Array<string>): Promise<Array<JNSName>> => {
-  const uniqueNames = Array.from(new Set(names)).map(name => name.endsWith('.jfin') ? name : name + '.jfin');
+  // eslint-disable-next-line no-nested-ternary
+  const uniqueNames = Array.from(new Set(names)).map(name => name.endsWith('.jfin') ? name : isAddress(name) ? name : name + '.jfin');
 
   try {
     const response = await instance.post<Array<string>>('/get-addresses', { names: uniqueNames });

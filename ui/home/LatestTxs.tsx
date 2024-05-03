@@ -32,12 +32,12 @@ const LatestTransactions = () => {
 
   // JNS Mod Start
   const addressesFrom = data?.map(item => item.from.hash) || [];
-  const addressesTo = data?.map(item => item.to?.hash) || [];
+  const addressesTo = data?.map(item => item.to?.hash || '') || [];
 
   const allAddresses = [ ...addressesFrom, ...addressesTo ];
 
   // eslint-disable-next-line react-hooks/rules-of-hooks
-  const { result } = useJNSName(allAddresses.filter(address => typeof address === 'string'));
+  const { result } = useJNSName(allAddresses);
 
   const dataWithJNSName = data?.map(item => ({
     ...item,

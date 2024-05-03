@@ -11,9 +11,11 @@ interface Props {
 }
 
 const HashStringShorten = ({ hash, isTooltipDisabled, as = 'span' }: Props) => {
-  if (hash.length <= 8) {
+  // JFIN Mod Start
+  if (hash?.length <= 8) {
     return <chakra.span as={ as }>{ hash }</chakra.span>;
   }
+  // JFIN Mod End
 
   return (
     <Tooltip label={ hash } isDisabled={ isTooltipDisabled }>

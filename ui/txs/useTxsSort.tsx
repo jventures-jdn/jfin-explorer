@@ -19,12 +19,13 @@ export default function useTxsSort(
   queryResult: UseQueryResult<TxsResponse>,
 ): HookResult {
   const addressesFrom = queryResult.data?.items.map(item => item.from.hash) || [];
-  const addressesTo = queryResult.data?.items.map(item => item.to?.hash) || [];
+  // JFIN Mod Start
+  const addressesTo = queryResult.data?.items.map(item => item.to?.hash || '') || [];
 
   const allAddresses = [ ...addressesFrom, ...addressesTo ];
 
-  const { result } = useJNSName(allAddresses.filter(address => typeof address === 'string'));
-
+  const { result } = useJNSName(allAddresses);
+  // JFIN Mod End
   const [ sorting, setSorting ] = React.useState<Sort>(cookies.get(cookies.NAMES.TXS_SORT) as Sort);
 
   const setSortByField = React.useCallback((field: 'val' | 'fee') => () => {
