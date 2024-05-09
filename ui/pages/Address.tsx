@@ -60,7 +60,7 @@ const AddressPageContent = () => {
   });
 
   // JNS Mod Start
-  const { result } = useJNSName([ hash ]);
+  const { data } = useJNSName([ hash ]);
 
   const addressTabsCountersQuery = useApiQuery('address_tabs_counters', {
     pathParams: { hash },
@@ -187,7 +187,7 @@ const AddressPageContent = () => {
           { ...addressQuery.data, name: (
             !addressQuery.data?.token &&
            !addressQuery.data?.is_contract) ?
-            result.find(name => name.address === hash)?.name :
+            data?.find(name => name.address === hash)?.name :
             '' }
         }
         isLoading={ isLoading }

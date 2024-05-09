@@ -1,7 +1,9 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { Grid } from '@chakra-ui/react';
 import React from 'react';
 
 import useIsMobile from 'lib/hooks/useIsMobile';
+import useJNSName from 'lib/hooks/useJNSName';
 import ActionBar from 'ui/shared/ActionBar';
 import DataListDisplay from 'ui/shared/DataListDisplay';
 import Pagination from 'ui/shared/pagination/Pagination';
@@ -23,6 +25,20 @@ const TokenInventory = ({ inventoryQuery }: Props) => {
   );
 
   const items = inventoryQuery.data?.items;
+  // JNS Mod Start
+  const ownerAddresses = items?.map(item => item?.owner?.hash || '') || [];
+
+  const { data } = useJNSName(ownerAddresses);
+
+  const dataWithJNSName = items?.map(item => {
+    return {
+      ...item,
+      owner: {
+        ...item.owner,
+        name: data?.find(name => name.address === item.owner?.hash)?.name || null,
+      },
+    };
+  });
 
   const content = items ? (
     <Grid
@@ -31,7 +47,7 @@ const TokenInventory = ({ inventoryQuery }: Props) => {
       rowGap={{ base: 3, lg: 6 }}
       gridTemplateColumns={{ base: 'repeat(2, calc((100% - 12px)/2))', lg: 'repeat(auto-fill, minmax(210px, 1fr))' }}
     >
-      { items.map((item, index) => (
+      { dataWithJNSName?.map((item: any, index) => (
         <TokenInventoryItem
           key={ item.token.address + '_' + item.id + (inventoryQuery.isPlaceholderData ? '_' + index : '') }
           item={ item }
@@ -51,5 +67,5 @@ const TokenInventory = ({ inventoryQuery }: Props) => {
     />
   );
 };
-
+// JNS Mod End
 export default TokenInventory;

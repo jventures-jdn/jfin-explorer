@@ -3,6 +3,7 @@ import React from 'react';
 
 import type { TokenHolder, TokenInfo } from 'types/api/token';
 
+import useJNSName from 'lib/hooks/useJNSName';
 import { default as Thead } from 'ui/shared/TheadSticky';
 import TokenHoldersTableItem from 'ui/token/TokenHolders/TokenHoldersTableItem';
 
@@ -14,6 +15,21 @@ interface Props {
 }
 
 const TokenHoldersTable = ({ data, token, top, isLoading }: Props) => {
+  // JNS Mod Start
+  const ownerAddresses = data?.map(item => item?.address?.hash || '') || [];
+
+  const { data: jnsData } = useJNSName(ownerAddresses);
+
+  const dataWithJNSName = data?.map(item => {
+    return {
+      ...item,
+      address: {
+        ...item.address,
+        name: jnsData?.find(name => name.address === item.address?.hash)?.name || null,
+      },
+    };
+  });
+
   return (
     <Table variant="simple" size="sm" layout="auto">
       <Thead top={ top }>
@@ -25,12 +41,12 @@ const TokenHoldersTable = ({ data, token, top, isLoading }: Props) => {
         </Tr>
       </Thead>
       <Tbody>
-        { data.map((item, index) => (
+        { dataWithJNSName.map((item, index) => (
           <TokenHoldersTableItem key={ item.address.hash + (isLoading ? index : '') } holder={ item } token={ token } isLoading={ isLoading }/>
         )) }
       </Tbody>
     </Table>
   );
 };
-
+// JNS Mod End
 export default React.memo(TokenHoldersTable);

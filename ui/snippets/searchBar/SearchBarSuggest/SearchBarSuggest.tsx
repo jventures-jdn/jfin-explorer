@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-non-null-assertion */
 import { Box, Tab, TabList, Tabs, Text, useColorModeValue } from '@chakra-ui/react';
 import type { UseQueryResult } from '@tanstack/react-query';
 import throttle from 'lodash/throttle';
@@ -9,7 +8,6 @@ import type { SearchResultItem } from 'types/api/search';
 
 import type { ResourceError } from 'lib/api/resources';
 import useIsMobile from 'lib/hooks/useIsMobile';
-import useJNSName from 'lib/hooks/useJNSName';
 import useMarketplaceApps from 'ui/marketplace/useMarketplaceApps';
 import TextAd from 'ui/shared/ad/TextAd';
 import ContentLoader from 'ui/shared/ContentLoader';
@@ -28,10 +26,6 @@ interface Props {
 
 const SearchBarSuggest = ({ query, searchTerm, onItemClick, containerId }: Props) => {
   const isMobile = useIsMobile();
-  // JNS Mod Start
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const queryAddress = query.data?.filter(data => data.type === 'address').map((item: any) => item.address);
-  const jns = useJNSName(queryAddress || []);
 
   const marketplaceApps = useMarketplaceApps(searchTerm);
 
@@ -76,16 +70,13 @@ const SearchBarSuggest = ({ query, searchTerm, onItemClick, containerId }: Props
       return {};
     }
     const map: Partial<ItemsCategoriesMap> = {};
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    query.data?.forEach((item: any) => {
-      const name = item.type === 'address' ? jns.result.find(_name => item.address === _name.address)?.name : item.name;
-      const _item = { ...item, name };
-      const cat = getItemCategory(_item) as ApiCategory;
+    query.data?.forEach(item => {
+      const cat = getItemCategory(item) as ApiCategory;
       if (cat) {
         if (cat in map) {
-          map[cat]?.push(_item);
+          map[cat]?.push(item);
         } else {
-          map[cat] = [ _item ];
+          map[cat] = [ item ];
         }
       }
     });
@@ -93,7 +84,7 @@ const SearchBarSuggest = ({ query, searchTerm, onItemClick, containerId }: Props
       map.app = marketplaceApps.displayedApps;
     }
     return map;
-  }, [ query.data, marketplaceApps.displayedApps, jns.result ]);
+  }, [ query.data, marketplaceApps.displayedApps ]);
 
   React.useEffect(() => {
     categoriesRefs.current = Array(Object.keys(itemsGroups).length).fill('').map((_, i) => categoriesRefs.current[i] || React.createRef());
@@ -112,10 +103,9 @@ const SearchBarSuggest = ({ query, searchTerm, onItemClick, containerId }: Props
   const bgColor = useColorModeValue('white', 'gray.900');
 
   const content = (() => {
-    if (query.isLoading || marketplaceApps.isPlaceholderData || jns.isLoading) {
+    if (query.isLoading || marketplaceApps.isPlaceholderData) {
       return <ContentLoader text="We are searching, please wait... " fontSize="sm"/>;
     }
-    // JNS Mod End
 
     if (query.isError) {
       return <Text>Something went wrong. Try refreshing the page or come back later.</Text>;

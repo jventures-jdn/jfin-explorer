@@ -15,10 +15,10 @@ export default function useQuickSearchQuery() {
 
   const jns = useJNSName([ debouncedSearchTerm ]);
 
-  if (jns.result.length > 0 &&
-    (jns.result?.at(jns.result.length - 1)?.address !== debouncedSearchTerm ||
-  jns.result?.at(jns.result.length - 1)?.name !== debouncedSearchTerm)) {
-    debouncedSearchTerm = jns.result.at(jns.result.length - 1)?.address || '';
+  if (jns.data && jns.data?.length > 0 &&
+    (jns.data?.at(jns.data?.length - 1)?.address !== debouncedSearchTerm ||
+  jns.data?.at(jns.data.length - 1)?.name !== debouncedSearchTerm)) {
+    debouncedSearchTerm = jns.data?.at(jns.data?.length - 1)?.address || debouncedSearchTerm;
   }
 
   // JNS Mod End

@@ -18,13 +18,13 @@ type HookResult = UseQueryResult<TxsResponse> & {
 export default function useTxsSort(
   queryResult: UseQueryResult<TxsResponse>,
 ): HookResult {
-  const addressesFrom = queryResult.data?.items.map(item => item.from.hash) || [];
   // JFIN Mod Start
+  const addressesFrom = queryResult.data?.items.map(item => item.from.hash) || [];
   const addressesTo = queryResult.data?.items.map(item => item.to?.hash || '') || [];
 
   const allAddresses = [ ...addressesFrom, ...addressesTo ];
 
-  const { result } = useJNSName(allAddresses);
+  const { data } = useJNSName(allAddresses);
   // JFIN Mod End
   const [ sorting, setSorting ] = React.useState<Sort>(cookies.get(cookies.NAMES.TXS_SORT) as Sort);
 
@@ -79,11 +79,11 @@ export default function useTxsSort(
       ...item,
       to: {
         ...item.to,
-        name: result.find(name => name.address === item.to?.hash)?.name || null,
+        name: data?.find(name => name.address === item.to?.hash)?.name || null,
       },
       from: {
         ...item.from,
-        name: result.find(name => name.address === item.from?.hash)?.name || null,
+        name: data?.find(name => name.address === item.from?.hash)?.name || null,
       },
     }));
 
@@ -94,6 +94,6 @@ export default function useTxsSort(
       setSortByValue,
       sorting,
     };
-  }, [ result, queryResult, setSortByField, setSortByValue, sorting ]);
+  }, [ data, queryResult, setSortByField, setSortByValue, sorting ]);
   // JNS Mod End
 }

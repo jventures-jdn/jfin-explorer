@@ -1,14 +1,18 @@
 // JNS Mod Start
-import { useQuery } from '@tanstack/react-query';
+/* eslint-disable no-nested-ternary */
+/* eslint-disable react-hooks/exhaustive-deps */
+/* eslint-disable @typescript-eslint/no-non-null-assertion */
+import { useQuery, useQueryClient } from '@tanstack/react-query';
 import axios from 'axios';
-import { useState } from 'react';
+import { useMemo } from 'react';
 import { isAddress } from 'viem';
 
 import { getEnvValue } from 'configs/app/utils';
+import validatorWallets from 'configs/app/validatorWallets';
 
 interface JNSName {
   address: string;
-  name: string;
+  name: string | null;
 }
 
 const JNS_API_HOST = getEnvValue('NEXT_PUBLIC_JNS_API_HOST');
@@ -18,63 +22,64 @@ const instance = axios.create({
   timeout: 3000,
 });
 
-const fetchJNSNames = async(addresses: Array<string>): Promise<Array<JNSName>> => {
-  const uniqueAddresses = Array.from(new Set(addresses));
+const ignoredAddresses = [ ...Object.keys(validatorWallets), '0x0000000000000000000000000000000000000000' ];
 
+async function fetchJNSNames(addresses: Array<string>): Promise<Array<JNSName>> {
+  const uniqueAddresses = Array.from(new Set(addresses)).filter(address => !ignoredAddresses.includes(address));
+  if (uniqueAddresses.length === 0) {
+    return [];
+  }
   try {
     const response = await instance.post<Array<string>>('/get-names', { addresses: uniqueAddresses });
     return uniqueAddresses.map((address, index) => ({
       address,
-      name: response.data[index],
-    }));
+      name: response.data[index] || null,
+    })).filter(jnsName => jnsName.name !== null && jnsName.name !== undefined);
   } catch (error) {
     throw new Error('Failed to fetch JNS names');
   }
-};
+}
 
-const fetchJNSAddresses = async(names: Array<string>): Promise<Array<JNSName>> => {
-  // eslint-disable-next-line no-nested-ternary
-  const uniqueNames = Array.from(new Set(names)).map(name => name.endsWith('.jfin') ? name : isAddress(name) ? name : name + '.jfin');
-
+async function fetchJNSAddresses(names: Array<string>): Promise<Array<JNSName>> {
+  const uniqueNames = Array.from(new Set(names)).map(name => name.endsWith('.jfin') ? name : isAddress(name) ? name : `${ name }.jfin`);
+  if (uniqueNames.length === 0) {
+    return [];
+  }
   try {
     const response = await instance.post<Array<string>>('/get-addresses', { names: uniqueNames });
     return uniqueNames.map((name, index) => ({
       address: response.data[index],
-      name,
-    }));
+      name: name || null,
+    })).filter(jnsName => jnsName.name !== null && jnsName.name !== undefined);
   } catch (error) {
     throw new Error('Failed to fetch JNS addresses');
   }
-};
+}
 
-const useJNSName = (data: Array<string> = []) => {
-  const [ previousAddresses, setPreviousAddresses ] = useState<Array<string>>([]);
-  const [ result, setResult ] = useState<Array<JNSName>>([]);
+function useJNSName(payload: Array<string> = []) {
+  const queryKey = useMemo(() => [ 'jnsNames', payload ], [ JSON.stringify(payload) ]);
+  const queryClient = useQueryClient();
 
-  const shouldFetchData = data.length > 0 && data.at(0) !== '' && JSON.stringify(data) !== JSON.stringify(previousAddresses);
+  const fetchQueryData = () => {
+    const existingData = queryClient.getQueryData<Array<JNSName>>(queryKey);
+    const missingData = payload.filter(p => !existingData?.find(d => d.address === p || d.name === p));
+    if (missingData.length === 0) {
+      return Promise.resolve(existingData!);
+    }
+    return payload.every(isAddress) ? fetchJNSNames(missingData) : fetchJNSAddresses(missingData);
+  };
 
-  const isAddresses = data.every(item => isAddress(item));
-
-  const { isLoading, isError } = useQuery<Array<JNSName>, Error>(
-    [ 'jnsNames', data ],
-    () => isAddresses ? fetchJNSNames(data) : fetchJNSAddresses(data),
+  const queryInfo = useQuery<Array<JNSName>, Error>(
+    queryKey,
+    fetchQueryData,
     {
-
-      enabled: shouldFetchData,
-      onSuccess: (_result) => {
-        setPreviousAddresses(data);
-        setResult((prevNames) => [ ...prevNames, ..._result ]);
-      },
+      enabled: payload.length > 0 && payload[0] !== '',
       keepPreviousData: true,
     },
   );
 
-  return {
-    result,
-    isLoading,
-    isError,
-  };
-};
+  return queryInfo;
+}
 
 export default useJNSName;
 // JNS Mod End
