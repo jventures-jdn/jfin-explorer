@@ -1,6 +1,7 @@
 import React from 'react';
 
 import useApiQuery from 'lib/api/useApiQuery';
+import useJNSName from 'lib/hooks/useJNSName';
 import { ADDRESS_INFO } from 'stubs/address';
 import DetailsInfoItem from 'ui/shared/DetailsInfoItem';
 import AddressEntity from 'ui/shared/entities/address/AddressEntity';
@@ -17,6 +18,8 @@ const TokenInstanceCreatorAddress = ({ hash }: Props) => {
       placeholderData: ADDRESS_INFO,
     },
   });
+  // JFIN Mod Start
+  const { data: jnsData } = useJNSName([ addressQuery?.data?.creator_address_hash || '' ]);
 
   if (addressQuery.isError) {
     return null;
@@ -30,7 +33,9 @@ const TokenInstanceCreatorAddress = ({ hash }: Props) => {
     hash: addressQuery.data.creator_address_hash,
     is_contract: false,
     implementation_name: null,
+    name: jnsData && jnsData?.length > 0 ? jnsData?.find(item => item.address === addressQuery?.data?.creator_address_hash)?.name : null,
   };
+  // JFIN Mod End
 
   return (
     <DetailsInfoItem

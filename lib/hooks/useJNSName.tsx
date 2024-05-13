@@ -9,6 +9,7 @@ import { isAddress } from 'viem';
 
 import { getEnvValue } from 'configs/app/utils';
 import validatorWallets from 'configs/app/validatorWallets';
+import { ADDRESS_HASH } from 'stubs/addressParams';
 
 interface JNSName {
   address: string;
@@ -22,7 +23,7 @@ const instance = axios.create({
   timeout: 3000,
 });
 
-const ignoredAddresses = [ ...Object.keys(validatorWallets), '0x0000000000000000000000000000000000000000' ];
+const ignoredAddresses = [ ...Object.keys(validatorWallets), ADDRESS_HASH, '0x0000000000000000000000000000000000000000' ];
 
 async function fetchJNSNames(addresses: Array<string>): Promise<Array<JNSName>> {
   const uniqueAddresses = Array.from(new Set(addresses)).filter(address => !ignoredAddresses.includes(address));

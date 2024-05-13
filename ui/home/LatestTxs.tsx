@@ -37,17 +37,17 @@ const LatestTransactions = () => {
   const allAddresses = [ ...addressesFrom, ...addressesTo ];
 
   // eslint-disable-next-line react-hooks/rules-of-hooks
-  const { result } = useJNSName(allAddresses);
+  const { data: jnsData } = useJNSName(allAddresses);
 
   const dataWithJNSName = data?.map(item => ({
     ...item,
     to: {
       ...item.to,
-      name: result.find(name => name.address === item.to?.hash)?.name || null,
+      name: jnsData?.find(name => name.address === item.to?.hash)?.name || null,
     },
     from: {
       ...item.from,
-      name: result.find(name => name.address === item.from.hash)?.name || null,
+      name: jnsData?.find(name => name.address === item.from.hash)?.name || null,
     },
   }));
 
