@@ -1,10 +1,7 @@
-// JNS Mod Start
-/* eslint-disable no-nested-ternary */
 /* eslint-disable react-hooks/exhaustive-deps */
-/* eslint-disable @typescript-eslint/no-non-null-assertion */
+/* eslint-disable no-nested-ternary */
 import { useQuery, useQueryClient } from '@tanstack/react-query';
 import axios from 'axios';
-import { useMemo } from 'react';
 import { isAddress } from 'viem';
 
 import { getEnvValue } from 'configs/app/utils';
@@ -12,7 +9,7 @@ import validatorWallets from 'configs/app/validatorWallets';
 import { ADDRESS_HASH } from 'stubs/addressParams';
 
 interface JNSName {
-  address: string;
+  address: string | null;
   name: string | null;
 }
 
@@ -23,7 +20,11 @@ const instance = axios.create({
   timeout: 3000,
 });
 
-const ignoredAddresses = [ ...Object.keys(validatorWallets), ADDRESS_HASH, '0x0000000000000000000000000000000000000000' ];
+const ignoredAddresses = [
+  ...Object.keys(validatorWallets),
+  ADDRESS_HASH,
+  '0x0000000000000000000000000000000000000000',
+];
 
 async function fetchJNSNames(addresses: Array<string>): Promise<Array<JNSName>> {
   const uniqueAddresses = Array.from(new Set(addresses)).filter(address => !ignoredAddresses.includes(address));
@@ -31,43 +32,65 @@ async function fetchJNSNames(addresses: Array<string>): Promise<Array<JNSName>> 
     return [];
   }
   try {
-    const response = await instance.post<Array<string>>('/get-names', { addresses: uniqueAddresses });
-    return uniqueAddresses.map((address, index) => ({
-      address,
-      name: response.data[index] || null,
-    })).filter(jnsName => jnsName.name !== null && jnsName.name !== undefined);
+    const responses = await Promise.all(
+      uniqueAddresses.map(address =>
+        instance.get<string>(`/get-name/${ address }`).then(response => ({
+          address,
+          name: response.data || null,
+        })).catch(() => ({ address: null, name: null })),
+      ),
+    ).catch(() => []);
+
+    return responses.filter(jnsName => jnsName.name !== null && jnsName.name !== undefined);
   } catch (error) {
+    if (axios.isAxiosError(error) && error.response?.status === 404) {
+      return [];
+    }
     throw new Error('Failed to fetch JNS names');
   }
 }
 
 async function fetchJNSAddresses(names: Array<string>): Promise<Array<JNSName>> {
-  const uniqueNames = Array.from(new Set(names)).map(name => name.endsWith('.jfin') ? name : isAddress(name) ? name : `${ name }.jfin`);
+  const uniqueNames = Array.from(new Set(names)).map(name =>
+    name.endsWith('.jfin') ? name : isAddress(name) ? name : `${ name }.jfin`,
+  );
   if (uniqueNames.length === 0) {
     return [];
   }
   try {
-    const response = await instance.post<Array<string>>('/get-addresses', { names: uniqueNames });
-    return uniqueNames.map((name, index) => ({
-      address: response.data[index],
-      name: name || null,
-    })).filter(jnsName => jnsName.name !== null && jnsName.name !== undefined);
+    const responses = await Promise.all(
+      uniqueNames.map(name =>
+        instance.get<string>(`/get-address/${ name }`).then(response => ({
+          address: response.data || null,
+          name,
+        })).catch(() => ({ address: null, name: null })),
+      ),
+    ).catch(() => []);
+
+    return responses.filter(jnsName => jnsName?.address !== null && jnsName?.address !== undefined);
   } catch (error) {
+    if (axios.isAxiosError(error) && error.response?.status === 404) {
+      return [];
+    }
     throw new Error('Failed to fetch JNS addresses');
   }
 }
 
 function useJNSName(payload: Array<string> = []) {
-  const queryKey = useMemo(() => [ 'jnsNames', payload ], [ JSON.stringify(payload) ]);
+  const queryKey = [ 'jnsNames' ];
   const queryClient = useQueryClient();
 
-  const fetchQueryData = () => {
-    const existingData = queryClient.getQueryData<Array<JNSName>>(queryKey);
+  const fetchQueryData = async() => {
+    const existingData = queryClient.getQueryData<Array<JNSName>>(queryKey) || [];
     const missingData = payload.filter(p => !existingData?.find(d => d.address === p || d.name === p));
     if (missingData.length === 0) {
-      return Promise.resolve(existingData!);
+      return existingData;
     }
-    return payload.every(isAddress) ? fetchJNSNames(missingData) : fetchJNSAddresses(missingData);
+    const fetchedData = await (payload.every(isAddress) ? fetchJNSNames(missingData) : fetchJNSAddresses(missingData));
+    const newData = [ ...existingData, ...fetchedData ].filter((item, index, self) =>
+      index === self.findIndex((t) => (t.address === item.address && t.name === item.name)),
+    );
+    return newData;
   };
 
   const queryInfo = useQuery<Array<JNSName>, Error>(
@@ -76,6 +99,13 @@ function useJNSName(payload: Array<string> = []) {
     {
       enabled: payload.length > 0 && payload[0] !== '',
       keepPreviousData: true,
+      onSuccess: (data) => {
+        const existingData = queryClient.getQueryData<Array<JNSName>>(queryKey) || [];
+        const newData = [ ...existingData, ...data ].filter((item, index, self) =>
+          index === self.findIndex((t) => (t.address === item.address && t.name === item.name)),
+        );
+        queryClient.setQueryData(queryKey, newData);
+      },
     },
   );
 
@@ -83,4 +113,3 @@ function useJNSName(payload: Array<string> = []) {
 }
 
 export default useJNSName;
-// JNS Mod End
