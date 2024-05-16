@@ -1,7 +1,9 @@
+/* eslint-disable @typescript-eslint/no-non-null-assertion */
 import { Accordion, Hide, Show, Text } from '@chakra-ui/react';
 import React from 'react';
 
 import { SECOND } from 'lib/consts';
+import useJNSName from 'lib/hooks/useJNSName';
 import { TX_STATE_CHANGES } from 'stubs/txStateChanges';
 import ActionBar from 'ui/shared/ActionBar';
 import DataListDisplay from 'ui/shared/DataListDisplay';
@@ -16,7 +18,7 @@ import TxSocketAlert from './TxSocketAlert';
 
 const TxState = () => {
   const txInfo = useFetchTxInfo({ updateDelay: 5 * SECOND });
-  const { data, isPlaceholderData, isError, pagination } = useQueryWithPages({
+  const { data: _data, isPlaceholderData, isError, pagination } = useQueryWithPages({
     resourceName: 'tx_state_changes',
     pathParams: { hash: txInfo.data?.hash },
     options: {
@@ -31,6 +33,20 @@ const TxState = () => {
     },
   });
 
+  const addresses = _data?.items.map(item => item.address.hash);
+
+  const { data: jnsData } = useJNSName(addresses);
+
+  const itemWithJnsName = _data?.items.map(item => (
+    {
+      ...item, address: {
+        ...item.address, name: jnsData?.find(val => val.address === item.address.hash)?.name || null,
+      },
+    }
+  ));
+
+  const data = { ..._data, items: itemWithJnsName };
+
   if (!txInfo.isLoading && !txInfo.isPlaceholderData && !txInfo.isError && !txInfo.data.status) {
     return txInfo.socketStatus ? <TxSocketAlert status={ txInfo.socketStatus }/> : <TxPendingAlert/>;
   }
@@ -38,10 +54,10 @@ const TxState = () => {
   const content = data ? (
     <Accordion allowMultiple defaultIndex={ [] }>
       <Hide below="lg" ssr={ false }>
-        <TxStateTable data={ data.items } isLoading={ isPlaceholderData } top={ pagination.isVisible ? 80 : 0 }/>
+        <TxStateTable data={ data.items! } isLoading={ isPlaceholderData } top={ pagination.isVisible ? 80 : 0 }/>
       </Hide>
       <Show below="lg" ssr={ false }>
-        <TxStateList data={ data.items } isLoading={ isPlaceholderData }/>
+        <TxStateList data={ data.items! } isLoading={ isPlaceholderData }/>
       </Show>
     </Accordion>
   ) : null;

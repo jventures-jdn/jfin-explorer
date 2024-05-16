@@ -1,6 +1,8 @@
+// JFIN Mod Start
 /* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable no-nested-ternary */
 import { useQuery, useQueryClient } from '@tanstack/react-query';
+import type { AxiosError } from 'axios';
 import axios from 'axios';
 import { isAddress } from 'viem';
 
@@ -37,9 +39,14 @@ async function fetchJNSNames(addresses: Array<string>): Promise<Array<JNSName>> 
         instance.get<string>(`/get-name/${ address }`).then(response => ({
           address,
           name: response.data || null,
-        })).catch(() => ({ address: null, name: null })),
+        })).catch((error: AxiosError) => {
+          if (error.response?.status === 404) {
+            return { address, name: null };
+          }
+          return { address: null, name: null };
+        }),
       ),
-    ).catch(() => []);
+    );
 
     return responses.filter(jnsName => jnsName.name !== null && jnsName.name !== undefined);
   } catch (error) {
@@ -63,9 +70,14 @@ async function fetchJNSAddresses(names: Array<string>): Promise<Array<JNSName>> 
         instance.get<string>(`/get-address/${ name }`).then(response => ({
           address: response.data || null,
           name,
-        })).catch(() => ({ address: null, name: null })),
+        })).catch((error: AxiosError) => {
+          if (error.response?.status === 404) {
+            return { address: null, name };
+          }
+          return { address: null, name: null };
+        }),
       ),
-    ).catch(() => []);
+    );
 
     return responses.filter(jnsName => jnsName?.address !== null && jnsName?.address !== undefined);
   } catch (error) {
@@ -77,19 +89,28 @@ async function fetchJNSAddresses(names: Array<string>): Promise<Array<JNSName>> 
 }
 
 function useJNSName(payload: Array<string> = []) {
-  const queryKey = [ 'jnsNames' ];
+  const queryKey = [ 'jnsNames', payload ];
   const queryClient = useQueryClient();
 
   const fetchQueryData = async() => {
     const existingData = queryClient.getQueryData<Array<JNSName>>(queryKey) || [];
-    const missingData = payload.filter(p => !existingData?.find(d => d.address === p || d.name === p));
+    const missingData = payload.filter(p => p !== '' && !existingData?.find(d => d.address === p || d.name === p));
+
     if (missingData.length === 0) {
       return existingData;
     }
-    const fetchedData = await (payload.every(isAddress) ? fetchJNSNames(missingData) : fetchJNSAddresses(missingData));
+
+    const addresses = missingData.filter(isAddress);
+    const names = missingData.filter(p => !isAddress(p));
+
+    const fetchedAddresses = addresses.length ? await fetchJNSNames(addresses) : [];
+    const fetchedNames = names.length ? await fetchJNSAddresses(names) : [];
+
+    const fetchedData = [ ...fetchedAddresses, ...fetchedNames ];
     const newData = [ ...existingData, ...fetchedData ].filter((item, index, self) =>
       index === self.findIndex((t) => (t.address === item.address && t.name === item.name)),
     );
+
     return newData;
   };
 
@@ -113,3 +134,4 @@ function useJNSName(payload: Array<string> = []) {
 }
 
 export default useJNSName;
+// JFIN Mod End
