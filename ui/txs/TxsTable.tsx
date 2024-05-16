@@ -39,6 +39,7 @@ const TxsTable = ({
   enableTimeIncrement,
   isLoading,
 }: Props) => {
+  // JFIN Mod Start
   return (
     <Table variant="simple" minWidth="950px" size="xs">
       <TheadSticky top={ top }>
@@ -48,9 +49,9 @@ const TxsTable = ({
           <Th width="160px">Type</Th>
           <Th width="20%">Method</Th>
           { showBlockInfo && <Th width="18%">Block</Th> }
-          <Th width={{ xl: '152px', base: '86px' }}>From</Th>
+          <Th width={{ xl: '164px', base: '90px' }}>From</Th>
           <Th width={{ xl: currentAddress ? '48px' : '36px', base: currentAddress ? '52px' : '28px' }}></Th>
-          <Th width={{ xl: '152px', base: '86px' }}>To</Th>
+          <Th width={{ xl: '164px', base: '90px' }}>To</Th>
           { !config.UI.views.tx.hiddenFields?.value && (
             <Th width="20%" isNumeric>
               <Link onClick={ sort('val') } display="flex" justifyContent="end">
@@ -99,6 +100,7 @@ const TxsTable = ({
       </Tbody>
     </Table>
   );
+  // JFIN Mod End
 };
 
 export default React.memo(TxsTable);

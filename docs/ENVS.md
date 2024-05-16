@@ -540,3 +540,6 @@ For obtaining the variables values please refer to [reCAPTCHA documentation](htt
 | --- | --- | --- | --- | --- | --- |
 | NEXT_PUBLIC_CHAIN_REWARD | `number` | Value for the jfin chain to set reward to 0. | - | - | `2` |
 | NEXT_PUBLIC_JFIN_REWARD | `number` | Value required to set the correct reward. | - | - | `0.6` |
+| NEXT_PUBLIC_JNS_API_HOST | `string` | JFIN Name Service API Host. | - | - | `<jns-api-url>` |
+| NEXT_PUBLIC_JNS_METADATA_HOST | `string` | JFIN Name Service Metadata Host. | - | - | `<jns-metadata-url>` |
+| NEXT_PUBLIC_JNS_NAMEWRAPPER_ADDRESS | `string` | JFIN Name Service Namewrapper address. | - | - | `<namewrapper-address>` |

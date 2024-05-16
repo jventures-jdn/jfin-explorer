@@ -1,3 +1,4 @@
+/* eslint-disable no-nested-ternary */
 import type { As } from '@chakra-ui/react';
 import { Box, Flex, Skeleton, Tooltip, chakra, VStack, Image } from '@chakra-ui/react';
 import _omit from 'lodash/omit';
@@ -93,7 +94,12 @@ const Icon = (props: IconProps) => {
       <Flex marginRight={ styles.marginRight }>
         { /* JFIN Mod Start */ }
         { props.imageSrc ? (
-          <Image src={ props.imageSrc } borderRadius="full" w="30px" alt="Address icon"/>
+          // eslint-disable-next-line react/jsx-no-bind
+          <Image src={ props.imageSrc } borderRadius="full" w="30px" alt="Address icon" onError={ ({ currentTarget }) => {
+            currentTarget.onerror = null; // prevents looping
+            currentTarget.src = `https://api.dicebear.com/8.x/shapes/svg?seed=${ props.address.hash }`;
+          } }/>
+
         ) : (
           <AddressIdenticon
             // size={ props.iconSize === 'lg' ? 30 : 20 }
@@ -158,24 +164,31 @@ const AddressEntry = (props: EntityProps) => {
   const partsProps = _omit(props, [ 'className', 'onClick' ]);
 
   // JFIN Mod Start
-  const [ imageSrc, updatedName ] = useMemo(() => {
-    let tempImageSrc = '';
+  const [ validatorImage, updatedName ] = useMemo(() => {
+    let tempValidatorImage = '';
     let validatorName = props.address.name;
     for (const [ key, value ] of Object.entries(config.validatorWallets)) {
       if (key.toLowerCase() === props?.address?.hash?.toLowerCase()) {
         validatorName = value.name;
         if ('image' in value) {
-          tempImageSrc = value.image;
+          tempValidatorImage = value.image;
           break;
         }
       }
     }
-    return [ tempImageSrc, validatorName ];
+    return [ tempValidatorImage, validatorName ];
   }, [ props.address.hash, props.address.name ]);
 
   return (
     <Container className={ props.className }>
-      <Icon { ...partsProps } imageSrc={ imageSrc }/>
+      <Icon { ...partsProps }
+        imageSrc={
+          validatorImage ?
+            validatorImage :
+            props.address.name ?
+              `https://jns-avatar-upload-testnet.jfin.workers.dev/jfintestnet/${ props.address.name }` :
+              `https://api.dicebear.com/8.x/shapes/svg?seed=${ props.address.hash }`
+        }/>
       <Link { ...linkProps }>
         <Content { ...partsProps } address={{ ...partsProps.address, name: updatedName }}/>
       </Link>

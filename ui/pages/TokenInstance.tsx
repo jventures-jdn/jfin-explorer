@@ -1,3 +1,6 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
+/* eslint-disable @typescript-eslint/no-non-null-asserted-optional-chain */
+/* eslint-disable @typescript-eslint/no-non-null-assertion */
 import { Box, Flex } from '@chakra-ui/react';
 import { useRouter } from 'next/router';
 import React from 'react';
@@ -8,6 +11,8 @@ import type { RoutedTab } from 'ui/shared/Tabs/types';
 import useApiQuery from 'lib/api/useApiQuery';
 import { useAppContext } from 'lib/contexts/app';
 import useIsMobile from 'lib/hooks/useIsMobile';
+import useJNSMetadata from 'lib/hooks/useJNSMetadata';
+import useJNSName from 'lib/hooks/useJNSName';
 import * as metadata from 'lib/metadata';
 import * as regexp from 'lib/regexp';
 import { TOKEN_INSTANCE } from 'stubs/token';
@@ -43,13 +48,26 @@ const TokenInstanceContent = () => {
 
   const scrollRef = React.useRef<HTMLDivElement>(null);
 
-  const tokenInstanceQuery = useApiQuery('token_instance', {
+  // JFIN Mod Start
+  const _tokenInstanceQuery = useApiQuery('token_instance', {
     pathParams: { hash, id },
     queryOptions: {
       enabled: Boolean(hash && id),
       placeholderData: TOKEN_INSTANCE,
     },
   });
+  const { data: jnsMetadata } = useJNSMetadata(hash, id!);
+  const { data: jnsData } = useJNSName([ _tokenInstanceQuery?.data?.owner?.hash || '', _tokenInstanceQuery?.data?.token.address || '' ]);
+
+  const tokenInstanceQuery = jnsMetadata ? { ..._tokenInstanceQuery, data: {
+    ..._tokenInstanceQuery.data,
+    metadata: jnsMetadata,
+    owner: {
+      ..._tokenInstanceQuery.data?.owner,
+      name: jnsData?.find(item => item.address === _tokenInstanceQuery.data?.owner?.hash)?.name,
+    },
+
+  } } : _tokenInstanceQuery;
 
   const transfersQuery = useQueryWithPages({
     resourceName: 'token_instance_transfers',
@@ -58,7 +76,7 @@ const TokenInstanceContent = () => {
     options: {
       enabled: Boolean(hash && id && (!tab || tab === 'token_transfers') && !tokenInstanceQuery.isPlaceholderData && tokenInstanceQuery.data),
       placeholderData: generateListStub<'token_instance_transfers'>(
-        tokenInstanceQuery.data?.token.type === 'ERC-1155' ? tokenStubs.TOKEN_TRANSFER_ERC_1155 : tokenStubs.TOKEN_TRANSFER_ERC_721,
+        tokenInstanceQuery.data?.token?.type === 'ERC-1155' ? tokenStubs.TOKEN_TRANSFER_ERC_1155 : tokenStubs.TOKEN_TRANSFER_ERC_721,
         10,
         { next_page_params: null },
       ),
@@ -74,15 +92,17 @@ const TokenInstanceContent = () => {
     options: {
       enabled: Boolean(hash && tab === 'holders' && shouldFetchHolders),
       placeholderData: generateListStub<'token_instance_holders'>(
-        tokenInstanceQuery.data?.token.type === 'ERC-1155' ? tokenStubs.TOKEN_HOLDER_ERC_1155 : tokenStubs.TOKEN_HOLDER_ERC_20, 10, { next_page_params: null }),
+        tokenInstanceQuery.data?.token?.type === 'ERC-1155' ?
+          tokenStubs.TOKEN_HOLDER_ERC_1155 :
+          tokenStubs.TOKEN_HOLDER_ERC_20, 10, { next_page_params: null }),
     },
   });
 
   React.useEffect(() => {
     if (tokenInstanceQuery.data && !tokenInstanceQuery.isPlaceholderData) {
       metadata.update(
-        { pathname: '/token/[hash]/instance/[id]', query: { hash: tokenInstanceQuery.data.token.address, id: tokenInstanceQuery.data.id } },
-        { symbol: tokenInstanceQuery.data.token.symbol ?? '' },
+        { pathname: '/token/[hash]/instance/[id]', query: { hash: tokenInstanceQuery?.data?.token?.address!, id: tokenInstanceQuery?.data?.id! } },
+        { symbol: tokenInstanceQuery?.data?.token?.symbol ?? '' },
       );
     }
   }, [ tokenInstanceQuery.data, tokenInstanceQuery.isPlaceholderData ]);
@@ -121,7 +141,7 @@ const TokenInstanceContent = () => {
     throw Error('Token instance fetch failed', { cause: tokenInstanceQuery.error });
   }
 
-  const tokenTag = <Tag isLoading={ tokenInstanceQuery.isPlaceholderData }>{ tokenInstanceQuery.data?.token.type }</Tag>;
+  const tokenTag = <Tag isLoading={ tokenInstanceQuery.isPlaceholderData }>{ tokenInstanceQuery.data?.token?.type }</Tag>;
 
   const address = {
     hash: hash || '',
@@ -168,7 +188,7 @@ const TokenInstanceContent = () => {
   const titleSecondRow = (
     <Flex alignItems="center" w="100%" minW={ 0 } columnGap={ 2 } rowGap={ 2 } flexWrap={{ base: 'wrap', lg: 'nowrap' }}>
       <TokenEntity
-        token={ tokenInstanceQuery.data?.token }
+        token={ tokenInstanceQuery?.data?.token }
         isLoading={ isLoading }
         noSymbol
         noCopy
@@ -179,7 +199,7 @@ const TokenInstanceContent = () => {
         w="auto"
         maxW="700px"
       />
-      { !isLoading && tokenInstanceQuery.data && <AddressAddToWallet token={ tokenInstanceQuery.data.token } variant="button"/> }
+      { !isLoading && tokenInstanceQuery.data && <AddressAddToWallet token={ tokenInstanceQuery?.data?.token } variant="button"/> }
       <AddressQrCode address={ address } isLoading={ isLoading }/>
       <AccountActionsMenu isLoading={ isLoading }/>
       { appLink }
@@ -197,7 +217,7 @@ const TokenInstanceContent = () => {
         isLoading={ isLoading }
       />
 
-      <TokenInstanceDetails data={ tokenInstanceQuery?.data } isLoading={ isLoading } scrollRef={ scrollRef }/>
+      <TokenInstanceDetails data={ tokenInstanceQuery?.data as any } isLoading={ isLoading } scrollRef={ scrollRef }/>
 
       { /* should stay before tabs to scroll up with pagination */ }
       <Box ref={ scrollRef }></Box>
@@ -213,5 +233,6 @@ const TokenInstanceContent = () => {
     </>
   );
 };
+// JFIN Mod End
 
 export default React.memo(TokenInstanceContent);

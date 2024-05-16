@@ -11,6 +11,7 @@ import useApiQuery from 'lib/api/useApiQuery';
 import { useAppContext } from 'lib/contexts/app';
 import useContractTabs from 'lib/hooks/useContractTabs';
 import useIsSafeAddress from 'lib/hooks/useIsSafeAddress';
+import useJNSName from 'lib/hooks/useJNSName';
 import getQueryParamString from 'lib/router/getQueryParamString';
 import { ADDRESS_INFO, ADDRESS_TABS_COUNTERS } from 'stubs/address';
 import AddressBlocksValidated from 'ui/address/AddressBlocksValidated';
@@ -57,6 +58,9 @@ const AddressPageContent = () => {
       placeholderData: ADDRESS_INFO,
     },
   });
+
+  // JNS Mod Start
+  const { data } = useJNSName([ hash ]);
 
   const addressTabsCountersQuery = useApiQuery('address_tabs_counters', {
     pathParams: { hash },
@@ -179,7 +183,13 @@ const AddressPageContent = () => {
   const titleSecondRow = (
     <Flex alignItems="center" w="100%" columnGap={ 2 } rowGap={ 2 } flexWrap={{ base: 'wrap', lg: 'nowrap' }}>
       <AddressEntity
-        address={{ ...addressQuery.data, name: '' }}
+        address={
+          { ...addressQuery.data, name: (
+            !addressQuery.data?.token &&
+           !addressQuery.data?.is_contract) ?
+            data?.find(name => name.address === hash)?.name :
+            '' }
+        }
         isLoading={ isLoading }
         fontFamily="heading"
         fontSize="lg"
@@ -197,6 +207,7 @@ const AddressPageContent = () => {
       <NetworkExplorers type="address" pathParam={ hash } ml="auto"/>
     </Flex>
   );
+  // JNS Mod End
 
   return (
     <>

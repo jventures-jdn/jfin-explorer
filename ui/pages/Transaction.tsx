@@ -1,11 +1,14 @@
+import { isArray } from 'lodash';
 import { useRouter } from 'next/router';
 import React from 'react';
+import { isAddress } from 'viem';
 
 import type { RoutedTab } from 'ui/shared/Tabs/types';
 
 import config from 'configs/app';
 import useApiQuery from 'lib/api/useApiQuery';
 import { useAppContext } from 'lib/contexts/app';
+import useJNSName from 'lib/hooks/useJNSName';
 import getQueryParamString from 'lib/router/getQueryParamString';
 import { TX } from 'stubs/tx';
 import AccountActionsMenu from 'ui/shared/AccountActionsMenu/AccountActionsMenu';
@@ -31,13 +34,57 @@ const TransactionPageContent = () => {
 
   const hash = getQueryParamString(router.query.hash);
 
-  const { data, isPlaceholderData } = useApiQuery('tx', {
+  const { data: _data, isPlaceholderData } = useApiQuery('tx', {
     pathParams: { hash },
     queryOptions: {
       enabled: Boolean(hash),
       placeholderData: TX,
     },
   });
+
+  const decodedInputValue = (() => {
+    const parametersValue = _data?.decoded_input?.parameters?.[0]?.value;
+    return isArray(parametersValue) ? parametersValue[0] : [ parametersValue || '' ];
+  })();
+
+  const tokenTransfers = (_data?.token_transfers || []).reduce((acc: Array<string>, transfer) => {
+    acc.push(transfer.from.hash, transfer.to.hash);
+    return acc;
+  }, []);
+
+  const decodeInputAddresses = (decodedInputValue as Array<string>).filter(isAddress);
+
+  const addresses = [
+    ...decodeInputAddresses,
+    ...tokenTransfers,
+    _data?.from?.hash || '',
+    _data?.to?.hash || '',
+  ];
+
+  const { data: jnsData } = useJNSName(addresses);
+
+  const data = {
+    ..._data,
+    from: {
+      ..._data?.from,
+      name: jnsData?.find(item => item.address === _data?.from?.hash)?.name,
+    },
+    to: {
+      ..._data?.to,
+      name: jnsData?.find(item => item.address === _data?.to?.hash)?.name,
+    },
+    token_transfers: (_data?.token_transfers || []).map(transfer => ({
+      ...transfer,
+      from: {
+        ...transfer.from,
+        name: jnsData?.find(item => item.address === transfer.from.hash)?.name,
+      },
+      to: {
+        ...transfer.to,
+        name: jnsData?.find(item => item.address === transfer.to.hash)?.name,
+      },
+    })),
+  };
 
   const tabs: Array<RoutedTab> = [
     { id: 'index', title: config.features.suave.isEnabled && data?.wrapped ? 'Confidential compute tx details' : 'Details', component: <TxDetails/> },

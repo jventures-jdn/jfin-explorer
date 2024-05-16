@@ -1,9 +1,11 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { Table, Tbody, Tr, Th } from '@chakra-ui/react';
 import React from 'react';
 
 import type { InternalTransaction } from 'types/api/internalTransaction';
 
 import config from 'configs/app';
+import useJNSName from 'lib/hooks/useJNSName';
 import { default as Thead } from 'ui/shared/TheadSticky';
 
 import AddressIntTxsTableItem from './AddressIntTxsTableItem';
@@ -15,6 +17,26 @@ interface Props {
 }
 
 const AddressIntTxsTable = ({ data, currentAddress, isLoading }: Props) => {
+  // JNS Mod Start
+  const addressesFrom = data?.map(item => item.from.hash) || [];
+  const addressesTo = data?.map(item => item.to?.hash || '') || [];
+
+  const allAddresses = [ ...addressesFrom, ...addressesTo ];
+
+  const { data: jnsData } = useJNSName(allAddresses);
+
+  const dataWithJNSName = data?.map(item => ({
+    ...item,
+    to: {
+      ...item.to,
+      name: jnsData?.find(name => name.address === item.to?.hash)?.name || null,
+    },
+    from: {
+      ...item.from,
+      name: jnsData?.find(name => name.address === item.from.hash)?.name || null,
+    },
+  }));
+
   return (
     <Table variant="simple" size="sm">
       <Thead top={ 80 }>
@@ -31,7 +53,7 @@ const AddressIntTxsTable = ({ data, currentAddress, isLoading }: Props) => {
         </Tr>
       </Thead>
       <Tbody>
-        { data.map((item, index) => (
+        { dataWithJNSName.map((item: any, index) => (
           <AddressIntTxsTableItem
             key={ item.transaction_hash + '_' + index }
             { ...item }
@@ -43,5 +65,6 @@ const AddressIntTxsTable = ({ data, currentAddress, isLoading }: Props) => {
     </Table>
   );
 };
+  // JNS Mod End
 
 export default AddressIntTxsTable;

@@ -1,3 +1,6 @@
+/* eslint-disable @typescript-eslint/no-non-null-asserted-optional-chain */
+/* eslint-disable @typescript-eslint/no-explicit-any */
+/* eslint-disable @typescript-eslint/no-non-null-assertion */
 import {
   Grid,
   GridItem,
@@ -14,8 +17,10 @@ import {
   Alert,
 } from '@chakra-ui/react';
 import BigNumber from 'bignumber.js';
+import { isArray } from 'lodash';
 import React from 'react';
 import { scroller, Element } from 'react-scroll';
+import { isAddress } from 'viem';
 
 import { route } from 'nextjs-routes';
 
@@ -26,6 +31,7 @@ import errorIcon from 'icons/status/error.svg';
 import successIcon from 'icons/status/success.svg';
 import { WEI, WEI_IN_GWEI } from 'lib/consts';
 import dayjs from 'lib/date/dayjs';
+import useJNSName from 'lib/hooks/useJNSName';
 import getNetworkValidatorTitle from 'lib/networks/getNetworkValidatorTitle';
 import getConfirmationDuration from 'lib/tx/getConfirmationDuration';
 import Icon from 'ui/shared/chakra/Icon';
@@ -56,7 +62,51 @@ import TxSocketAlert from 'ui/tx/TxSocketAlert';
 import useFetchTxInfo from 'ui/tx/useFetchTxInfo';
 
 const TxDetails = () => {
-  const { data, isPlaceholderData, isError, socketStatus, error } = useFetchTxInfo();
+  const { data: _data, isPlaceholderData, isError, socketStatus, error } = useFetchTxInfo();
+
+  const decodedInputValue = (() => {
+    const parametersValue = _data?.decoded_input?.parameters?.[0]?.value;
+    return isArray(parametersValue) ? parametersValue[0] : [ parametersValue || '' ];
+  })();
+
+  const tokenTransfers = (_data?.token_transfers || []).reduce((acc: Array<string>, transfer) => {
+    acc.push(transfer.from.hash, transfer.to.hash);
+    return acc;
+  }, []);
+
+  const decodeInputAddresses = (decodedInputValue as Array<string>).filter(isAddress);
+
+  const addresses = [
+    ...decodeInputAddresses,
+    ...tokenTransfers,
+    _data?.from?.hash || '',
+    _data?.to?.hash || '',
+  ];
+
+  const { data: jnsData } = useJNSName(addresses);
+
+  const data = {
+    ..._data,
+    from: {
+      ..._data?.from,
+      name: jnsData?.find(item => item.address === _data?.from?.hash)?.name || null,
+    },
+    to: {
+      ..._data?.to,
+      name: jnsData?.find(item => item.address === _data?.to?.hash)?.name || null,
+    },
+    token_transfers: (_data?.token_transfers || []).map(transfer => ({
+      ...transfer,
+      from: {
+        ...transfer.from,
+        name: jnsData?.find(item => item.address === transfer.from.hash)?.name,
+      },
+      to: {
+        ...transfer.to,
+        name: jnsData?.find(item => item.address === transfer.to.hash)?.name,
+      },
+    })),
+  };
 
   const [ isExpanded, setIsExpanded ] = React.useState(false);
 
@@ -136,7 +186,7 @@ const TxDetails = () => {
         >
           { data.status === null && <Spinner mr={ 2 } size="sm" flexShrink={ 0 }/> }
           <Skeleton isLoaded={ !isPlaceholderData } overflow="hidden">
-            <HashStringShortenDynamic hash={ data.hash }/>
+            <HashStringShortenDynamic hash={ data.hash! }/>
           </Skeleton>
           <CopyToClipboard text={ data.hash } isLoading={ isPlaceholderData }/>
         </DetailsInfoItem>
@@ -145,7 +195,7 @@ const TxDetails = () => {
           hint="Current transaction state: Success, Failed (Error), or Pending (In Process)"
           isLoading={ isPlaceholderData }
         >
-          <TxStatus status={ data.status } errorText={ data.status === 'error' ? data.result : undefined } isLoading={ isPlaceholderData }/>
+          <TxStatus status={ data.status! } errorText={ data.status === 'error' ? data.result : undefined } isLoading={ isPlaceholderData }/>
           { data.method && (
             <Tag colorScheme={ data.method === 'Multicall' ? 'teal' : 'gray' } isLoading={ isPlaceholderData } isTruncated ml={ 3 }>
               { data.method }
@@ -194,7 +244,7 @@ const TxDetails = () => {
             <Skeleton isLoaded={ !isPlaceholderData } whiteSpace="normal">{ dayjs(data.timestamp).format('llll') }</Skeleton>
             <TextSeparator color="gray.500"/>
             <Skeleton isLoaded={ !isPlaceholderData } color="text_secondary">
-              <span>{ getConfirmationDuration(data.confirmation_duration) }</span>
+              <span>{ getConfirmationDuration(data.confirmation_duration!) }</span>
             </Skeleton>
           </DetailsInfoItem>
         ) }
@@ -219,7 +269,7 @@ const TxDetails = () => {
 
         { actionsExist && (
           <>
-            <TxDetailsActions actions={ data.actions }/>
+            <TxDetailsActions actions={ data.actions! }/>
             <DetailsInfoItemDivider/>
           </>
         ) }
@@ -282,7 +332,7 @@ const TxDetails = () => {
             <span>[ Contract creation ]</span>
           ) }
         </DetailsInfoItem>
-        { data.token_transfers && <TxDetailsTokenTransfers data={ data.token_transfers } txHash={ data.hash }/> }
+        { data.token_transfers && <TxDetailsTokenTransfers data={ data.token_transfers as any } txHash={ data.hash! }/> }
 
         <DetailsInfoItemDivider/>
 
@@ -311,7 +361,7 @@ const TxDetails = () => {
               <TxFeeStability data={ data.stability_fee } isLoading={ isPlaceholderData }/>
             ) : (
               <CurrencyValue
-                value={ data.fee.value }
+                value={ data?.fee?.value! }
                 currency={ config.UI.views.tx.hiddenFields?.fee_currency ? '' : config.chain.currency.symbol }
                 exchangeRate={ data.exchange_rate }
                 flexWrap="wrap"
@@ -321,19 +371,19 @@ const TxDetails = () => {
           </DetailsInfoItem>
         ) }
 
-        <TxDetailsGasPrice gasPrice={ data.gas_price } isLoading={ isPlaceholderData }/>
+        <TxDetailsGasPrice gasPrice={ data?.gas_price! } isLoading={ isPlaceholderData }/>
 
-        <TxDetailsFeePerGas txFee={ data.fee.value } gasUsed={ data.gas_used } isLoading={ isPlaceholderData }/>
+        <TxDetailsFeePerGas txFee={ data?.fee?.value! } gasUsed={ data?.gas_used! } isLoading={ isPlaceholderData }/>
 
         <DetailsInfoItem
           title="Gas usage & limit by txn"
           hint="Actual gas amount used by the transaction"
           isLoading={ isPlaceholderData }
         >
-          <Skeleton isLoaded={ !isPlaceholderData }>{ BigNumber(data.gas_used || 0).toFormat() }</Skeleton>
+          <Skeleton isLoaded={ !isPlaceholderData }>{ BigNumber(data?.gas_used || 0).toFormat() }</Skeleton>
           <TextSeparator/>
-          <Skeleton isLoaded={ !isPlaceholderData }>{ BigNumber(data.gas_limit).toFormat() }</Skeleton>
-          <Utilization ml={ 4 } value={ BigNumber(data.gas_used || 0).dividedBy(BigNumber(data.gas_limit)).toNumber() } isLoading={ isPlaceholderData }/>
+          <Skeleton isLoaded={ !isPlaceholderData }>{ BigNumber(data?.gas_limit!).toFormat() }</Skeleton>
+          <Utilization ml={ 4 } value={ BigNumber(data.gas_used || 0).dividedBy(BigNumber(data?.gas_limit!)).toNumber() } isLoading={ isPlaceholderData }/>
         </DetailsInfoItem>
         { !config.UI.views.tx.hiddenFields?.gas_fees &&
           (data.base_fee_per_gas || data.max_fee_per_gas || data.max_priority_fee_per_gas) && (
@@ -449,12 +499,12 @@ const TxDetails = () => {
         { isExpanded && (
           <>
             <GridItem colSpan={{ base: undefined, lg: 2 }} mt={{ base: 1, lg: 4 }}/>
-            <TxDetailsOther nonce={ data.nonce } type={ data.type } position={ data.position }/>
+            <TxDetailsOther nonce={ data.nonce! } type={ data.type! } position={ data.position! }/>
             <DetailsInfoItem
               title="Raw input"
               hint="Binary data included with the transaction. See logs tab for additional info"
             >
-              <RawInputData hex={ data.raw_input }/>
+              <RawInputData hex={ data.raw_input! }/>
             </DetailsInfoItem>
             { data.decoded_input && (
               <DetailsInfoItem

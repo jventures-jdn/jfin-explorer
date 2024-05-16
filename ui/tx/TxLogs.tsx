@@ -2,6 +2,7 @@ import { Box, Text } from '@chakra-ui/react';
 import React from 'react';
 
 import { SECOND } from 'lib/consts';
+import useJNSName from 'lib/hooks/useJNSName';
 import { LOG } from 'stubs/log';
 import { generateListStub } from 'stubs/utils';
 import ActionBar from 'ui/shared/ActionBar';
@@ -15,7 +16,7 @@ import useFetchTxInfo from 'ui/tx/useFetchTxInfo';
 
 const TxLogs = () => {
   const txInfo = useFetchTxInfo({ updateDelay: 5 * SECOND });
-  const { data, isPlaceholderData, isError, pagination } = useQueryWithPages({
+  const { data: _data, isPlaceholderData, isError, pagination } = useQueryWithPages({
     resourceName: 'tx_logs',
     pathParams: { hash: txInfo.data?.hash },
     options: {
@@ -23,6 +24,29 @@ const TxLogs = () => {
       placeholderData: generateListStub<'tx_logs'>(LOG, 3, { next_page_params: null }),
     },
   });
+
+  const addresses: Array<string> = [];
+
+  _data?.items.forEach(item => {
+    addresses.push(item.address.hash);
+    item.decoded?.parameters.forEach((param) => {
+      if (param.type === 'address') {
+        addresses.push(param.value as string);
+      }
+    });
+  });
+
+  const { data: jnsData } = useJNSName(addresses);
+
+  const itemWithJnsName = _data?.items.map(item => (
+    {
+      ...item, address: {
+        ...item.address, name: jnsData?.find(val => val.address === item.address.hash)?.name || null,
+      },
+    }
+  ));
+
+  const data = { ..._data, items: itemWithJnsName };
 
   if (!txInfo.isLoading && !txInfo.isPlaceholderData && !txInfo.isError && !txInfo.data.status) {
     return txInfo.socketStatus ? <TxSocketAlert status={ txInfo.socketStatus }/> : <TxPendingAlert/>;
@@ -32,7 +56,7 @@ const TxLogs = () => {
     return <DataFetchAlert/>;
   }
 
-  if (!data?.items.length) {
+  if (!data?.items?.length) {
     return <Text as="span">There are no logs for this transaction.</Text>;
   }
 

@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { Box, Flex, Text } from '@chakra-ui/react';
 import React from 'react';
 
@@ -5,6 +6,7 @@ import { route } from 'nextjs-routes';
 
 import useApiQuery from 'lib/api/useApiQuery';
 import useIsMobile from 'lib/hooks/useIsMobile';
+import useJNSName from 'lib/hooks/useJNSName';
 import useNewTxsSocket from 'lib/hooks/useNewTxsSocket';
 import { TX } from 'stubs/tx';
 import LinkInternal from 'ui/shared/LinkInternal';
@@ -28,25 +30,46 @@ const LatestTransactions = () => {
     return <Text mt={ 4 }>No data. Please reload page.</Text>;
   }
 
-  if (data) {
+  // JNS Mod Start
+  const addressesFrom = data?.map(item => item.from.hash) || [];
+  const addressesTo = data?.map(item => item.to?.hash || '') || [];
+
+  const allAddresses = [ ...addressesFrom, ...addressesTo ];
+
+  // eslint-disable-next-line react-hooks/rules-of-hooks
+  const { data: jnsData } = useJNSName(allAddresses);
+
+  const dataWithJNSName = data?.map(item => ({
+    ...item,
+    to: {
+      ...item.to,
+      name: jnsData?.find(name => name.address === item.to?.hash)?.name || null,
+    },
+    from: {
+      ...item.from,
+      name: jnsData?.find(name => name.address === item.from.hash)?.name || null,
+    },
+  }));
+
+  if (dataWithJNSName) {
     const txsUrl = route({ pathname: '/txs' });
     return (
       <>
         <SocketNewItemsNotice borderBottomRadius={ 0 } url={ txsUrl } num={ num } alert={ socketAlert } isLoading={ isPlaceholderData }/>
         <Box mb={ 3 } display={{ base: 'block', lg: 'none' }}>
-          { data.slice(0, txsCount).map(((tx, index) => (
+          { dataWithJNSName.slice(0, txsCount).map(((tx, index) => (
             <LatestTxsItemMobile
               key={ tx.hash + (isPlaceholderData ? index : '') }
-              tx={ tx }
+              tx={ tx as any }
               isLoading={ isPlaceholderData }
             />
           ))) }
         </Box>
         <Box mb={ 4 } display={{ base: 'none', lg: 'block' }}>
-          { data.slice(0, txsCount).map(((tx, index) => (
+          { dataWithJNSName.slice(0, txsCount).map(((tx, index) => (
             <LatestTxsItem
               key={ tx.hash + (isPlaceholderData ? index : '') }
-              tx={ tx }
+              tx={ tx as any }
               isLoading={ isPlaceholderData }
             />
           ))) }
@@ -60,5 +83,6 @@ const LatestTransactions = () => {
 
   return null;
 };
+// JNS Mod End
 
 export default LatestTransactions;

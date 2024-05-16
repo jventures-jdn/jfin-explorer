@@ -3,6 +3,7 @@ import React from 'react';
 
 import type { TokenTransfer } from 'types/api/tokenTransfer';
 
+import useJNSName from 'lib/hooks/useJNSName';
 import * as SocketNewItemsNotice from 'ui/shared/SocketNewItemsNotice';
 import { default as Thead } from 'ui/shared/TheadSticky';
 import TokenTransferTableItem from 'ui/shared/TokenTransfer/TokenTransferTableItem';
@@ -30,6 +31,25 @@ const TokenTransferTable = ({
   socketInfoNum,
   isLoading,
 }: Props) => {
+  // JNS Mod Start
+  const addressesFrom = data?.map(item => item.from.hash) || [];
+  const addressesTo = data?.map(item => item.to?.hash) || [];
+
+  const allAddresses = [ ...addressesFrom, ...addressesTo ];
+
+  const { data: jnsData } = useJNSName(allAddresses);
+
+  const dataWithJNSName = data?.map(item => ({
+    ...item,
+    to: {
+      ...item.to,
+      name: jnsData?.find(name => name.address === item.to?.hash)?.name || null,
+    },
+    from: {
+      ...item.from,
+      name: jnsData?.find(name => name.address === item.from.hash)?.name || null,
+    },
+  }));
 
   return (
     <Table variant="simple" size="sm" minW="950px">
@@ -55,7 +75,7 @@ const TokenTransferTable = ({
             isLoading={ isLoading }
           />
         ) }
-        { data.map((item, index) => (
+        { dataWithJNSName.map((item, index) => (
           <TokenTransferTableItem
             key={ item.tx_hash + item.block_hash + item.log_index + (isLoading ? index : '') }
             { ...item }
@@ -69,5 +89,6 @@ const TokenTransferTable = ({
     </Table>
   );
 };
+// JNS Mod End
 
 export default React.memo(TokenTransferTable);
