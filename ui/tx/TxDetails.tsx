@@ -74,7 +74,7 @@ const TxDetails = () => {
     return acc;
   }, []);
 
-  const decodeInputAddresses = (decodedInputValue as Array<string>).filter(isAddress);
+  const decodeInputAddresses = isArray(decodedInputValue) ? decodedInputValue : ([ decodedInputValue ] as any)?.filter(isAddress);
 
   const addresses = [
     ...decodeInputAddresses,

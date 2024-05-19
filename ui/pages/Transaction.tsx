@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { isArray } from 'lodash';
 import { useRouter } from 'next/router';
 import React from 'react';
@@ -52,7 +53,7 @@ const TransactionPageContent = () => {
     return acc;
   }, []);
 
-  const decodeInputAddresses = (decodedInputValue as Array<string>).filter(isAddress);
+  const decodeInputAddresses = isArray(decodedInputValue) ? decodedInputValue : ([ decodedInputValue ] as any)?.filter(isAddress);
 
   const addresses = [
     ...decodeInputAddresses,
