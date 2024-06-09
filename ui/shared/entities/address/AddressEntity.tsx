@@ -1,6 +1,8 @@
 /* eslint-disable no-nested-ternary */
 import type { As } from '@chakra-ui/react';
 import { Box, Flex, Skeleton, Tooltip, chakra, VStack, Image } from '@chakra-ui/react';
+import { shapes } from '@dicebear/collection';
+import { createAvatar } from '@dicebear/core';
 import _omit from 'lodash/omit';
 import React, { useMemo } from 'react';
 
@@ -89,6 +91,10 @@ const Icon = (props: IconProps) => {
     );
   }
 
+  const avatar = createAvatar(shapes, {
+    seed: props.address.hash,
+  });
+
   return (
     <Tooltip label={ props.address.implementation_name }>
       <Flex marginRight={ styles.marginRight }>
@@ -97,7 +103,7 @@ const Icon = (props: IconProps) => {
           // eslint-disable-next-line react/jsx-no-bind
           <Image src={ props.imageSrc } borderRadius="full" w="30px" alt="Address icon" onError={ ({ currentTarget }) => {
             currentTarget.onerror = null; // prevents looping
-            currentTarget.src = `https://api.dicebear.com/8.x/shapes/svg?seed=${ props.address.hash }`;
+            currentTarget.src = avatar.toDataUriSync();
           } }/>
 
         ) : (
@@ -179,6 +185,10 @@ const AddressEntry = (props: EntityProps) => {
     return [ tempValidatorImage, validatorName ];
   }, [ props.address.hash, props.address.name ]);
 
+  const avatar = createAvatar(shapes, {
+    seed: props.address.hash,
+  });
+
   return (
     <Container className={ props.className }>
       <Icon { ...partsProps }
@@ -187,7 +197,7 @@ const AddressEntry = (props: EntityProps) => {
             validatorImage :
             props.address.name ?
               `https://jns-avatar-upload-testnet.jfin.workers.dev/jfintestnet/${ props.address.name }` :
-              `https://api.dicebear.com/8.x/shapes/svg?seed=${ props.address.hash }`
+              avatar.toDataUriSync()
         }/>
       <Link { ...linkProps }>
         <Content { ...partsProps } address={{ ...partsProps.address, name: updatedName }}/>
