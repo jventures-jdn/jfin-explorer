@@ -53,15 +53,14 @@ const ContractMethodFieldZeroes = ({ onClick, isDisabled }: Props) => {
       { Boolean(value) && (
         <Button
           px={ 1 }
-          lineHeight={ 6 }
-          h={ 6 }
           fontWeight={ 500 }
           ml={ 1 }
-          variant="subtle"
-          colorScheme="gray"
+          variant="outline"
           display="inline"
           onClick={ handleButtonClick }
           isDisabled={ isDisabled }
+          flexShrink={ 0 }
+          height={ 8 }
         >
           { times }
           <chakra.span>10</chakra.span>
@@ -71,12 +70,14 @@ const ContractMethodFieldZeroes = ({ onClick, isDisabled }: Props) => {
       <Popover placement="bottom-end" isLazy isOpen={ isOpen } onClose={ onClose }>
         <PopoverTrigger>
           <Button
-            variant="subtle"
+            variant="outline"
             colorScheme="gray"
             size="xs"
             cursor="pointer"
+            flexShrink={ 0 }
             ml={ 1 }
             p={ 0 }
+            height={ 8 }
             onClick={ onToggle }
             isDisabled={ isDisabled }
           >
