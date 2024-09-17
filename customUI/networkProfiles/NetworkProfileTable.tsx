@@ -35,13 +35,6 @@ const NetworkProfileTable = ({ profile }: Props) => {
               </Td>
             </Tr>
             <Tr>
-              <Td fontWeight="bold">Token</Td>
-              <Td>
-                { profile.token }
-                <CopyToClipboard text={ profile.token }/>
-              </Td>
-            </Tr>
-            <Tr>
               <Td fontWeight="bold">RPC</Td>
               <Td>
                 { profile.rpc }
@@ -56,7 +49,14 @@ const NetworkProfileTable = ({ profile }: Props) => {
               </Td>
             </Tr>
             <Tr>
-              <Td fontWeight="bold">Block explorer</Td>
+              <Td fontWeight="bold">Currency symbol</Td>
+              <Td>
+                { profile.token }
+                <CopyToClipboard text={ profile.token }/>
+              </Td>
+            </Tr>
+            <Tr>
+              <Td fontWeight="bold">Block explorer URL</Td>
               <Td>
                 <Link href={ profile.explorerUrl } target="_blank">
                   { profile.explorerUrl }
