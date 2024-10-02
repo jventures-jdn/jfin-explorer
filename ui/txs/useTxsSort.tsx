@@ -75,17 +75,26 @@ export default function useTxsSort(
     }
 
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    const queryResultWithJNSName: any = queryResult.data.items.slice().sort(sortTxs(sorting)).map(item => ({
-      ...item,
-      to: {
-        ...item.to,
-        name: data?.find(name => name.address === item.to?.hash)?.name || null,
-      },
-      from: {
-        ...item.from,
-        name: data?.find(name => name.address === item.from?.hash)?.name || null,
-      },
-    }));
+    const queryResultWithJNSName: any = queryResult.data.items
+      .slice()
+      .sort(sortTxs(sorting))
+      .map((item) => ({
+        ...item,
+        to: item.to ?
+          {
+            ...item.to,
+            name:
+                data?.find((name) => name.address === item.to?.hash)?.name ||
+                null,
+          } :
+          item.to,
+        from: {
+          ...item.from,
+          name:
+            data?.find((name) => name.address === item.from?.hash)?.name ||
+            null,
+        },
+      }));
 
     return {
       ...queryResult,
