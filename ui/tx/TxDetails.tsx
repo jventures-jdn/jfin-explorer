@@ -91,20 +91,20 @@ const TxDetails = () => {
       ..._data?.from,
       name: jnsData?.find(item => item.address === _data?.from?.hash)?.name || null,
     },
-    to: {
+    to: _data?.to ? {
       ..._data?.to,
       name: jnsData?.find(item => item.address === _data?.to?.hash)?.name || null,
-    },
+    } : _data?.to,
     token_transfers: (_data?.token_transfers || []).map(transfer => ({
       ...transfer,
       from: {
         ...transfer.from,
         name: jnsData?.find(item => item.address === transfer.from.hash)?.name,
       },
-      to: {
+      to: transfer.to ? {
         ...transfer.to,
         name: jnsData?.find(item => item.address === transfer.to.hash)?.name,
-      },
+      } : transfer.to,
     })),
   };
 

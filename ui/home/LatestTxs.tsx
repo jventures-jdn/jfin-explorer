@@ -41,10 +41,10 @@ const LatestTransactions = () => {
 
   const dataWithJNSName = data?.map(item => ({
     ...item,
-    to: {
+    to: item.to ? {
       ...item.to,
       name: jnsData?.find(name => name.address === item.to?.hash)?.name || null,
-    },
+    } : item.to,
     from: {
       ...item.from,
       name: jnsData?.find(name => name.address === item.from.hash)?.name || null,
