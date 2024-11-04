@@ -6,6 +6,7 @@ import type { AddressesItem } from 'types/api/addresses';
 
 import config from 'configs/app';
 import { ZERO } from 'lib/consts';
+import useJNSName from 'lib/hooks/useJNSName';
 import { default as Thead } from 'ui/shared/TheadSticky';
 
 import AddressesTableItem from './AddressesTableItem';
@@ -19,6 +20,18 @@ interface Props {
 }
 
 const AddressesTable = ({ items, totalSupply, pageStartIndex, top, isLoading }: Props) => {
+  // JNS Mod Start
+  const ownerAddresses = items?.map(item => item?.hash || '') || [];
+
+  const { data } = useJNSName(ownerAddresses);
+
+  const dataWithJNSName = items?.map(item => {
+    return {
+      ...item,
+      name: data?.find(name => name.address === item?.hash)?.name || null,
+    };
+  });
+
   const hasPercentage = !totalSupply.eq(ZERO);
   return (
     <Table variant="simple" size="sm">
@@ -33,7 +46,7 @@ const AddressesTable = ({ items, totalSupply, pageStartIndex, top, isLoading }: 
         </Tr>
       </Thead>
       <Tbody>
-        { items.map((item, index) => (
+        { dataWithJNSName.map((item, index) => (
           <AddressesTableItem
             key={ item.hash + (isLoading ? index : '') }
             item={ item }
@@ -47,5 +60,5 @@ const AddressesTable = ({ items, totalSupply, pageStartIndex, top, isLoading }: 
     </Table>
   );
 };
-
+// JNS Mod End
 export default AddressesTable;

@@ -24,7 +24,7 @@ const LatestBlocks = () => {
   const isMobile = useIsMobile();
   // const blocksMaxCount = isMobile ? 2 : 3;
   let blocksMaxCount: number;
-  if (config.features.optimisticRollup.isEnabled || config.UI.views.block.hiddenFields?.total_reward) {
+  if (config.features.rollup.isEnabled || config.UI.views.block.hiddenFields?.total_reward) {
     blocksMaxCount = isMobile ? 4 : 5;
   } else {
     blocksMaxCount = isMobile ? 2 : 3;
@@ -81,9 +81,11 @@ const LatestBlocks = () => {
             <Text as="span" fontSize="sm">
               Network utilization:{ nbsp }
             </Text>
-            <Text as="span" fontSize="sm" color="blue.400" fontWeight={ 700 }>
+            { /* JFIN Mod Start */ }
+            <Text as="span" fontSize="sm" color="purple.200" fontWeight={ 700 }>
               { statsQueryResult.data?.network_utilization_percentage.toFixed(2) }%
             </Text>
+            { /* JFIN Mod End */ }
           </Skeleton>
         ) }
         <VStack spacing={ 3 } mb={ 4 } overflow="hidden" alignItems="stretch">

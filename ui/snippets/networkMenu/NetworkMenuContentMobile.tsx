@@ -1,8 +1,11 @@
-import { Box, Select, VStack, Skeleton, Flex } from '@chakra-ui/react';
-import capitalize from 'lodash/capitalize';
-import React from 'react';
+/* eslint-disable react/jsx-no-bind */
+import { Box, VStack, Skeleton, Flex, useColorModeValue, Text } from '@chakra-ui/react';
+import React, { useState } from 'react';
 
 import type { NetworkGroup, FeaturedNetwork } from 'types/networks';
+
+import chevronIcon from 'icons/arrows/east-mini.svg';
+import Icon from 'ui/shared/chakra/Icon';
 
 import NetworkMenuLink from './NetworkMenuLink';
 
@@ -11,19 +14,22 @@ interface Props {
   items?: Array<FeaturedNetwork>;
 }
 
-const NetworkMenuContentMobile = ({ items, tabs }: Props) => {
-  const selectedNetwork = items?.find(({ isActive }) => isActive);
-  const [ selectedTab, setSelectedTab ] = React.useState<NetworkGroup>('Mainnets');
+const NetworkMenuContentMobile = ({ items }: Props) => {
+  {/* JFIN Mod Start */}
+  const [ selectedMenu, setSelectedMenu ] = useState<string | undefined>();
+  const iconColor = useColorModeValue('purple.600', 'purple.200');
 
-  React.useEffect(() => {
-    if (items) {
-      setSelectedTab(tabs.find((tab) => selectedNetwork?.group === tab) || 'Mainnets');
+  const handleClickMenu = (network: FeaturedNetwork) => {
+    if (!network?.subMenu) {
+      return;
     }
-  }, [ items, selectedNetwork?.group, tabs ]);
+    setSelectedMenu(network.title);
+  };
 
-  const handleSelectChange = React.useCallback((event: React.ChangeEvent<HTMLSelectElement>) => {
-    setSelectedTab(event.target.value as NetworkGroup);
-  }, []);
+  const handleClickBack = () => {
+    setSelectedMenu(undefined);
+  };
+  {/* JFIN Mod End */}
 
   const content = !items || items.length === 0 ? (
     <>
@@ -45,21 +51,47 @@ const NetworkMenuContentMobile = ({ items, tabs }: Props) => {
     </>
   ) : (
     <>
-      <Select size="xs" borderRadius="base" value={ selectedTab } onChange={ handleSelectChange } focusBorderColor="none">
-        { tabs.map((tab) => <option key={ tab } value={ tab }>{ capitalize(tab) }</option>) }
-      </Select>
-      <VStack as="ul" spacing={ 2 } alignItems="stretch" mt={ 6 }>
-        { items
-          .filter(({ group }) => group === selectedTab)
-          .map((network) => (
-            <NetworkMenuLink
-              key={ network.title }
-              { ...network }
-              isMobile
-            />
-          ))
-        }
-      </VStack>
+      { /* JFIN Mod Start */ }
+      { selectedMenu ? (
+        <>
+          {
+            selectedMenu && (
+              <Flex alignItems="center" onClick={ handleClickBack }>
+                <Icon as={ chevronIcon } boxSize={ 6 } mr={ 2 } color={ iconColor } cursor="pointer"/>
+                <Text as="h4" fontSize="18px" lineHeight="30px" fontWeight="500">{ selectedMenu }</Text>
+              </Flex>
+            )
+          }
+          <VStack as="ul" spacing={ 2 } mt={ 4 } alignItems="stretch">
+            { items.find((item) => item.title === selectedMenu)?.subMenu?.map(subMenu => (
+              <NetworkMenuLink
+                group="Mainnets"
+                key={ subMenu.title }
+                isMobile
+                { ...subMenu }/>
+            ),
+            ) }
+          </VStack>
+        </>
+      ) : (
+        <VStack as="ul" spacing={ 2 } alignItems="stretch">
+          { items
+            .map((network) => (
+              <Box
+                key={ network.title }
+                onClick={ () => handleClickMenu(network) }
+              >
+                <NetworkMenuLink
+                  key={ network.title }
+                  { ...network }
+                  isMobile
+                />
+              </Box>
+            ))
+          }
+        </VStack>
+      ) }
+      { /* JFIN Mod End */ }
     </>
   );
 

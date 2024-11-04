@@ -15,6 +15,8 @@ import type { MenuButton, TabItem } from './types';
 import TabCounter from './TabCounter';
 import { menuButton } from './utils';
 
+const BUTTON_CLASSNAME = 'button-item';
+
 interface Props {
   tabs: Array<TabItem | MenuButton>;
   activeTab?: TabItem;
@@ -60,14 +62,10 @@ const TabsMenu = ({ tabs, tabsCut, isActive, styles, onItemClick, buttonRef, act
               isActive={ activeTab ? activeTab.id === tab.id : false }
               justifyContent="left"
               data-index={ index }
-              sx={{
-                '&:hover span': {
-                  color: 'inherit',
-                },
-              }}
+              className={ BUTTON_CLASSNAME }
             >
               { typeof tab.title === 'function' ? tab.title() : tab.title }
-              <TabCounter count={ tab.count }/>
+              <TabCounter count={ tab.count } parentClassName={ BUTTON_CLASSNAME }/>
             </Button>
           )) }
         </PopoverBody>

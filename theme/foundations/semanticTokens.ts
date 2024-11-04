@@ -13,11 +13,21 @@ const semanticTokens = {
       _dark: 'gray.400',
     },
     link: {
-      'default': 'blue.600',
-      _dark: 'blue.300',
+
+      /* JFIN Mod Start */
+      'default': 'blackAlpha.800',
+
+      /* JFIN Mod End */
+      _dark: 'whiteAlpha.800',
     },
     link_hovered: {
-      'default': 'blue.400',
+
+      /* JFIN Mod Start */
+      'default': 'blackAlpha.800',
+
+      _dark: 'whiteAlpha.800',
+
+      /* JFIN Mod End */
     },
     error: {
       'default': 'red.400',

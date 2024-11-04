@@ -1,48 +1,83 @@
 [
   {
-    "title": "JFin Explorer",
-    "url": "https://exp.jfinchain.com/",
-    "group": "Mainnets"
+    "title": "Bridge",
+    "url": "https://bridge.jfinchain.com/",
+    "group": "Mainnets",
+    "icon": "/static/commons/rpc.svg",
+    "invertIconInDarkMode": "true"
   },
   {
-    "title": "JFin Explorer Testnet",
-    "url": "https://exp.testnet.jfinchain.com/",
-    "group": "Testnets"
-  },
-  {
-    "title": "JFin Chain Website",
-    "url": "https://www.jfincoin.io/about-jfin-chain",
-    "group": "Mainnets"
+    "title": "Staking",
+    "url": "https://staking.jfinchain.com/",
+    "group": "Mainnets",
+    "icon": "/static/commons/link.svg",
+    "invertIconInDarkMode": "true"
   },
   {
     "title": "Join Wallet",
     "url": "https://www.joinapp.digital",
     "group": "Mainnets",
-    "icon": "https://static.wixstatic.com/media/ff114f_72bfca7b019444939cda710b6f2dd67c~mv2.png/v1/fill/w_83,h_83,al_c,q_85,usm_0.66_1.00_0.01,enc_auto/Join%20Logo-04.png"
-  },
-  {
-    "title": "Bridge",
-    "url": "https://bridge.jfinchain.com/",
-    "group": "Mainnets"
-  },
-  {
-    "title": "Staking",
-    "url": "https://staking.jfinchain.com/",
-    "group": "Mainnets"
-  },
-  {
-    "title": "Faucet",
-    "url": "https://faucet.testnet.jfinchain.com/",
-    "group": "Mainnets"
+    "icon": "/static/apps/joinwallet.png"
   },
   {
     "title": "Community",
     "url": "https://www.jfincoin.io/jfin-community",
-    "group": "Mainnets"
+    "group": "Mainnets",
+    "icon": "/static/commons/discussions.svg",
+    "invertIconInDarkMode": "true"
   },
   {
-    "title": "Whitepaper",
-    "url": "https://www.jfincoin.io/whitepaper",
-    "group": "Mainnets"
+    "title": "Coinmarketcap",
+    "url": "https://coinmarketcap.com/currencies/jfin/",
+    "group": "Mainnets",
+    "icon": "/static/apps/coinmarketcap.png"
+  },
+  {
+    "title": "JNFT",
+    "url": "https://marketplace.jnft.digital/",
+    "group": "Mainnets",
+    "icon": "/static/apps/jnft.png",
+    "invertIconInDarkMode": "true"
+  },
+  {
+    "title": "J2O (L2)",
+    "url": "https://j2o.io/",
+    "group": "Mainnets",
+    "icon": "/static/apps/j2o.png"
+  },
+  {
+    "title": "Testnet",
+    "url": "https://testnet.jfinscan.com/",
+    "group": "Testnets",
+    "icon": "/static/commons/construction.svg",
+    "invertIconInDarkMode": "true"
+  },
+  {
+    "title": "Markets",
+    "group": "Mainnets",
+    "icon": "/static/commons/token.svg",
+    "invertIconInDarkMode": "true",
+    "subMenu": [
+      {
+        "title": "Bitkub",
+        "icon": "/static/markets/bitkub.png",
+        "url": "https://www.bitkub.com/market/JFIN"
+      },
+      {
+        "title": "Coinstore",
+        "icon": "/static/markets/coinstore.png",
+        "url": "https://www.coinstore.com/#/spot/jfinusdt"
+      },
+      {
+        "title": "Satang Pro",
+        "icon": "/static/markets/satang-pro.png",
+        "url": "https://satangcorp.com/exchange/trade/JFIN-THB"
+      },
+      {
+        "title": "Liquid Crypto",
+        "icon": "/static/markets/liquid-crypto.png",
+        "url": "https://jfinchain.liquidcrypto.finance/swap"
+      }
+    ]
   }
 ]

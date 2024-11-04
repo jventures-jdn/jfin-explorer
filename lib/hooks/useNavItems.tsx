@@ -10,9 +10,15 @@ import appsIcon from 'icons/apps.svg';
 import withdrawalsIcon from 'icons/arrows/north-east.svg';
 import depositsIcon from 'icons/arrows/south-east.svg';
 import blocksIcon from 'icons/block.svg';
+import constructionIcon from 'icons/construction.svg';
+import contractIcon from 'icons/contract.svg';
+import discussionsIcon from 'icons/discussions.svg';
+import docsIcon from 'icons/docs.svg';
+import gasIcon from 'icons/gas.svg';
 import gearIcon from 'icons/gear.svg';
 import globeIcon from 'icons/globe-b.svg';
 import graphQLIcon from 'icons/graphQL.svg';
+import linkIcon from 'icons/link.svg';
 import outputRootsIcon from 'icons/output_roots.svg';
 import privateTagIcon from 'icons/privattags.svg';
 import publicTagIcon from 'icons/publictags.svg';
@@ -24,6 +30,7 @@ import topAccountsIcon from 'icons/top-accounts.svg';
 import transactionsIcon from 'icons/transactions.svg';
 import txnBatchIcon from 'icons/txn_batches.svg';
 import verifiedIcon from 'icons/verified.svg';
+import metamaskIcon from 'icons/wallets/metamask.svg';
 import watchlistIcon from 'icons/watchlist.svg';
 import { rightLineArrow } from 'lib/html-entities';
 import UserAvatar from 'ui/shared/UserAvatar';
@@ -68,23 +75,10 @@ export default function useNavItems(): ReturnType {
       isActive: pathname === '/txs' || pathname === '/tx/[hash]',
     };
     const verifiedContracts =
-    // eslint-disable-next-line max-len
-     { text: 'Verified contracts', nextRoute: { pathname: '/verified-contracts' as const }, icon: verifiedIcon, isActive: pathname === '/verified-contracts' };
+      // eslint-disable-next-line max-len
+      { text: 'Verified contracts', nextRoute: { pathname: '/verified-contracts' as const }, icon: verifiedIcon, isActive: pathname === '/verified-contracts' };
 
-    if (config.features.zkEvmRollup.isEnabled) {
-      blockchainNavItems = [
-        [
-          txs,
-          blocks,
-          // eslint-disable-next-line max-len
-          { text: 'Txn batches', nextRoute: { pathname: '/zkevm-l2-txn-batches' as const }, icon: txnBatchIcon, isActive: pathname === '/zkevm-l2-txn-batches' || pathname === '/zkevm-l2-txn-batch/[number]' },
-        ],
-        [
-          topAccounts,
-          verifiedContracts,
-        ].filter(Boolean),
-      ];
-    } else if (config.features.optimisticRollup.isEnabled) {
+    if (config.features.rollup.isEnabled) {
       blockchainNavItems = [
         [
           txs,
@@ -120,6 +114,89 @@ export default function useNavItems(): ReturnType {
       ].filter(Boolean);
     }
 
+    /* JFIN Mod Start */
+    const informationNavItems: Array<NavItem> = [
+      {
+        text: 'About',
+        iconImage: '/static/jfin/jfin-chain.png',
+        url: 'https://www.jfincoin.io/about-jfin-chain',
+      },
+      {
+        text: 'Community',
+        icon: discussionsIcon,
+        url: 'https://www.jfincoin.io/jfin-community',
+      },
+      {
+        text: 'Whitepaper',
+        icon: contractIcon,
+        url: 'https://www.jfincoin.io/whitepaper',
+      },
+      {
+        text: 'Coinmarketcap',
+        iconImage: '/static/apps/coinmarketcap.png',
+        url: 'https://coinmarketcap.com/currencies/jfin/',
+      },
+    ].filter(Boolean);
+
+    const moreNavItems: Array<NavItem> = [
+      {
+        text: 'Bridge',
+        icon: rpcIcon,
+        url: 'https://bridge.jfinchain.com/',
+        group: 'Apps',
+      },
+      {
+        text: 'Staking',
+        icon: linkIcon,
+        url: 'https://staking.jfinchain.com/',
+        group: 'Apps',
+      },
+      {
+        text: 'Join Wallet',
+        iconImage: '/static/apps/joinwallet.png',
+        url: 'https://www.joinapp.digital/',
+        group: 'Apps',
+      },
+      {
+        text: 'J2O (L2)',
+        iconImage: '/static/apps/j2o.png',
+        url: 'https://j2o.io/',
+        group: 'Apps',
+      },
+      {
+        text: 'JNFT',
+        iconImage: '/static/apps/jnft.png',
+        url: 'https://marketplace.jnft.digital/',
+        group: 'Apps',
+      },
+      {
+        text: 'Bitkub',
+        iconImage: '/static/markets/bitkub.png',
+        url: 'https://www.bitkub.com/market/JFIN',
+        group: 'JFIN Coin Markets',
+      },
+      {
+        text: 'Coinstore',
+        iconImage: '/static/markets/coinstore.png',
+        url: 'https://www.coinstore.com/#/spot/jfinusdt',
+        group: 'JFIN Coin Markets',
+      },
+      {
+        text: 'Satang Pro',
+        iconImage: '/static/markets/satang-pro.png',
+        url: 'https://satangcorp.com/exchange/trade/JFIN-THB',
+        group: 'JFIN Coin Markets',
+      },
+      {
+        text: 'Liquid Crypto',
+        iconImage: '/static/markets/liquid-crypto.png',
+        url: 'https://jfinchain.liquidcrypto.finance/swap',
+        group: 'JFIN Coin Markets',
+      },
+    ].filter(Boolean);
+
+    /* JFIN Mod End */
+
     const apiNavItems: Array<NavItem> = [
       config.features.restApiDocs.isEnabled ? {
         text: 'REST API',
@@ -133,22 +210,53 @@ export default function useNavItems(): ReturnType {
         icon: graphQLIcon,
         isActive: pathname === '/graphiql',
       } : null,
-      !config.UI.sidebar.hiddenLinks?.rpc_api && {
+      {
         text: 'RPC API',
         icon: rpcIcon,
         url: 'https://docs.blockscout.com/for-users/api/rpc-endpoints',
       },
-      !config.UI.sidebar.hiddenLinks?.eth_rpc_api && {
+      {
         text: 'Eth RPC API',
         icon: rpcIcon,
-        url: ' https://docs.blockscout.com/for-users/api/eth-rpc',
+        url: 'https://ethereum.org/en/developers/docs/apis/json-rpc/',
+      },
+
+      /* JFIN Mod Start */
+      {
+        text: 'Faucet',
+        icon: gasIcon,
+        url: 'https://faucet.testnet.jfinchain.com/',
+      },
+      {
+        text: 'Testnet',
+        icon: constructionIcon,
+        url: 'https://testnet.jfinscan.com/',
+      },
+
+      /* JFIN Mod End */
+    ].filter(Boolean);
+
+    /* JFIN Mod Start */
+    const networkNavItems: Array<NavItem> = [
+      {
+        group: 'Mainnet',
+        text: 'JFIN Chain Mainnet',
+        icon: globeIcon,
+        url: 'https://jfinscan.com',
+      }, {
+        group: 'Testnet',
+        text: 'JFIN Chain Testnet',
+        icon: constructionIcon,
+        url: 'https://testnet.jfinscan.com',
       },
     ].filter(Boolean);
+
+    /* JFIN Mod End */
 
     const mainNavItems: ReturnType['mainNavItems'] = [
       {
         text: 'Blockchain',
-        icon: globeIcon,
+        icon: blocksIcon,
         isActive: blockchainNavItems.flat().some(item => isInternalItem(item) && item.isActive),
         subItems: blockchainNavItems,
       },
@@ -170,17 +278,51 @@ export default function useNavItems(): ReturnType {
         icon: statsIcon,
         isActive: pathname === '/stats',
       } : null,
-      apiNavItems.length > 0 && {
-        text: 'API',
-        icon: apiDocsIcon,
-        isActive: apiNavItems.some(item => isInternalItem(item) && item.isActive),
-        subItems: apiNavItems,
-      },
+
+      /* JFIN Mod Start */
+      // apiNavItems.length > 0 && {
+      //   text: 'API',
+      //   icon: apiDocsIcon,
+      //   isActive: apiNavItems.some(item => isInternalItem(item) && item.isActive),
+      //   subItems: apiNavItems,
+      // },
+
+      /* JFIN Mod End */
       config.UI.sidebar.otherLinks.length > 0 ? {
         text: 'Other',
         icon: gearIcon,
         subItems: config.UI.sidebar.otherLinks,
       } : null,
+
+      /* JFIN Mod Start */
+      {
+        text: 'Information',
+        icon: docsIcon,
+        subItems: informationNavItems,
+      },
+      {
+        text: 'Developers',
+        icon: gearIcon,
+        subItems: apiNavItems,
+      },
+      {
+        text: 'More',
+        icon: appsIcon,
+        subItems: moreNavItems,
+      },
+      {
+        text: config.chain.isTestnet ? 'Testnet' : 'Mainnet',
+        icon: config.chain.isTestnet ? constructionIcon : globeIcon,
+        subItems: networkNavItems,
+      },
+      {
+        text: 'Network Profiles',
+        icon: metamaskIcon,
+        nextRoute: { pathname: '/network-profiles' as const },
+        isActive: pathname === '/network-profiles',
+      },
+
+      /* JFIN Mod End */
     ].filter(Boolean);
 
     const accountNavItems: ReturnType['accountNavItems'] = [
@@ -227,6 +369,6 @@ export default function useNavItems(): ReturnType {
       isActive: pathname === '/auth/profile',
     };
 
-    return { mainNavItems, accountNavItems, profileItem };
+    return { mainNavItems, accountNavItems, profileItem, networkNavItems };
   }, [ pathname ]);
 }

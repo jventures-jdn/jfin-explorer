@@ -1,12 +1,16 @@
+/* eslint-disable no-nested-ternary */
 import type { As } from '@chakra-ui/react';
-import { Box, Flex, Skeleton, Tooltip, chakra, VStack } from '@chakra-ui/react';
+import { Box, Flex, Skeleton, Tooltip, chakra, VStack, Image } from '@chakra-ui/react';
+import { shapes } from '@dicebear/collection';
+import { createAvatar } from '@dicebear/core';
 import _omit from 'lodash/omit';
-import React from 'react';
+import React, { useMemo } from 'react';
 
 import type { AddressParam } from 'types/api/addressParams';
 
 import { route } from 'nextjs-routes';
 
+import config from 'configs/app';
 import iconSafe from 'icons/brands/safe.svg';
 import iconContractVerified from 'icons/contract_verified.svg';
 import iconContract from 'icons/contract.svg';
@@ -32,6 +36,7 @@ const Link = chakra((props: LinkProps) => {
 
 type IconProps = Pick<EntityProps, 'address' | 'isLoading' | 'iconSize' | 'noIcon' | 'isSafeAddress'> & {
   asProp?: As;
+  imageSrc?: string;
 };
 
 const Icon = (props: IconProps) => {
@@ -86,13 +91,29 @@ const Icon = (props: IconProps) => {
     );
   }
 
+  const avatar = createAvatar(shapes, {
+    seed: props.address.hash,
+  });
+
   return (
     <Tooltip label={ props.address.implementation_name }>
       <Flex marginRight={ styles.marginRight }>
-        <AddressIdenticon
-          size={ props.iconSize === 'lg' ? 30 : 20 }
-          hash={ props.address.hash }
-        />
+        { /* JFIN Mod Start */ }
+        { props.imageSrc ? (
+          // eslint-disable-next-line react/jsx-no-bind
+          <Image src={ props.imageSrc } borderRadius="full" w="30px" alt="Address icon" onError={ ({ currentTarget }) => {
+            currentTarget.onerror = null; // prevents looping
+            currentTarget.src = avatar.toDataUriSync();
+          } }/>
+
+        ) : (
+          <AddressIdenticon
+            // size={ props.iconSize === 'lg' ? 30 : 20 }
+            size={ 30 }
+            hash={ props.address.hash }
+          />
+        ) }
+        { /* JFIN Mod Start */ }
       </Flex>
     </Tooltip>
   );
@@ -148,16 +169,44 @@ const AddressEntry = (props: EntityProps) => {
   const linkProps = _omit(props, [ 'className' ]);
   const partsProps = _omit(props, [ 'className', 'onClick' ]);
 
+  // JFIN Mod Start
+  const [ validatorImage, updatedName ] = useMemo(() => {
+    let tempValidatorImage = '';
+    let validatorName = props.address.name;
+    for (const [ key, value ] of Object.entries(config.validatorWallets)) {
+      if (key.toLowerCase() === props?.address?.hash?.toLowerCase()) {
+        validatorName = value.name;
+        if ('image' in value) {
+          tempValidatorImage = value.image;
+          break;
+        }
+      }
+    }
+    return [ tempValidatorImage, validatorName ];
+  }, [ props.address.hash, props.address.name ]);
+
+  const avatar = createAvatar(shapes, {
+    seed: props.address.hash,
+  });
+
   return (
     <Container className={ props.className }>
-      <Icon { ...partsProps }/>
+      <Icon { ...partsProps }
+        imageSrc={
+          validatorImage ?
+            validatorImage :
+            props.address.name ?
+              `https://jns-avatar-upload-testnet.jfin.workers.dev/jfintestnet/${ props.address.name }` :
+              avatar.toDataUriSync()
+        }/>
       <Link { ...linkProps }>
-        <Content { ...partsProps }/>
+        <Content { ...partsProps } address={{ ...partsProps.address, name: updatedName }}/>
       </Link>
       <Copy { ...partsProps }/>
     </Container>
   );
 };
+  // JFIN Mod End
 
 export default React.memo(chakra(AddressEntry));
 

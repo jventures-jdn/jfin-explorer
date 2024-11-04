@@ -13,7 +13,7 @@ import TxEntityL1 from 'ui/shared/entities/tx/TxEntityL1';
 import LinkInternal from 'ui/shared/LinkInternal';
 import ListItemMobileGrid from 'ui/shared/ListItemMobile/ListItemMobileGrid';
 
-const feature = config.features.optimisticRollup;
+const feature = config.features.rollup;
 
 type Props = { item: L2TxnBatchesItem; isLoading?: boolean };
 

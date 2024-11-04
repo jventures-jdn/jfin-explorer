@@ -18,7 +18,11 @@ export default function generate<R extends Route>(route: R, apiData?: ApiData<R>
   };
 
   const compiledTitle = compileValue(templates.title.make(route.pathname), params);
-  const title = compiledTitle ? compiledTitle + (config.meta.promoteBlockscoutInTitle ? ' | Blockscout' : '') : '';
+
+  /* JFIN Mod Start */
+  const title = compiledTitle ? compiledTitle + (config.meta.promoteBlockscoutInTitle ? ' | JFIN Chain Explorer' : '') : '';
+
+  /* JFIN Mod End */
   const description = compileValue(templates.description.make(route.pathname), params);
 
   const pageOgType = getPageOgType(route.pathname);

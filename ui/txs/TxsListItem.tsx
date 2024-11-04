@@ -19,9 +19,9 @@ import BlockEntity from 'ui/shared/entities/block/BlockEntity';
 import TxEntity from 'ui/shared/entities/tx/TxEntity';
 import InOutTag from 'ui/shared/InOutTag';
 import ListItemMobile from 'ui/shared/ListItemMobile/ListItemMobile';
-import TxStatus from 'ui/shared/statusTag/TxStatus';
 import TxFeeStability from 'ui/shared/tx/TxFeeStability';
 import TxWatchListTags from 'ui/shared/tx/TxWatchListTags';
+import TxStatus from 'ui/shared/TxStatus';
 import TxAdditionalInfo from 'ui/txs/TxAdditionalInfo';
 import TxType from 'ui/txs/TxType';
 
@@ -103,12 +103,14 @@ const TxsListItem = ({ tx, isLoading, showBlockInfo, currentAddress, enableTimeI
         { (isIn || isOut) ?
           <InOutTag isIn={ isIn } isOut={ isOut } width="48px" mx={ 2 } isLoading={ isLoading }/> : (
             <Box mx={ 2 }>
+              { /* JFIN Mod Start */ }
               <Icon
                 as={ rightArrowIcon }
                 boxSize={ 6 }
-                color="gray.500"
+                color="purple.200"
                 isLoading={ isLoading }
               />
+              { /* JFIN Mod End */ }
             </Box>
           ) }
         { dataTo ? (
@@ -122,6 +124,7 @@ const TxsListItem = ({ tx, isLoading, showBlockInfo, currentAddress, enableTimeI
           />
         ) : '-' }
       </Flex>
+      { /* JFIN Mod Start */ }
       { !config.UI.views.tx.hiddenFields?.value && (
         <Flex mt={ 2 } columnGap={ 2 }>
           <Skeleton isLoaded={ !isLoading } display="inline-block" whiteSpace="pre">Value</Skeleton>
@@ -145,6 +148,7 @@ const TxsListItem = ({ tx, isLoading, showBlockInfo, currentAddress, enableTimeI
           ) }
         </Flex>
       ) }
+      { /* JFIN Mod End */ }
     </ListItemMobile>
   );
 };

@@ -1,11 +1,14 @@
 import React from 'react';
 
+import type { NetworkProfile } from 'types/client/networkProfiles';
+
 import config from 'configs/app';
 import getErrorObj from 'lib/errors/getErrorObj';
 
 import useProvider from './useProvider';
 
-export default function useAddOrSwitchChain() {
+/* JFIN Mod Start */
+export default function useAddOrSwitchChain(networkProfile?: NetworkProfile) {
   const { wallet, provider } = useProvider();
 
   return React.useCallback(async() => {
@@ -13,7 +16,7 @@ export default function useAddOrSwitchChain() {
       return;
     }
 
-    const hexadecimalChainId = '0x' + Number(config.chain.id).toString(16);
+    const hexadecimalChainId = '0x' + Number(networkProfile?.chainId || config.chain.id).toString(16);
 
     try {
       return await provider.request({
@@ -29,14 +32,14 @@ export default function useAddOrSwitchChain() {
       if (code === 4902) {
         const params = [ {
           chainId: hexadecimalChainId,
-          chainName: config.chain.name,
+          chainName: networkProfile?.name || config.chain.name,
           nativeCurrency: {
-            name: config.chain.currency.name,
-            symbol: config.chain.currency.symbol,
+            name: networkProfile?.token || config.chain.currency.name,
+            symbol: networkProfile?.token || config.chain.currency.symbol,
             decimals: config.chain.currency.decimals,
           },
-          rpcUrls: [ config.chain.rpcUrl ],
-          blockExplorerUrls: [ config.app.baseUrl ],
+          rpcUrls: [ networkProfile?.rpc || config.chain.rpcUrl ],
+          blockExplorerUrls: [ networkProfile?.explorerUrl || config.app.baseUrl ],
         } ] as never;
         // in wagmi types for wallet_addEthereumChain method is not provided
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -49,5 +52,7 @@ export default function useAddOrSwitchChain() {
 
       throw error;
     }
-  }, [ provider, wallet ]);
+  }, [ networkProfile, provider, wallet ]);
 }
+
+/* JFIN Mod End */

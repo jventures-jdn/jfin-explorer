@@ -13,7 +13,7 @@ const VerifiedContractsCounters = () => {
   }
 
   const content = (() => {
-    if (countersQuery.isPending) {
+    if (countersQuery.isLoading) {
       const item = <Skeleton w={{ base: '100%', lg: 'calc((100% - 12px)/2)' }} h="69px" borderRadius="12px"/>;
       return (
         <>

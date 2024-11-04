@@ -1,5 +1,6 @@
 import { Grid, GridItem, Skeleton, useColorModeValue } from '@chakra-ui/react';
 import React from 'react';
+import xss from 'xss';
 
 import type { TokenInstance } from 'types/api/token';
 import type { MetadataAttributes } from 'types/client/token';
@@ -33,8 +34,6 @@ const Item = ({ data, isLoading }: ItemProps) => {
           w="100%"
           overflow="hidden"
           href={ data.value }
-          fontSize="sm"
-          lineHeight={ 5 }
         >
           <TruncatedValue value={ data.value } w="calc(100% - 16px)"/>
         </LinkExternal>
@@ -54,8 +53,19 @@ const Item = ({ data, isLoading }: ItemProps) => {
       flexDir="column"
       alignItems="flex-start"
     >
-      <Skeleton isLoaded={ !isLoading } fontSize="xs" lineHeight={ 4 } color="text_secondary" fontWeight={ 500 } mb={ 1 }>
+      <Skeleton
+        isLoaded={ !isLoading }
+        fontSize="xs"
+        lineHeight={ 4 }
+        color="text_secondary"
+        fontWeight={ 500 }
+        w="full"
+        display="flex"
+        mb={ 1 }
+        flex={ 1 }
+        justifyContent="space-between">
         <span>{ data.trait_type }</span>
+        { data?.display_type === 'date' && <span>UTC</span> }
       </Skeleton>
       { value }
     </GridItem>
@@ -95,7 +105,9 @@ const TokenInstanceMetadataInfo = ({ data, isLoading }: Props) => {
           isLoading={ isLoading }
         >
           <Skeleton isLoaded={ !isLoading }>
-            { metadata.description }
+            { /* JFIN Mod Start */ }
+            <div dangerouslySetInnerHTML={{ __html: xss(metadata?.description) }}/>
+            { /* JFIN Mod End */ }
           </Skeleton>
         </DetailsInfoItem>
       ) }
@@ -106,7 +118,7 @@ const TokenInstanceMetadataInfo = ({ data, isLoading }: Props) => {
           whiteSpace="normal"
           isLoading={ isLoading }
         >
-          <Grid gap={ 2 } templateColumns="repeat(auto-fill,minmax(160px, 1fr))" w="100%">
+          <Grid gap={ 2 } templateColumns="repeat(auto-fill,minmax(180px, 1fr))" w="100%">
             { metadata.attributes.map((attribute, index) => <Item key={ index } data={ attribute } isLoading={ isLoading }/>) }
           </Grid>
         </DetailsInfoItem>

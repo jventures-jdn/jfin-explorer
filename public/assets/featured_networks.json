@@ -1,0 +1,83 @@
+[
+  {
+    "title": "Bridge",
+    "url": "https://bridge.jfinchain.com/",
+    "group": "Mainnets",
+    "icon": "/static/commons/rpc.svg",
+    "invertIconInDarkMode": "true"
+  },
+  {
+    "title": "Staking",
+    "url": "https://staking.jfinchain.com/",
+    "group": "Mainnets",
+    "icon": "/static/commons/link.svg",
+    "invertIconInDarkMode": "true"
+  },
+  {
+    "title": "Join Wallet",
+    "url": "https://www.joinapp.digital",
+    "group": "Mainnets",
+    "icon": "/static/apps/joinwallet.png"
+  },
+  {
+    "title": "Community",
+    "url": "https://www.jfincoin.io/jfin-community",
+    "group": "Mainnets",
+    "icon": "/static/commons/discussions.svg",
+    "invertIconInDarkMode": "true"
+  },
+  {
+    "title": "Coinmarketcap",
+    "url": "https://coinmarketcap.com/currencies/jfin/",
+    "group": "Mainnets",
+    "icon": "/static/apps/coinmarketcap.png"
+  },
+  {
+    "title": "JNFT",
+    "url": "https://marketplace.jnft.digital/",
+    "group": "Mainnets",
+    "icon": "/static/apps/jnft.svg",
+    "invertIconInDarkMode": "true"
+  },
+  {
+    "title": "J2O (L2)",
+    "url": "https://j2o.io/",
+    "group": "Mainnets",
+    "icon": "/static/apps/j2o.png"
+  },
+  {
+    "title": "Testnet",
+    "url": "https://testnet.jfinscan.com/",
+    "group": "Testnets",
+    "icon": "/static/commons/construction.svg",
+    "invertIconInDarkMode": "true"
+  },
+  {
+    "title": "Markets",
+    "group": "Mainnets",
+    "icon": "/static/commons/token.svg",
+    "invertIconInDarkMode": "true",
+    "subMenu": [
+      {
+        "title": "Bitkub",
+        "icon": "/static/markets/bitkub.png",
+        "url": "https://www.bitkub.com/market/JFIN"
+      },
+      {
+        "title": "Coinstore",
+        "icon": "/static/markets/coinstore.png",
+        "url": "https://www.coinstore.com/#/spot/jfinusdt"
+      },
+      {
+        "title": "Satang Pro",
+        "icon": "/static/markets/satang-pro.png",
+        "url": "https://satangcorp.com/exchange/trade/JFIN-THB"
+      },
+      {
+        "title": "Liquid Crypto",
+        "icon": "/static/markets/liquid-crypto.png",
+        "url": "https://jfinchain.liquidcrypto.finance/swap"
+      }
+    ]
+  }
+]

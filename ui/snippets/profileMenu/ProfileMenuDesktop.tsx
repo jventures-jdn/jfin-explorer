@@ -9,15 +9,15 @@ import UserAvatar from 'ui/shared/UserAvatar';
 import ProfileMenuContent from 'ui/snippets/profileMenu/ProfileMenuContent';
 
 const ProfileMenuDesktop = () => {
-  const { data, error, isPending } = useFetchProfileInfo();
+  const { data, error, isLoading } = useFetchProfileInfo();
   const loginUrl = useLoginUrl();
   const [ hasMenu, setHasMenu ] = React.useState(false);
 
   React.useEffect(() => {
-    if (!isPending) {
+    if (!isLoading) {
       setHasMenu(Boolean(data));
     }
-  }, [ data, error?.status, isPending ]);
+  }, [ data, error?.status, isLoading ]);
 
   const handleSignInClick = React.useCallback(() => {
     mixpanel.logEvent(

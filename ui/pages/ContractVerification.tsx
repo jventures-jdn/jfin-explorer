@@ -64,7 +64,7 @@ const ContractVerification = () => {
       return <DataFetchAlert/>;
     }
 
-    if (configQuery.isPending || contractQuery.isPending || isVerifiedContract) {
+    if (configQuery.isLoading || contractQuery.isLoading || isVerifiedContract) {
       return <ContentLoader/>;
     }
 

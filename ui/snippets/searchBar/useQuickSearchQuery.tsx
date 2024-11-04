@@ -1,15 +1,31 @@
+/* eslint-disable @typescript-eslint/no-non-null-assertion */
 import { useRouter } from 'next/router';
 import React from 'react';
+import { isAddress } from 'viem';
 
 import useApiQuery from 'lib/api/useApiQuery';
 import useDebounce from 'lib/hooks/useDebounce';
+// JNS Mod Start
+import useJNSName from 'lib/hooks/useJNSName';
 
 export default function useQuickSearchQuery() {
   const router = useRouter();
 
   const [ searchTerm, setSearchTerm ] = React.useState('');
 
-  const debouncedSearchTerm = useDebounce(searchTerm, 300);
+  let debouncedSearchTerm = useDebounce(searchTerm, 600);
+
+  const jns = useJNSName([ debouncedSearchTerm ]);
+
+  if (jns.data && jns.data.length > 0 && !isAddress(debouncedSearchTerm)) {
+    const jnsName = debouncedSearchTerm.endsWith('.jfin') ? debouncedSearchTerm : `${ debouncedSearchTerm }.jfin`;
+    const foundJns = jns.data.find(item => item.name === jnsName);
+
+    if (foundJns && foundJns.address) {
+      debouncedSearchTerm = foundJns.address;
+    }
+  }
+  // JNS Mod End
   const pathname = router.pathname;
 
   const query = useApiQuery('quick_search', {

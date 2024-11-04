@@ -8,6 +8,7 @@ export interface MetadataAttributes {
   value: string;
   trait_type: string;
   value_type?: 'URL';
+  display_type?: string;
 }
 
 export interface BridgedTokenChain {

@@ -18,6 +18,10 @@ const SearchBarSuggestAddress = ({ data, isMobile, searchTerm }: Props) => {
   const icon = (
     <AddressEntity.Icon
       address={{ hash: data.address, is_contract: data.type === 'contract', name: '', is_verified: data.is_smart_contract_verified, implementation_name: null }}
+      imageSrc={ Boolean(data.name) &&
+         typeof data.name === 'string' &&
+          /\.jfin$/.test(data.name) ? `https://jns-avatar-upload-testnet.jfin.workers.dev/jfintestnet/${ data.name }` :
+        undefined }
     />
   );
   const name = data.name && (

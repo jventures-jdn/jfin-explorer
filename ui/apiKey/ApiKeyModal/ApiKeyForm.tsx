@@ -57,8 +57,7 @@ const ApiKeyForm: React.FC<Props> = ({ data, onClose, setAlertVisible }) => {
     });
   };
 
-  const mutation = useMutation({
-    mutationFn: updateApiKey,
+  const mutation = useMutation(updateApiKey, {
     onSuccess: async(data) => {
       const response = data as unknown as ApiKey;
 
@@ -149,7 +148,7 @@ const ApiKeyForm: React.FC<Props> = ({ data, onClose, setAlertVisible }) => {
           size="lg"
           type="submit"
           isDisabled={ !isDirty }
-          isLoading={ mutation.isPending }
+          isLoading={ mutation.isLoading }
         >
           { data ? 'Save' : 'Generate API key' }
         </Button>

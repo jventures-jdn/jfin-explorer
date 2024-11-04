@@ -1,6 +1,7 @@
 import { Box } from '@chakra-ui/react';
 import React from 'react';
 import type { Primitive } from 'react-hook-form';
+import xss from 'xss';
 
 import urlParser from 'lib/token/metadata/urlParser';
 import LinkExternal from 'ui/shared/LinkExternal';
@@ -30,7 +31,9 @@ const MetadataItemPrimitive = ({ name, value, isItem = true, isFlat, level }: Pr
       }
       // eslint-disable-next-line no-fallthrough
       default: {
-        return <div>{ String(value) }</div>;
+        { /* JFIN Mod Start */ }
+        return <div dangerouslySetInnerHTML={{ __html: xss(String(value)) }}/>;
+        { /* JFIN Mod End */ }
       }
     }
   })();

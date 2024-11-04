@@ -20,7 +20,6 @@ module.exports = {
     'plugin:@typescript-eslint/recommended',
     'plugin:jest/recommended',
     'plugin:playwright/playwright-test',
-    'plugin:@tanstack/eslint-plugin-query/recommended',
   ],
   plugins: [
     'es5',
@@ -32,7 +31,6 @@ module.exports = {
     'eslint-plugin-import-helpers',
     'jest',
     'eslint-plugin-no-cyrillic-string',
-    '@tanstack/query',
   ],
   parser: '@typescript-eslint/parser',
   parserOptions: {
@@ -307,7 +305,7 @@ module.exports = {
       },
     },
     {
-      files: [ '*.config.ts', '*.config.js', 'playwright/**', 'deploy/tools/**', 'middleware.ts', 'nextjs/**' ],
+      files: [ '*.config.ts', 'playwright/**', 'deploy/tools/**', 'middleware.ts', 'nextjs/**' ],
       rules: {
         // for configs allow to consume env variables from process.env directly
         'no-restricted-properties': [ 0 ],

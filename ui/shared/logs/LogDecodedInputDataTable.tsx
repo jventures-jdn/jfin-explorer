@@ -4,6 +4,7 @@ import React from 'react';
 import type { DecodedInput } from 'types/api/decodedInput';
 import type { ArrayElement } from 'types/utils';
 
+import useJNSName from 'lib/hooks/useJNSName';
 import CopyToClipboard from 'ui/shared/CopyToClipboard';
 import AddressEntity from 'ui/shared/entities/address/AddressEntity';
 import TruncatedValue from 'ui/shared/TruncatedValue';
@@ -29,11 +30,13 @@ const HeaderItem = ({ children, isLoading }: { children: React.ReactNode; isLoad
 };
 
 const Row = ({ name, type, indexed, value, isLoading }: ArrayElement<DecodedInput['parameters']> & { isLoading?: boolean }) => {
+  const { data: jnsData } = useJNSName([ value as string ]);
   const content = (() => {
     if (type === 'address' && typeof value === 'string') {
       return (
         <AddressEntity
-          address={{ hash: value, name: '', implementation_name: null, is_contract: false, is_verified: false }}
+          address={{ hash: value, name: jnsData?.find(item => item.address === value)?.name || '',
+            implementation_name: null, is_contract: false, is_verified: false }}
           isLoading={ isLoading }
         />
       );

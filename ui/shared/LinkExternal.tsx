@@ -17,6 +17,8 @@ const LinkExternal = ({ href, children, className, isLoading, variant }: Props) 
 
   const styleProps: ChakraProps = (() => {
     const commonProps = {
+      fontSize: 'sm',
+      lineHeight: 5,
       display: 'inline-block',
       alignItems: 'center',
     };

@@ -112,7 +112,7 @@ const TokenInfoForm = ({ address, tokenName, application, onSubmit }: Props) => 
     return <DataFetchAlert/>;
   }
 
-  if (configQuery.isPending) {
+  if (configQuery.isLoading) {
     return <ContentLoader/>;
   }
 

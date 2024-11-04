@@ -8,6 +8,7 @@ import { Element } from 'react-scroll';
 import { route } from 'nextjs-routes';
 
 import useIsMobile from 'lib/hooks/useIsMobile';
+import useJNSName from 'lib/hooks/useJNSName';
 import * as mixpanel from 'lib/mixpanel/index';
 import { getRecentSearchKeywords, saveToRecentKeywords } from 'lib/recentSearchKeywords';
 import LinkInternal from 'ui/shared/LinkInternal';
@@ -35,6 +36,26 @@ const SearchBar = ({ isHomepage }: Props) => {
   const recentSearchKeywords = getRecentSearchKeywords();
 
   const { searchTerm, debouncedSearchTerm, handleSearchTermChange, query, pathname } = useQuickSearchQuery();
+
+  const addresses: Array<string> = [];
+  query.data?.forEach((item) => {
+    if (item.type === 'address') {
+      addresses.push(item.address);
+    }
+  });
+
+  const { data } = useJNSName(addresses);
+
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const dataWithJNSName = query.data?.map((item: any) => {
+    const jnsName = data?.find(resultItem => item.type === 'address' ? item.address === resultItem.address : false);
+    return {
+      ...item,
+      name: jnsName?.name || item?.name,
+    };
+  });
+
+  const _query = { ...query, data: dataWithJNSName };
 
   const handleSubmit = React.useCallback((event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -152,7 +173,9 @@ const SearchBar = ({ isHomepage }: Props) => {
             ) }
             { searchTerm.trim().length > 0 && (
               <SearchBarSuggest
-                query={ query }
+                // query={ query }
+                // eslint-disable-next-line @typescript-eslint/no-explicit-any
+                query={ _query as any }
                 searchTerm={ debouncedSearchTerm }
                 onItemClick={ handleItemClick }
                 containerId={ SCROLL_CONTAINER_ID }

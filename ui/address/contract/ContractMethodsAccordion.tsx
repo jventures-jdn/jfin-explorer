@@ -71,16 +71,18 @@ const ContractMethodsAccordion = <T extends SmartContractMethod>({ data, address
         <Link onClick={ handleReset } ml={ 3 }>Reset</Link>
       </Flex>
       <Accordion allowMultiple position="relative" onChange={ handleAccordionStateChange } index={ expandedSections }>
-        { data.map((item, index) => (
-          <ContractMethodsAccordionItem
-            key={ index }
-            data={ item }
-            id={ id }
-            index={ index }
-            addressHash={ addressHash }
-            renderContent={ renderItemContent as (item: SmartContractMethod, index: number, id: number) => React.ReactNode }
-          />
-        )) }
+        { data.map((item, index) => {
+          return (
+            <ContractMethodsAccordionItem
+              key={ index }
+              data={ item }
+              id={ id }
+              index={ index }
+              addressHash={ addressHash }
+              renderContent={ renderItemContent as (item: SmartContractMethod, index: number, id: number) => React.ReactNode }
+            />
+          );
+        }) }
       </Accordion>
     </>
   );

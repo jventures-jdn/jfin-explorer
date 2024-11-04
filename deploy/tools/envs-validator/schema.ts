@@ -45,7 +45,7 @@ const urlTest: yup.TestConfig = {
         new URL(value);
         return true;
       }
-    } catch (error) {}
+    } catch (error) { }
 
     return false;
   },
@@ -106,23 +106,20 @@ const beaconChainSchema = yup
 const rollupSchema = yup
   .object()
   .shape({
-    NEXT_PUBLIC_IS_OPTIMISTIC_L2_NETWORK: yup.boolean(),
-    NEXT_PUBLIC_OPTIMISTIC_L2_WITHDRAWAL_URL: yup
-      .string()
-      .when('NEXT_PUBLIC_IS_OPTIMISTIC_L2_NETWORK', {
-        is: (value: string) => value,
-        then: (schema) => schema.test(urlTest).required(),
-        // eslint-disable-next-line max-len
-        otherwise: (schema) => schema.max(-1, 'NEXT_PUBLIC_OPTIMISTIC_L2_WITHDRAWAL_URL cannot not be used if NEXT_PUBLIC_IS_OPTIMISTIC_L2_NETWORK is not set to "true"'),
-      }),
-    NEXT_PUBLIC_IS_ZKEVM_L2_NETWORK: yup.boolean(),
+    NEXT_PUBLIC_IS_L2_NETWORK: yup.boolean(),
     NEXT_PUBLIC_L1_BASE_URL: yup
       .string()
-      .when([ 'NEXT_PUBLIC_IS_OPTIMISTIC_L2_NETWORK', 'NEXT_PUBLIC_IS_ZKEVM_L2_NETWORK' ], {
-        is: (isOptimistic?: boolean, isZk?: boolean) => isOptimistic || isZk,
+      .when('NEXT_PUBLIC_IS_L2_NETWORK', {
+        is: (value: boolean) => value,
         then: (schema) => schema.test(urlTest).required(),
-        // eslint-disable-next-line max-len
-        otherwise: (schema) => schema.max(-1, 'NEXT_PUBLIC_L1_BASE_URL cannot not be used if NEXT_PUBLIC_IS_OPTIMISTIC_L2_NETWORK or NEXT_PUBLIC_IS_ZKEVM_L2_NETWORK is not set to "true"'),
+        otherwise: (schema) => schema.max(-1, 'NEXT_PUBLIC_L1_BASE_URL cannot not be used if NEXT_PUBLIC_IS_L2_NETWORK is not set to "true"'),
+      }),
+    NEXT_PUBLIC_L2_WITHDRAWAL_URL: yup
+      .string()
+      .when('NEXT_PUBLIC_IS_L2_NETWORK', {
+        is: (value: string) => value,
+        then: (schema) => schema.test(urlTest).required(),
+        otherwise: (schema) => schema.max(-1, 'NEXT_PUBLIC_L2_WITHDRAWAL_URL cannot not be used if NEXT_PUBLIC_IS_L2_NETWORK is not set to "true"'),
       }),
   });
 
@@ -210,21 +207,30 @@ const accountSchema = yup
       }),
   });
 
+const featuredNetworkSubMenuSchema = yup
+  .object({
+    title: yup.string().required(),
+    url: yup.string().test(urlTest).required(),
+    icon: yup.string(),
+  });
+
 const featuredNetworkSchema: yup.ObjectSchema<FeaturedNetwork> = yup
   .object()
   .shape({
     title: yup.string().required(),
-    url: yup.string().test(urlTest).required(),
+    url: yup.string(),
     group: yup.string().oneOf(NETWORK_GROUPS).required(),
-    icon: yup.string().test(urlTest),
+    icon: yup.string(),
     isActive: yup.boolean(),
     invertIconInDarkMode: yup.boolean(),
+    subMenu: yup.array().of(featuredNetworkSubMenuSchema),
   });
 
 const navItemExternalSchema: yup.ObjectSchema<NavItemExternal> = yup
   .object({
     text: yup.string().required(),
     url: yup.string().test(urlTest).required(),
+    group: yup.string(),
   });
 
 const footerLinkSchema: yup.ObjectSchema<CustomLink> = yup
@@ -408,8 +414,7 @@ const schema = yup
       .transform(replaceQuotes)
       .json()
       .of(networkExplorerSchema),
-    NEXT_PUBLIC_HIDE_INDEXING_ALERT_BLOCKS: yup.boolean(),
-    NEXT_PUBLIC_HIDE_INDEXING_ALERT_INT_TXS: yup.boolean(),
+    NEXT_PUBLIC_HIDE_INDEXING_ALERT: yup.boolean(),
     NEXT_PUBLIC_MAINTENANCE_ALERT_MESSAGE: yup.string(),
 
     // 5. Features configuration
@@ -445,6 +450,13 @@ const schema = yup
 
     // Misc
     NEXT_PUBLIC_USE_NEXT_JS_PROXY: yup.boolean(),
+
+    // JFIN Chain Configuration
+    NEXT_PUBLIC_CHAIN_REWARD: yup.number(),
+    NEXT_PUBLIC_JFIN_REWARD: yup.number(),
+    NEXT_PUBLIC_JNS_API_HOST: yup.string(),
+    NEXT_PUBLIC_JNS_METADATA_HOST: yup.string(),
+    NEXT_PUBLIC_JNS_NAMEWRAPPER_ADDRESS: yup.string(),
   })
   .concat(accountSchema)
   .concat(adsBannerSchema)

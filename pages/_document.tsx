@@ -7,9 +7,14 @@ import * as serverTiming from 'nextjs/utils/serverTiming';
 
 import theme from 'theme';
 
-class MyDocument extends Document {
+interface DocumentProps {
+  pathname?: string;
+}
+
+class MyDocument extends Document<DocumentProps> {
   static async getInitialProps(ctx: DocumentContext) {
     const originalRenderPage = ctx.renderPage;
+    const pathname = ctx?.req?.url || ctx.asPath || ctx.pathname;
     ctx.renderPage = async() => {
       const start = Date.now();
       const result = await originalRenderPage();
@@ -22,10 +27,11 @@ class MyDocument extends Document {
 
     const initialProps = await Document.getInitialProps(ctx);
 
-    return initialProps;
+    return { ...initialProps, pathname };
   }
 
   render() {
+    const { pathname } = this.props;
     return (
       <Html lang="en">
         <Head>
@@ -42,6 +48,10 @@ class MyDocument extends Document {
           { /* eslint-disable-next-line @next/next/no-sync-scripts */ }
           <script src="/envs.js"/>
 
+          { /* JFIN Mod Start */ }
+          <script type="text/javascript" src="https://files.coinmarketcap.com/static/widget/currency.js" async/>
+          { /* JFIN Mod End */ }
+
           { /* FAVICON */ }
           <link rel="icon" href="/favicon/favicon.ico" sizes="48x48"/>
           <link rel="icon" sizes="32x32" type="image/png" href="/favicon/favicon-32x32.png"/>
@@ -52,6 +62,21 @@ class MyDocument extends Document {
         <body>
           <ColorModeScript initialColorMode={ theme.config.initialColorMode }/>
           <Main/>
+          { pathname && pathname === '/' && (
+            <div
+              id="coinmarketcap-currency-widget"
+              className="coinmarketcap-currency-widget"
+              data-currencyid="4568"
+              data-base="USD"
+              data-secondary="THB"
+              data-ticker="true"
+              data-rank="true"
+              data-marketcap="false"
+              data-volume="true"
+              data-statsticker="true"
+              data-stats="USD"
+            />
+          ) }
           <NextScript/>
         </body>
       </Html>
