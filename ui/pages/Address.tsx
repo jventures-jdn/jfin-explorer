@@ -51,21 +51,27 @@ const AddressPageContent = () => {
   const tabsScrollRef = React.useRef<HTMLDivElement>(null);
   const hash = getQueryParamString(router.query.hash);
 
+  const addressResult = useApiQuery('search_check_redirect', {
+    queryParams: { q: hash },
+  });
+
   const addressQuery = useApiQuery('address', {
     pathParams: { hash },
     queryOptions: {
-      enabled: Boolean(hash),
+      enabled: Boolean(hash) && Boolean(addressResult.data) && addressResult.isSuccess,
       placeholderData: ADDRESS_INFO,
     },
   });
 
   // JNS Mod Start
-  const { data } = useJNSName([ hash ]);
+  const { data } = useJNSName(
+    addressResult.isSuccess ? [ hash ] : [],
+  );
 
   const addressTabsCountersQuery = useApiQuery('address_tabs_counters', {
     pathParams: { hash },
     queryOptions: {
-      enabled: Boolean(hash),
+      enabled: Boolean(hash) && Boolean(addressResult.data) && addressResult.isSuccess && Boolean(addressQuery.data),
       placeholderData: ADDRESS_TABS_COUNTERS,
     },
   });
