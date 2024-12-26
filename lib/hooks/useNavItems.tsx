@@ -160,7 +160,7 @@ export default function useNavItems(): ReturnType {
       {
         text: 'J2O (L2)',
         iconImage: '/static/apps/j2o.png',
-        url: 'https://j2o.io/',
+        url: 'https://exp.j2o.io/',
         group: 'Apps',
       },
       {
@@ -185,12 +185,6 @@ export default function useNavItems(): ReturnType {
         text: 'Satang Pro',
         iconImage: '/static/markets/satang-pro.png',
         url: 'https://satangcorp.com/exchange/trade/JFIN-THB',
-        group: 'JFIN Coin Markets',
-      },
-      {
-        text: 'Liquid Crypto',
-        iconImage: '/static/markets/liquid-crypto.png',
-        url: 'https://jfinchain.liquidcrypto.finance/swap',
         group: 'JFIN Coin Markets',
       },
     ].filter(Boolean);

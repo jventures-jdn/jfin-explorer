@@ -70,7 +70,7 @@ export default function useNetworkMenu() {
     },
     {
       title: 'J2O (L2)',
-      url: 'https://j2o.io/',
+      url: 'https://exp.j2o.io/',
       group: 'Mainnets',
       icon: '/static/apps/j2o.png',
     },
@@ -95,11 +95,6 @@ export default function useNetworkMenu() {
           title: 'Satang Pro',
           icon: '/static/markets/satang-pro.png',
           url: 'https://satangcorp.com/exchange/trade/JFIN-THB',
-        },
-        {
-          title: 'Liquid Crypto',
-          icon: '/static/markets/liquid-crypto.png',
-          url: 'https://jfinchain.liquidcrypto.finance/swap',
         },
       ],
     },
