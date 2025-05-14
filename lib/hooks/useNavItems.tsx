@@ -164,9 +164,9 @@ export default function useNavItems(): ReturnType {
         group: 'Apps',
       },
       {
-        text: 'JNFT',
+        text: 'JNFT+',
         iconImage: '/static/apps/jnft.png',
-        url: 'https://marketplace.jnft.digital/',
+        url: 'https://jnftplus.com/',
         group: 'Apps',
       },
       {

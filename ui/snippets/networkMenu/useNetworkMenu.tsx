@@ -63,8 +63,8 @@ export default function useNetworkMenu() {
       icon: '/static/apps/coinmarketcap.png',
     },
     {
-      title: 'JNFT',
-      url: 'https://marketplace.jnft.digital/',
+      title: 'JNFT+',
+      url: 'https://jnftplus.com/',
       group: 'Mainnets',
       icon: '/static/apps/jnft.png',
     },
