@@ -182,9 +182,9 @@ export default function useNavItems(): ReturnType {
         group: 'JFIN Coin Markets',
       },
       {
-        text: 'Satang Pro',
-        iconImage: '/static/markets/satang-pro.png',
-        url: 'https://satangcorp.com/exchange/trade/JFIN-THB',
+        text: 'Orbix',
+        iconImage: '/static/markets/orbix.png',
+        url: 'https://www.orbixtrade.com/exchange/en/trade/JFIN_THB',
         group: 'JFIN Coin Markets',
       },
     ].filter(Boolean);

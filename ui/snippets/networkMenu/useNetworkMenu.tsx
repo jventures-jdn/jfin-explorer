@@ -92,9 +92,9 @@ export default function useNetworkMenu() {
           url: 'https://www.coinstore.com/#/spot/jfinusdt',
         },
         {
-          title: 'Satang Pro',
-          icon: '/static/markets/satang-pro.png',
-          url: 'https://satangcorp.com/exchange/trade/JFIN-THB',
+          title: 'Orbix',
+          icon: '/static/markets/orbix.png',
+          url: 'https://www.orbixtrade.com/exchange/en/trade/JFIN_THB',
         },
       ],
     },
