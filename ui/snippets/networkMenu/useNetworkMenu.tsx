@@ -30,7 +30,7 @@ export default function useNetworkMenu() {
 
   const featuredNetworks = [
     {
-      title: 'Bridges',
+      title: 'Bridge',
       group: 'Mainnets',
       icon: '/static/commons/rpc.svg',
       invertIconInDarkMode: 'true',
@@ -107,7 +107,7 @@ export default function useNetworkMenu() {
     },
     config.chain.isTestnet ? { ...network.mainnet } : { ...network.testnet },
     {
-      title: 'Markets',
+      title: 'Market',
       group: 'Mainnets',
       icon: '/static/commons/token.svg',
       invertIconInDarkMode: 'true',
