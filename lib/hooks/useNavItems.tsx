@@ -138,13 +138,25 @@ export default function useNavItems(): ReturnType {
       },
     ].filter(Boolean);
 
-    const moreNavItems: Array<NavItem> = [
+    const bridgesNavItems: Array<NavItem> = [
       {
-        text: 'Bridge',
-        icon: rpcIcon,
-        url: 'https://bridge.jfinchain.com/',
-        group: 'Apps',
+        text: 'JFIN Chain',
+        iconImage: '/static/bridges/jfinchain.png',
+        url: 'https://bridge.jfinchain.com',
       },
+      {
+        text: 'KUB Chain',
+        iconImage: '/static/bridges/kubchain.png',
+        url: 'https://bridge.kubchain.com',
+      },
+      {
+        text: 'SIX Network',
+        iconImage: '/static/bridges/sixnetwork.png',
+        url: 'https://bridge.six.network',
+      },
+    ];
+
+    const moreNavItems: Array<NavItem> = [
       {
         text: 'Staking',
         icon: linkIcon,
@@ -158,15 +170,15 @@ export default function useNavItems(): ReturnType {
         group: 'Apps',
       },
       {
-        text: 'J2O (L2)',
-        iconImage: '/static/apps/j2o.png',
-        url: 'https://exp.j2o.io/',
-        group: 'Apps',
-      },
-      {
         text: 'JNFT+',
         iconImage: '/static/apps/jnft.png',
         url: 'https://jnftplus.com/',
+        group: 'Apps',
+      },
+      {
+        text: 'J2O (L2)',
+        iconImage: '/static/apps/j2o.png',
+        url: 'https://exp.j2o.io/',
         group: 'Apps',
       },
       {
@@ -289,6 +301,13 @@ export default function useNavItems(): ReturnType {
       } : null,
 
       /* JFIN Mod Start */
+      {
+        text: 'Bridges',
+        icon: rpcIcon,
+        // url: 'https://bridge.jfinchain.com/',
+        // group: 'Apps',
+        subItems: bridgesNavItems,
+      },
       {
         text: 'Information',
         icon: docsIcon,
