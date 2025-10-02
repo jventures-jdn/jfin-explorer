@@ -31,10 +31,41 @@ export default function useNetworkMenu() {
   const featuredNetworks = [
     {
       title: 'Bridge',
-      url: 'https://bridge.jfinchain.com/',
       group: 'Mainnets',
       icon: '/static/commons/rpc.svg',
       invertIconInDarkMode: 'true',
+      subMenu: [
+        {
+          title: 'JFIN Chain',
+          icon: '/static/bridges/jfinchain.png',
+          url: 'https://bridge.jfinchain.com',
+        },
+        {
+          title: 'KUB Chain',
+          icon: '/static/bridges/kubchain.png',
+          url: 'https://bridge.kubchain.com',
+        },
+        {
+          title: 'SIX Network',
+          icon: '/static/bridges/sixnetwork.png',
+          url: 'https://bridge.six.network',
+        },
+        // {
+        //   title: 'Bitkub',
+        //   icon: '/static/markets/bitkub.png',
+        //   url: 'https://www.bitkub.com/market/JFIN',
+        // },
+        // {
+        //   title: 'Coinstore',
+        //   icon: '/static/markets/coinstore.png',
+        //   url: 'https://www.coinstore.com/#/spot/jfinusdt',
+        // },
+        // {
+        //   title: 'Orbix',
+        //   icon: '/static/markets/orbix.png',
+        //   url: 'https://www.orbixtrade.com/exchange/en/trade/JFIN_THB',
+        // },
+      ],
     },
     {
       title: 'Staking',
@@ -76,7 +107,7 @@ export default function useNetworkMenu() {
     },
     config.chain.isTestnet ? { ...network.mainnet } : { ...network.testnet },
     {
-      title: 'Markets',
+      title: 'Market',
       group: 'Mainnets',
       icon: '/static/commons/token.svg',
       invertIconInDarkMode: 'true',
@@ -92,9 +123,9 @@ export default function useNetworkMenu() {
           url: 'https://www.coinstore.com/#/spot/jfinusdt',
         },
         {
-          title: 'Satang Pro',
-          icon: '/static/markets/satang-pro.png',
-          url: 'https://satangcorp.com/exchange/trade/JFIN-THB',
+          title: 'Orbix',
+          icon: '/static/markets/orbix.png',
+          url: 'https://www.orbixtrade.com/exchange/en/trade/JFIN_THB',
         },
       ],
     },

@@ -52,26 +52,33 @@ FAVICON_MASTER_URL=https://cdn.discordapp.com/attachments/1164767344497795207/11
 `xxx` represent blockchain environment it can be mainnet, testnet, etc.. (see more in ./configs/envs/)
 
 ```bash
-yarn:dev preset {xxx}
+yarn dev:preset {xxx}
+yarn dev:preset mainnet
+yarn dev:preset testnet
 ```
 
 # 📝 Environment Variables
+
 All environment variables are listed in [docs/ENVS.md.](https://github.com/blockscout/frontend/blob/main/docs/ENVS.md)
 
-
 # ✈️ Deployment
+
 Deploy mainnet
+
 ```bash
 yarn deploy:mainnet
 ```
 
 Deploy testnet
+
 ```bash
 yarn deploy:testnet
 ```
 
 # ⚙️ Customization
+
 ### New Blockchain Environment
+
 1. Create new .env file name .env.{xxx} xxx represent environment name of blockchain
 2. Copy all content from .env.mainnet to .env.{xxx} then edit these keys
 
@@ -101,29 +108,38 @@ NEXT_PUBLIC_JNS_NAMEWRAPPER_ADDRESS=0xF67dEc1b1f85aA3ac77Db6215271305979f51613 (
 ```
 
 ### Change coin market cap
+
 ![image](https://github.com/user-attachments/assets/b8e18071-8f56-4384-b3d3-628b41068e2d)
+
 - Config details see here: [https://coinmarketcap.com/widget/ticker](https://coinmarketcap.com/widget/ticker)
 - Setup script: `./pages/_document.tsx`
 - Custom color: `CoinMarketCapWidget.tsx`
 
 ### Allow cors for external import url like iframe, script, image
-- Custom header policy `nextjs/csp/generateCspPolicy.ts` 
+
+- Custom header policy `nextjs/csp/generateCspPolicy.ts`
 
 ### Add custom env varaible
+
 1. add varaible to `.env.{xxx}`
 2. add varaible to `deploy/tools/envs-validator/schema.ts`
 3. add varaible to `docs/ENVS.md` below `JFIN Chain Configuration` section
 
-### Get environment varaible 
+### Get environment varaible
+
 use `getEnvValue()`
 
 ### Custom app network
+
 ![image](https://github.com/user-attachments/assets/25897aad-e871-40fe-9f5a-5f8b7b579345)
+
 - file `app_networks.json`
 - `group` is meaning tab of menus
 
 ### Custom sidebar menu
+
 ![image](https://github.com/user-attachments/assets/f6ec7074-6995-4686-bc9d-55d3424a0c6f)
+
 - file `lib/hooks/useNavItems.tsx`
 
 ## Team

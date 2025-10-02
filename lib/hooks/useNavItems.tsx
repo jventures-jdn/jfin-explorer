@@ -138,13 +138,25 @@ export default function useNavItems(): ReturnType {
       },
     ].filter(Boolean);
 
-    const moreNavItems: Array<NavItem> = [
+    const bridgesNavItems: Array<NavItem> = [
       {
-        text: 'Bridge',
-        icon: rpcIcon,
-        url: 'https://bridge.jfinchain.com/',
-        group: 'Apps',
+        text: 'JFIN Chain',
+        iconImage: '/static/bridges/jfinchain.png',
+        url: 'https://bridge.jfinchain.com',
       },
+      {
+        text: 'KUB Chain',
+        iconImage: '/static/bridges/kubchain.png',
+        url: 'https://bridge.kubchain.com',
+      },
+      {
+        text: 'SIX Network',
+        iconImage: '/static/bridges/sixnetwork.png',
+        url: 'https://bridge.six.network',
+      },
+    ];
+
+    const moreNavItems: Array<NavItem> = [
       {
         text: 'Staking',
         icon: linkIcon,
@@ -158,34 +170,34 @@ export default function useNavItems(): ReturnType {
         group: 'Apps',
       },
       {
-        text: 'J2O (L2)',
-        iconImage: '/static/apps/j2o.png',
-        url: 'https://exp.j2o.io/',
-        group: 'Apps',
-      },
-      {
         text: 'JNFT+',
         iconImage: '/static/apps/jnft.png',
         url: 'https://jnftplus.com/',
         group: 'Apps',
       },
       {
+        text: 'J2O (L2)',
+        iconImage: '/static/apps/j2o.png',
+        url: 'https://exp.j2o.io/',
+        group: 'Apps',
+      },
+      {
         text: 'Bitkub',
         iconImage: '/static/markets/bitkub.png',
         url: 'https://www.bitkub.com/market/JFIN',
-        group: 'JFIN Coin Markets',
+        group: 'JFIN Coin Market',
       },
       {
         text: 'Coinstore',
         iconImage: '/static/markets/coinstore.png',
         url: 'https://www.coinstore.com/#/spot/jfinusdt',
-        group: 'JFIN Coin Markets',
+        group: 'JFIN Coin Market',
       },
       {
-        text: 'Satang Pro',
-        iconImage: '/static/markets/satang-pro.png',
-        url: 'https://satangcorp.com/exchange/trade/JFIN-THB',
-        group: 'JFIN Coin Markets',
+        text: 'Orbix',
+        iconImage: '/static/markets/orbix.png',
+        url: 'https://www.orbixtrade.com/exchange/en/trade/JFIN_THB',
+        group: 'JFIN Coin Market',
       },
     ].filter(Boolean);
 
@@ -289,6 +301,13 @@ export default function useNavItems(): ReturnType {
       } : null,
 
       /* JFIN Mod Start */
+      {
+        text: 'Bridge',
+        icon: rpcIcon,
+        // url: 'https://bridge.jfinchain.com/',
+        // group: 'Apps',
+        subItems: bridgesNavItems,
+      },
       {
         text: 'Information',
         icon: docsIcon,
