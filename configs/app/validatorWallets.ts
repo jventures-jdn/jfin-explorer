@@ -4,9 +4,9 @@ const validatorWallets = Object.freeze({
     name: 'JDN',
     image: '/static/partners/jdn.png',
   },
-  '0xCd4A92A21539Fd2b50d1ecabce89cCf7294100C8': {
-    name: 'Kane Digital',
-    image: '/static/partners/kanedigital.jpg',
+  '0x1b74cb1878d107d1bf44ADa5472587f4B7799c3a': {
+    name: 'TPCX',
+    image: '/static/partners/tpcx.png',
   },
   '0x88Cf3c2a965e2636155bCEf7264B805E8f57EF97': {
     name: 'TOKENINE',
@@ -20,6 +20,10 @@ const validatorWallets = Object.freeze({
     name: 'JET',
     image: '/static/partners/jet.png',
   },
+  '0xCd4A92A21539Fd2b50d1ecabce89cCf7294100C8': {
+    name: 'Seitee',
+    image: '/static/partners/seitee.png',
+  },
   '0x78BBA445e1C15E5206adcD671500C7Fa63384A36': {
     name: 'Maxbit',
     image: '/static/partners/maxbit.jpg',
@@ -31,10 +35,6 @@ const validatorWallets = Object.freeze({
   '0x4280e5b57b4d75d6A1aE563f8A09dA8fe05a67d6': {
     name: 'KUB',
     image: '/static/partners/kub.png',
-  },
-  '0x1b74cb1878d107d1bf44ADa5472587f4B7799c3a': {
-    name: 'AVANTIS',
-    image: '/static/partners/ava.png',
   },
   '0xd0004509B34A3ec8A1489CCBA9FA892A09945d1f': {
     name: 'MetaWarden',
