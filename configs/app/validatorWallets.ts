@@ -13,8 +13,8 @@ const validatorWallets = Object.freeze({
     image: '/static/partners/tokenine.png',
   },
   '0xe8391988483355e6a8170AC10f5726D4868e5C68': {
-    name: 'I AM',
-    image: '/static/partners/iam.png',
+    name: 'JDN',
+    image: '/static/partners/jdn.png',
   },
   '0x6DE767908d0d792385200E30d66A5696B24f709c': {
     name: 'JET',
