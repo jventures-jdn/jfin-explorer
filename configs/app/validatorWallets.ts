@@ -4,9 +4,9 @@ const validatorWallets = Object.freeze({
     name: 'JDN',
     image: '/static/partners/jdn.png',
   },
-  '0x1b74cb1878d107d1bf44ADa5472587f4B7799c3a': {
-    name: 'TPCX',
-    image: '/static/partners/tpcx.png',
+  '0x7d7D4B9950bD53562DFDB41de47Ac717Fac25F54': {
+    name: 'JDN',
+    image: '/static/partners/jdn.png',
   },
   '0x88Cf3c2a965e2636155bCEf7264B805E8f57EF97': {
     name: 'TOKENINE',
@@ -20,9 +20,9 @@ const validatorWallets = Object.freeze({
     name: 'JET',
     image: '/static/partners/jet.png',
   },
-  '0xCd4A92A21539Fd2b50d1ecabce89cCf7294100C8': {
-    name: 'Seitee',
-    image: '/static/partners/seitee.png',
+  '0x0D13bCA30eEb238BF17E1573C83311700Ee3F7a1': {
+    name: 'JDN',
+    image: '/static/partners/jdn.png',
   },
   '0x78BBA445e1C15E5206adcD671500C7Fa63384A36': {
     name: 'Maxbit',
