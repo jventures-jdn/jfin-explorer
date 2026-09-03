@@ -1,5 +1,6 @@
 import { Skeleton, chakra } from '@chakra-ui/react';
 import React from 'react';
+import xss from 'xss';
 
 import TruncatedTextTooltip from 'ui/shared/TruncatedTextTooltip';
 
@@ -20,9 +21,8 @@ const TruncatedValue = ({ className, isLoading, value }: Props) => {
         overflow="hidden"
         textOverflow="ellipsis"
         height="fit-content"
-      >
-        { value }
-      </Skeleton>
+        dangerouslySetInnerHTML={{ __html: xss(value) }}
+      />
     </TruncatedTextTooltip>
   );
 };

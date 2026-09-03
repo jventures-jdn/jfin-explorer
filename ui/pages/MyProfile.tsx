@@ -9,11 +9,11 @@ import PageTitle from 'ui/shared/Page/PageTitle';
 import UserAvatar from 'ui/shared/UserAvatar';
 
 const MyProfile = () => {
-  const { data, isPending, isError } = useFetchProfileInfo();
+  const { data, isLoading, isError } = useFetchProfileInfo();
   useRedirectForInvalidAuthToken();
 
   const content = (() => {
-    if (isPending) {
+    if (isLoading) {
       return <ContentLoader/>;
     }
 

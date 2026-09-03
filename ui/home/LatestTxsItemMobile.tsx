@@ -16,9 +16,9 @@ import useTimeAgoIncrement from 'lib/hooks/useTimeAgoIncrement';
 import Icon from 'ui/shared/chakra/Icon';
 import AddressEntity from 'ui/shared/entities/address/AddressEntity';
 import TxEntity from 'ui/shared/entities/tx/TxEntity';
-import TxStatus from 'ui/shared/statusTag/TxStatus';
 import TxFeeStability from 'ui/shared/tx/TxFeeStability';
 import TxWatchListTags from 'ui/shared/tx/TxWatchListTags';
+import TxStatus from 'ui/shared/TxStatus';
 import TxAdditionalInfo from 'ui/txs/TxAdditionalInfo';
 import TxType from 'ui/txs/TxType';
 
@@ -34,9 +34,15 @@ const LatestTxsItem = ({ tx, isLoading }: Props) => {
   return (
     <Box
       width="100%"
-      borderTop="1px solid"
+
+      /* JFIN Mod Start */
+      borderRadius="md"
+      border="1px"
       borderColor="divider"
-      py={ 4 }
+      p={ 6 }
+      mt={ 3 }
+
+      /* JFIN Mod End */
       _last={{ borderBottom: '1px solid', borderColor: 'divider' }}
       display={{ base: 'block', lg: 'none' }}
     >

@@ -59,16 +59,15 @@ const WatchListItem = ({ item, isLoading, onEditClick, onDeleteClick }: Props) =
     });
   }, [ notificationToast ]);
 
-  const { mutate } = useMutation({
-    mutationFn: () => {
-      setSwitchDisabled(true);
-      const body = { ...item, notification_methods: { email: !notificationEnabled } };
-      setNotificationEnabled(prevState => !prevState);
-      return apiFetch('watchlist', {
-        pathParams: { id: item.id },
-        fetchParams: { method: 'PUT', body },
-      });
-    },
+  const { mutate } = useMutation(() => {
+    setSwitchDisabled(true);
+    const body = { ...item, notification_methods: { email: !notificationEnabled } };
+    setNotificationEnabled(prevState => !prevState);
+    return apiFetch('watchlist', {
+      pathParams: { id: item.id },
+      fetchParams: { method: 'PUT', body },
+    });
+  }, {
     onError: () => {
       showErrorToast();
       setNotificationEnabled(prevState => !prevState);

@@ -1,5 +1,6 @@
 import { Alert, Flex } from '@chakra-ui/react';
 import React from 'react';
+import { useAccount } from 'wagmi';
 
 import type { SmartContractReadMethod, SmartContractQueryMethodRead } from 'types/api/contract';
 
@@ -15,7 +16,6 @@ import ContractImplementationAddress from './ContractImplementationAddress';
 import ContractMethodCallable from './ContractMethodCallable';
 import ContractMethodConstant from './ContractMethodConstant';
 import ContractReadResult from './ContractReadResult';
-import useWatchAccount from './useWatchAccount';
 
 interface Props {
   addressHash?: string;
@@ -25,13 +25,13 @@ interface Props {
 
 const ContractRead = ({ addressHash, isProxy, isCustomAbi }: Props) => {
   const apiFetch = useApiFetch();
-  const account = useWatchAccount();
+  const { address: userAddress } = useAccount();
 
-  const { data, isPending, isError } = useApiQuery(isProxy ? 'contract_methods_read_proxy' : 'contract_methods_read', {
+  const { data, isLoading, isError } = useApiQuery(isProxy ? 'contract_methods_read_proxy' : 'contract_methods_read', {
     pathParams: { hash: addressHash },
     queryParams: {
       is_custom_abi: isCustomAbi ? 'true' : 'false',
-      from: account?.address,
+      from: userAddress,
     },
     queryOptions: {
       enabled: Boolean(addressHash),
@@ -50,11 +50,11 @@ const ContractRead = ({ addressHash, isProxy, isCustomAbi }: Props) => {
           args,
           method_id: item.method_id,
           contract_type: isProxy ? 'proxy' : 'regular',
-          from: account?.address,
+          from: userAddress,
         },
       },
     });
-  }, [ account?.address, addressHash, apiFetch, isCustomAbi, isProxy ]);
+  }, [ addressHash, apiFetch, isCustomAbi, isProxy, userAddress ]);
 
   const renderItemContent = React.useCallback((item: SmartContractReadMethod, index: number, id: number) => {
     if (item.error) {
@@ -83,7 +83,7 @@ const ContractRead = ({ addressHash, isProxy, isCustomAbi }: Props) => {
     return <DataFetchAlert/>;
   }
 
-  if (isPending) {
+  if (isLoading) {
     return <ContentLoader/>;
   }
 
@@ -94,7 +94,7 @@ const ContractRead = ({ addressHash, isProxy, isCustomAbi }: Props) => {
   return (
     <>
       { isCustomAbi && <ContractCustomAbiAlert/> }
-      { account && <ContractConnectWallet/> }
+      <ContractConnectWallet/>
       { isProxy && <ContractImplementationAddress hash={ addressHash }/> }
       <ContractMethodsAccordion data={ data } addressHash={ addressHash } renderItemContent={ renderItemContent }/>
     </>

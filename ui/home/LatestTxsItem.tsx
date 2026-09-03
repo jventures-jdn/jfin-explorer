@@ -17,9 +17,9 @@ import useTimeAgoIncrement from 'lib/hooks/useTimeAgoIncrement';
 import Icon from 'ui/shared/chakra/Icon';
 import AddressEntity from 'ui/shared/entities/address/AddressEntity';
 import TxEntity from 'ui/shared/entities/tx/TxEntity';
-import TxStatus from 'ui/shared/statusTag/TxStatus';
 import TxFeeStability from 'ui/shared/tx/TxFeeStability';
 import TxWatchListTags from 'ui/shared/tx/TxWatchListTags';
+import TxStatus from 'ui/shared/TxStatus';
 import TxAdditionalInfo from 'ui/txs/TxAdditionalInfo';
 import TxType from 'ui/txs/TxType';
 
@@ -78,13 +78,15 @@ const LatestTxsItem = ({ tx, isLoading }: Props) => {
         </Box>
       </Flex>
       <Grid alignItems="center" alignSelf="flex-start" templateColumns="24px auto">
+        { /* JFIN Mod Start */ }
         <Icon
           as={ rightArrowIcon }
           boxSize={ 6 }
-          color="gray.500"
+          color="purple.200"
           transform="rotate(90deg)"
           isLoading={ isLoading }
         />
+        { /* JFIN Mod End */ }
         <Box overflow="hidden" ml={ 1 }>
           <AddressEntity
             isLoading={ isLoading }

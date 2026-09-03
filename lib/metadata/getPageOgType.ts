@@ -5,7 +5,7 @@ type OGPageType = 'Homepage' | 'Root page' | 'Regular page';
 const OG_TYPE_DICT: Record<Route['pathname'], OGPageType> = {
   '/': 'Homepage',
   '/txs': 'Root page',
-  '/txs/kettle/[hash]': 'Regular page',
+  '/txs/computor/[hash]': 'Regular page',
   '/tx/[hash]': 'Regular page',
   '/blocks': 'Root page',
   '/block/[height_or_hash]': 'Regular page',
@@ -36,8 +36,6 @@ const OG_TYPE_DICT: Record<Route['pathname'], OGPageType> = {
   '/l2-output-roots': 'Root page',
   '/l2-txn-batches': 'Root page',
   '/l2-withdrawals': 'Root page',
-  '/zkevm-l2-txn-batches': 'Root page',
-  '/zkevm-l2-txn-batch/[number]': 'Regular page',
   '/404': 'Regular page',
 
   // service routes, added only to make typescript happy
@@ -48,6 +46,10 @@ const OG_TYPE_DICT: Record<Route['pathname'], OGPageType> = {
   '/api/healthz': 'Regular page',
   '/auth/auth0': 'Regular page',
   '/auth/unverified-email': 'Regular page',
+
+  // JFIN Mod Start
+  '/network-profiles': 'Root page',
+  // JFIN Mod end
 };
 
 export default function getPageOgType(pathname: Route['pathname']) {

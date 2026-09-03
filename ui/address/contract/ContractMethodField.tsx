@@ -60,12 +60,12 @@ const ContractMethodField = ({ control, name, valueType, placeholder, setValue, 
             { ...field }
             ref={ ref }
             placeholder={ placeholder }
-            paddingRight={ hasZerosControl ? '120px' : '40px' }
+            paddingRight="40px"
           />
-          <InputRightElement w="auto" right={ 1 }>
+          <InputRightElement w="auto" right={ hasZerosControl ? '24' : '1' } >
             { field.value && <ClearButton onClick={ handleClear } isDisabled={ isDisabled }/> }
-            { hasZerosControl && <ContractMethodFieldZeroes onClick={ handleAddZeroesClick } isDisabled={ isDisabled }/> }
           </InputRightElement>
+          { hasZerosControl && <ContractMethodFieldZeroes onClick={ handleAddZeroesClick } isDisabled={ isDisabled }/> }
         </InputGroup>
       </FormControl>
     );

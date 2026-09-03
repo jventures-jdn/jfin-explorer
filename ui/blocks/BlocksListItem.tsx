@@ -28,8 +28,6 @@ interface Props {
   enableTimeIncrement?: boolean;
 }
 
-const isRollup = config.features.optimisticRollup.isEnabled || config.features.zkEvmRollup.isEnabled;
-
 const BlocksListItem = ({ data, isLoading, enableTimeIncrement }: Props) => {
   const totalReward = getBlockTotalReward(data);
   const burntFees = BigNumber(data.burnt_fees || 0);
@@ -91,7 +89,7 @@ const BlocksListItem = ({ data, isLoading, enableTimeIncrement }: Props) => {
           ) }
         </Flex>
       </Box>
-      { !isRollup && !config.UI.views.block.hiddenFields?.total_reward && (
+      { !config.features.rollup.isEnabled && !config.UI.views.block.hiddenFields?.total_reward && (
         <Flex columnGap={ 2 }>
           <Text fontWeight={ 500 }>Reward { config.chain.currency.symbol }</Text>
           <Skeleton isLoaded={ !isLoading } display="inline-block" color="text_secondary">
@@ -99,7 +97,7 @@ const BlocksListItem = ({ data, isLoading, enableTimeIncrement }: Props) => {
           </Skeleton>
         </Flex>
       ) }
-      { !isRollup && !config.UI.views.block.hiddenFields?.burnt_fees && (
+      { !config.features.rollup.isEnabled && !config.UI.views.block.hiddenFields?.burnt_fees && (
         <Box>
           <Text fontWeight={ 500 }>Burnt fees</Text>
           <Flex columnGap={ 4 } mt={ 2 }>

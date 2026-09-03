@@ -10,10 +10,10 @@ import clockIcon from 'icons/clock-light.svg';
 import bitcoinIcon from 'icons/coins/bitcoin.svg';
 import gasIcon from 'icons/gas.svg';
 import txIcon from 'icons/transactions.svg';
-import batchesIcon from 'icons/txn_batches.svg';
 import walletIcon from 'icons/wallet.svg';
 import useApiQuery from 'lib/api/useApiQuery';
 import { WEI } from 'lib/consts';
+import useIsMobile from 'lib/hooks/useIsMobile';
 import { HOMEPAGE_STATS } from 'stubs/stats';
 
 import StatsGasPrices from './StatsGasPrices';
@@ -29,14 +29,9 @@ const Stats = () => {
     },
   });
 
-  const zkEvmLatestBatchQuery = useApiQuery('homepage_zkevm_latest_batch', {
-    queryOptions: {
-      placeholderData: 12345,
-      enabled: config.features.zkEvmRollup.isEnabled,
-    },
-  });
+  const isMobile = useIsMobile();
 
-  if (isError || zkEvmLatestBatchQuery.isError) {
+  if (isError) {
     return null;
   }
 
@@ -56,28 +51,18 @@ const Stats = () => {
 
     content = (
       <>
-        { config.features.zkEvmRollup.isEnabled ? (
-          <StatsItem
-            icon={ batchesIcon }
-            title="Latest batch"
-            value={ (zkEvmLatestBatchQuery.data || 0).toLocaleString() }
-            url={ route({ pathname: '/zkevm-l2-txn-batches' }) }
-            isLoading={ zkEvmLatestBatchQuery.isPlaceholderData }
-          />
-        ) : (
-          <StatsItem
-            icon={ blockIcon }
-            title="Total blocks"
-            value={ Number(data.total_blocks).toLocaleString() }
-            url={ route({ pathname: '/blocks' }) }
-            isLoading={ isPlaceholderData }
-          />
-        ) }
+        <StatsItem
+          icon={ blockIcon }
+          title="Total blocks"
+          value={ Number(data.total_blocks).toLocaleString() }
+          url={ route({ pathname: '/blocks' }) }
+          isLoading={ isPlaceholderData }
+        />
         { hasAvgBlockTime && (
           <StatsItem
             icon={ clockIcon }
             title="Average block time"
-            value={ `${ (data.average_block_time / 1000).toFixed(1) } s` }
+            value="3 s"
             isLoading={ isPlaceholderData }
           />
         ) }
@@ -118,17 +103,21 @@ const Stats = () => {
     );
   }
 
+  /* JFIN Mod Start */
   return (
     <Grid
       gridTemplateColumns={{ lg: `repeat(${ itemsCount }, 1fr)`, base: '1fr 1fr' }}
       gridTemplateRows={{ lg: 'none', base: undefined }}
       gridGap="10px"
-      marginTop="24px"
+      marginTop={ isMobile ? '24px' : { base: -6, lg: -4 } }
+      paddingX={ isMobile ? '0px' : '48px' }
     >
       { content }
     </Grid>
 
   );
+
+  /* JFIN Mod End */
 };
 
 export default Stats;

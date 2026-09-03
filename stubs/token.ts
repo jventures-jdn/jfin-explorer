@@ -94,20 +94,22 @@ export const getTokenTransfersStub = (type?: TokenType, pagination: TokenTransfe
   }
 };
 
+// JFIN Mod Start
 export const TOKEN_INSTANCE: TokenInstance = {
   animation_url: null,
-  external_app_url: 'https://vipsland.com/nft/collections/genesis/188882',
-  id: '188882',
-  image_url: 'https://ipfs.vipsland.com/nft/collections/genesis/188882.gif',
+  external_app_url: '',
+  id: '',
+  image_url: '',
   is_unique: true,
   metadata: {
-    attributes: Array(3).fill({ trait_type: 'skin tone', value: 'very light skin tone' }),
-    description: '**GENESIS #188882**, **8a77ca1bcaa4036f** :: *844th* generation of *#57806 and #57809* :: **eGenetic Hash Code (eDNA)** = *2822355e953a462d*',
-    external_url: 'https://vipsland.com/nft/collections/genesis/188882',
-    image: 'https://ipfs.vipsland.com/nft/collections/genesis/188882.gif',
-    name: 'GENESIS #188882, 8a77ca1bcaa4036f. Blockchain pixel PFP NFT + "on music video" trait inspired by God',
+    attributes: [],
+    description: '',
+    external_url: '',
+    image: '',
+    name: '',
   },
   owner: ADDRESS_PARAMS,
   token: TOKEN_INFO_ERC_1155,
   holder_address_hash: ADDRESS_HASH,
 };
+// JFIN Mod End

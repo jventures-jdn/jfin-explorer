@@ -5,7 +5,6 @@ import React from 'react';
 import type { HomeStats } from 'types/api/stats';
 import type { ChainIndicatorId } from 'types/homepage';
 
-import type { ResourceError } from 'lib/api/resources';
 import useIsMobile from 'lib/hooks/useIsMobile';
 
 interface Props {
@@ -15,7 +14,7 @@ interface Props {
   icon: React.ReactNode;
   isSelected: boolean;
   onClick: (id: ChainIndicatorId) => void;
-  stats: UseQueryResult<HomeStats, ResourceError<unknown>>;
+  stats: UseQueryResult<HomeStats>;
 }
 
 const ChainIndicatorItem = ({ id, title, value, icon, isSelected, onClick, stats }: Props) => {
@@ -34,7 +33,7 @@ const ChainIndicatorItem = ({ id, title, value, icon, isSelected, onClick, stats
       return null;
     }
 
-    if (stats.isPending) {
+    if (stats.isLoading) {
       return (
         <Skeleton
           h={ 3 }

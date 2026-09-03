@@ -13,9 +13,9 @@ export default function useNftMediaType(url: string | null, isEnabled: boolean) 
 
   const fetch = useFetch();
 
-  const { data } = useQuery<unknown, ResourceError<unknown>, MediaType>({
-    queryKey: [ 'nft-media-type', url ],
-    queryFn: async() => {
+  const { data } = useQuery<unknown, ResourceError<unknown>, MediaType>(
+    [ 'nft-media-type', url ],
+    async() => {
       if (!url) {
         return 'image';
       }
@@ -41,9 +41,10 @@ export default function useNftMediaType(url: string | null, isEnabled: boolean) 
         return 'image';
       }
     },
-    enabled: isEnabled && Boolean(url),
-    staleTime: Infinity,
-  });
+    {
+      enabled: isEnabled && Boolean(url),
+      staleTime: Infinity,
+    });
 
   return data;
 }

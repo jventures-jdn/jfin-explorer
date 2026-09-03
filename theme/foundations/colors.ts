@@ -18,9 +18,37 @@ const colors = {
     '900': '#1A365D',
   },
   red: {
-    '500': '#E53E3E',
-    '100': '#FED7D7',
+
+    /* JFIN Mod Start */
+    '50': '#FEC2C2',
+    '100': '#FCA5A5',
+    '200': '#FD7F7F',
+    '300': '#FA4F4F',
+    '400': '#F13535',
+    '500': '#D31C1C',
+    '600': '#9B2626',
+    '700': '#732020',
+    '800': '#5A1B1B',
+    '900': '#390D0F',
+
+    /* JFIN Mod End */
   },
+
+  /* JFIN Mod Start */
+  purple: {
+    '50': '#a5a0e6',
+    '100': '#8c85df',
+    '200': '#736bd7',
+    '300': '#5950d0',
+    '400': '#4036c8',
+    '500': '#3c32bb',
+    '600': '#2f2793',
+    '700': '#262078',
+    '800': '#1e195d',
+    '900': '#151242',
+  },
+
+  /* JFIN Mod End */
   orange: {
     '100': '#FEEBCB',
   },
@@ -60,6 +88,11 @@ const colors = {
   facebook: '#4460A0',
   medium: '#231F20',
   reddit: '#FF4500',
+
+  /* JFIN Mod Start */
+  jfin: '#c60000',
+
+  /* JFIN Mod End */
 };
 
 export default colors;

@@ -6,7 +6,6 @@ import type { AddressCoinBalanceHistoryResponse } from 'types/api/address';
 import type { PaginationParams } from 'ui/shared/pagination/types';
 
 import config from 'configs/app';
-import type { ResourceError } from 'lib/api/resources';
 import ActionBar from 'ui/shared/ActionBar';
 import DataListDisplay from 'ui/shared/DataListDisplay';
 import Pagination from 'ui/shared/pagination/Pagination';
@@ -16,7 +15,7 @@ import AddressCoinBalanceListItem from './AddressCoinBalanceListItem';
 import AddressCoinBalanceTableItem from './AddressCoinBalanceTableItem';
 
 interface Props {
-  query: UseQueryResult<AddressCoinBalanceHistoryResponse, ResourceError<unknown>> & {
+  query: UseQueryResult<AddressCoinBalanceHistoryResponse> & {
     pagination: PaginationParams;
   };
 }

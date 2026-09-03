@@ -1,14 +1,16 @@
 import type { Route } from 'nextjs-routes';
 
+// JFIN Mod Start
 // equal og:description
 // eslint-disable-next-line max-len
-const DEFAULT_TEMPLATE = 'Blockscout is the #1 open-source blockchain explorer available today. 100+ chains and counting rely on Blockscout data availability, APIs, and ecosystem tools to support their networks.';
+const DEFAULT_TEMPLATE = 'JFIN Chain Explorer is a tool for inspecting and analyzing EVM based blockchains. Blockchain explorer for JFIN Chain Networks.'; // MOCK Description
+// JFIN Mod End
 
 // FIXME all page descriptions will be updated later
 const TEMPLATE_MAP: Record<Route['pathname'], string> = {
   '/': DEFAULT_TEMPLATE,
   '/txs': DEFAULT_TEMPLATE,
-  '/txs/kettle/[hash]': DEFAULT_TEMPLATE,
+  '/txs/computor/[hash]': DEFAULT_TEMPLATE,
   '/tx/[hash]': 'View transaction %hash% on %network_title%',
   '/blocks': DEFAULT_TEMPLATE,
   '/block/[height_or_hash]': 'View the transactions, token transfers, and uncles for block %height_or_hash%',
@@ -39,8 +41,6 @@ const TEMPLATE_MAP: Record<Route['pathname'], string> = {
   '/l2-output-roots': DEFAULT_TEMPLATE,
   '/l2-txn-batches': DEFAULT_TEMPLATE,
   '/l2-withdrawals': DEFAULT_TEMPLATE,
-  '/zkevm-l2-txn-batches': DEFAULT_TEMPLATE,
-  '/zkevm-l2-txn-batch/[number]': DEFAULT_TEMPLATE,
   '/404': DEFAULT_TEMPLATE,
 
   // service routes, added only to make typescript happy
@@ -51,6 +51,10 @@ const TEMPLATE_MAP: Record<Route['pathname'], string> = {
   '/api/healthz': DEFAULT_TEMPLATE,
   '/auth/auth0': DEFAULT_TEMPLATE,
   '/auth/unverified-email': DEFAULT_TEMPLATE,
+
+  // JFIN Mod Start
+  '/network-profiles': DEFAULT_TEMPLATE,
+  // JFIN Mod end
 };
 
 export function make(pathname: Route['pathname']) {

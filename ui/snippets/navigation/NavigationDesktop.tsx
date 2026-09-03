@@ -1,5 +1,5 @@
-import { Flex, Box, VStack, Icon, useColorModeValue } from '@chakra-ui/react';
-import React from 'react';
+import { Flex, Box, VStack, Icon, useColorModeValue, Text } from '@chakra-ui/react';
+import React, { Fragment } from 'react';
 
 import config from 'configs/app';
 import chevronIcon from 'icons/arrows/east-mini.svg';
@@ -60,7 +60,8 @@ const NavigationDesktop = () => {
       width={{ lg: isExpanded ? '229px' : '92px', xl: isCollapsed ? '92px' : '229px' }}
       { ...getDefaultTransitionProps({ transitionProperty: 'width, padding' }) }
     >
-      { config.chain.isTestnet && <Icon as={ testnetIcon } h="14px" w="auto" color="red.400" position="absolute" pl={ 3 } top="34px"/> }
+      { /* JFIN Mod Start */ }
+      { config.chain.isTestnet && <Icon as={ testnetIcon } h="14px" w="auto" color="purple.200" position="absolute" pl={ 3 } top="34px"/> }
       <Box
         as="header"
         display="flex"
@@ -76,13 +77,36 @@ const NavigationDesktop = () => {
         transitionTimingFunction="ease"
       >
         <NetworkLogo isCollapsed={ isCollapsed }/>
-        { Boolean(config.UI.sidebar.featuredNetworks) && <NetworkMenu isCollapsed={ isCollapsed }/> }
+        <NetworkMenu isCollapsed={ isCollapsed }/>
       </Box>
+      { /* JFIN Mod End */ }
       <Box as="nav" mt={ 8 } w="100%">
         <VStack as="ul" spacing="1" alignItems="flex-start">
           { mainNavItems.map((item) => {
             if (isGroupItem(item)) {
-              return <NavLinkGroupDesktop key={ item.text } item={ item } isCollapsed={ isCollapsed }/>;
+              return (
+                <Fragment key={ item.text }>
+                  { (item.text === 'Mainnet' || item.text === 'Testnet') && (
+                    <>
+                      { /* <Divider mb={ 3 } mx="auto" w="158px"/> */ }
+                      <Text
+                        bg="divider"
+                        display="inline-block"
+                        whiteSpace="nowrap"
+                        variant="secondary"
+                        fontSize="2xs"
+                        borderRadius="md"
+                        px={ 2 }
+                        marginLeft={ isCollapsed ? 0.5 : 3 }
+                        my={ 1 }
+                      >
+                      Network
+                      </Text>
+                    </>
+                  ) }
+                  <NavLinkGroupDesktop key={ item.text } item={ item } isCollapsed={ isCollapsed }/>
+                </Fragment>
+              );
             } else {
               return <NavLink key={ item.text } item={ item } isCollapsed={ isCollapsed }/>;
             }

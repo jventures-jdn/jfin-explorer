@@ -1,6 +1,8 @@
 import { AccordionButton, AccordionIcon, AccordionPanel, Flex } from '@chakra-ui/react';
 import React from 'react';
 
+import parseDate from 'lib/parseDate';
+
 import MetadataAccordionItem from './MetadataAccordionItem';
 import MetadataAccordionItemTitle from './MetadataAccordionItemTitle';
 import MetadataItemPrimitive from './MetadataItemPrimitive';
@@ -10,6 +12,12 @@ interface Props {
   value: Array<unknown>;
   level: number;
 }
+
+type Item = {
+  display_type?: string;
+  value?: string | number;
+  [key: string]: string | number | object | undefined;
+};
 
 const MetadataItemArray = ({ name, value, level }: Props) => {
 
@@ -48,7 +56,12 @@ const MetadataItemArray = ({ name, value, level }: Props) => {
                   if (Array.isArray(item)) {
                     return <span>{ JSON.stringify(item, undefined, 2) }</span>;
                   } else {
-                    return Object.entries(item).map(([ name, value ], index) => {
+                    const typedItem = { ...item } as Item;
+                    if (typedItem.display_type === 'date' && typeof typedItem.value === 'number') {
+                      const dateValue = parseDate(typedItem.value);
+                      typedItem.value = dateValue;
+                    }
+                    return Object.entries(typedItem).map(([ name, value ], index) => {
                       return (
                         <Flex key={ index } columnGap={ 3 }>
                           <MetadataAccordionItemTitle name={ name } fontWeight={ 400 } w={{ base: '90px' }}/>

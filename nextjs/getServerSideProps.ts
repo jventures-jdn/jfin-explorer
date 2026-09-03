@@ -8,7 +8,6 @@ export type Props = {
   id: string;
   height_or_hash: string;
   hash: string;
-  number: string;
   q: string;
 }
 
@@ -20,7 +19,6 @@ export const base: GetServerSideProps<Props> = async({ req, query }) => {
       id: query.id?.toString() || '',
       hash: query.hash?.toString() || '',
       height_or_hash: query.height_or_hash?.toString() || '',
-      number: query.number?.toString() || '',
       q: query.q?.toString() || '',
     },
   };
@@ -57,17 +55,7 @@ export const beaconChain: GetServerSideProps<Props> = async(context) => {
 };
 
 export const L2: GetServerSideProps<Props> = async(context) => {
-  if (!config.features.optimisticRollup.isEnabled) {
-    return {
-      notFound: true,
-    };
-  }
-
-  return base(context);
-};
-
-export const zkEvmL2: GetServerSideProps<Props> = async(context) => {
-  if (!config.features.zkEvmRollup.isEnabled) {
+  if (!config.features.rollup.isEnabled) {
     return {
       notFound: true,
     };

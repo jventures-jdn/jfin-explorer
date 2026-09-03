@@ -11,14 +11,14 @@ interface Props {
 }
 
 const TxAdditionalInfoContainer = ({ hash }: Props) => {
-  const { data, isError, isPending } = useApiQuery('tx', {
+  const { data, isError, isLoading } = useApiQuery('tx', {
     pathParams: { hash },
     queryOptions: {
       refetchOnMount: false,
     },
   });
 
-  if (isPending) {
+  if (isLoading) {
     return (
       <Box>
         <Skeleton w="130px" h="24px" borderRadius="full" mb={ 6 }/>

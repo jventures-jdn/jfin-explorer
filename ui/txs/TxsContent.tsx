@@ -15,8 +15,7 @@ import TxsTable from './TxsTable';
 import useTxsSort from './useTxsSort';
 
 type Props = {
-  // eslint-disable-next-line max-len
-  query: QueryWithPagesResult<'txs_validated' | 'txs_pending'> | QueryWithPagesResult<'txs_watchlist'> | QueryWithPagesResult<'block_txs'> | QueryWithPagesResult<'zkevm_l2_txn_batch_txs'>;
+  query: QueryWithPagesResult<'txs_validated' | 'txs_pending'> | QueryWithPagesResult<'txs_watchlist'> | QueryWithPagesResult<'block_txs'>;
   showBlockInfo?: boolean;
   showSocketInfo?: boolean;
   socketInfoAlert?: string;

@@ -11,7 +11,6 @@ import getValueWithUnit from 'lib/getValueWithUnit';
 import CurrencyValue from 'ui/shared/CurrencyValue';
 import LinkInternal from 'ui/shared/LinkInternal';
 import TextSeparator from 'ui/shared/TextSeparator';
-import TxFeeStability from 'ui/shared/tx/TxFeeStability';
 import Utilization from 'ui/shared/Utilization/Utilization';
 
 const TxAdditionalInfoContent = ({ tx }: { tx: Transaction }) => {
@@ -34,20 +33,16 @@ const TxAdditionalInfoContent = ({ tx }: { tx: Transaction }) => {
       { !config.UI.views.tx.hiddenFields?.tx_fee && (
         <Box { ...sectionProps } mb={ 4 }>
           <Text { ...sectionTitleProps }>Transaction fee</Text>
-          { tx.stability_fee ? (
-            <TxFeeStability data={ tx.stability_fee }/>
-          ) : (
-            <Flex>
-              <CurrencyValue
-                value={ tx.fee.value }
-                currency={ config.UI.views.tx.hiddenFields?.fee_currency ? '' : config.chain.currency.symbol }
-                exchangeRate={ tx.exchange_rate }
-                accuracyUsd={ 2 }
-                flexWrap="wrap"
-                rowGap={ 0 }
-              />
-            </Flex>
-          ) }
+          <Flex>
+            <CurrencyValue
+              value={ tx.fee.value }
+              currency={ config.UI.views.tx.hiddenFields?.fee_currency ? '' : config.chain.currency.symbol }
+              exchangeRate={ tx.exchange_rate }
+              accuracyUsd={ 2 }
+              flexWrap="wrap"
+              rowGap={ 0 }
+            />
+          </Flex>
         </Box>
       ) }
       { tx.gas_used !== null && (

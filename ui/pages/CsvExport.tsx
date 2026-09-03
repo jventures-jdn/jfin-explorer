@@ -108,7 +108,7 @@ const CsvExport = () => {
       return <DataFetchAlert/>;
     }
 
-    if (addressQuery.isPending) {
+    if (addressQuery.isLoading) {
       return <ContentLoader/>;
     }
 

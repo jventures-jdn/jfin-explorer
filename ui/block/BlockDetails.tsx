@@ -38,8 +38,6 @@ interface Props {
   query: UseQueryResult<Block, ResourceError>;
 }
 
-const isRollup = config.features.optimisticRollup.isEnabled || config.features.zkEvmRollup.isEnabled;
-
 const BlockDetails = ({ query }: Props) => {
   const [ isExpanded, setIsExpanded ] = React.useState(false);
   const router = useRouter();
@@ -89,7 +87,7 @@ const BlockDetails = ({ query }: Props) => {
   const validatorTitle = getNetworkValidatorTitle();
 
   const rewardBreakDown = (() => {
-    if (isRollup || totalReward.isEqualTo(ZERO) || txFees.isEqualTo(ZERO) || burntFees.isEqualTo(ZERO)) {
+    if (config.features.rollup.isEnabled || totalReward.isEqualTo(ZERO) || txFees.isEqualTo(ZERO) || burntFees.isEqualTo(ZERO)) {
       return null;
     }
 
@@ -120,14 +118,6 @@ const BlockDetails = ({ query }: Props) => {
         ) }
       </Text>
     );
-  })();
-
-  const verificationTitle = (() => {
-    if (config.features.zkEvmRollup.isEnabled) {
-      return 'Sequenced by';
-    }
-
-    return config.chain.verificationType === 'validation' ? 'Validated by' : 'Mined by';
   })();
 
   return (
@@ -203,7 +193,7 @@ const BlockDetails = ({ query }: Props) => {
         </DetailsInfoItem>
       ) }
       <DetailsInfoItem
-        title={ verificationTitle }
+        title={ config.chain.verificationType === 'validation' ? 'Validated by' : 'Mined by' }
         hint="A block producer who successfully included the block onto the blockchain"
         columnGap={ 1 }
         isLoading={ isPlaceholderData }
@@ -215,7 +205,7 @@ const BlockDetails = ({ query }: Props) => {
         { /* api doesn't return the block processing time yet */ }
         { /* <Text>{ dayjs.duration(block.minedIn, 'second').humanize(true) }</Text> */ }
       </DetailsInfoItem>
-      { !isRollup && !totalReward.isEqualTo(ZERO) && !config.UI.views.block.hiddenFields?.total_reward && (
+      { !config.features.rollup.isEnabled && !totalReward.isEqualTo(ZERO) && !config.UI.views.block.hiddenFields?.total_reward && (
         <DetailsInfoItem
           title="Block reward"
           hint={

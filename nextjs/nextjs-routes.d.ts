@@ -36,19 +36,18 @@ declare module "nextjs-routes" {
     | StaticRoute<"/l2-txn-batches">
     | StaticRoute<"/l2-withdrawals">
     | StaticRoute<"/login">
+    | StaticRoute<"/network-profiles">
     | StaticRoute<"/search-results">
     | StaticRoute<"/stats">
     | DynamicRoute<"/token/[hash]", { "hash": string }>
     | DynamicRoute<"/token/[hash]/instance/[id]", { "hash": string; "id": string }>
     | StaticRoute<"/tokens">
     | DynamicRoute<"/tx/[hash]", { "hash": string }>
+    | DynamicRoute<"/txs/computor/[hash]", { "hash": string }>
     | StaticRoute<"/txs">
-    | DynamicRoute<"/txs/kettle/[hash]", { "hash": string }>
     | StaticRoute<"/verified-contracts">
     | StaticRoute<"/visualize/sol2uml">
-    | StaticRoute<"/withdrawals">
-    | DynamicRoute<"/zkevm-l2-txn-batch/[number]", { "number": string }>
-    | StaticRoute<"/zkevm-l2-txn-batches">;
+    | StaticRoute<"/withdrawals">;
 
   interface StaticRoute<Pathname> {
     pathname: Pathname;

@@ -21,7 +21,7 @@ const hooksConfig = {
 test('regular block +@mobile +@dark-mode', async({ mount, page }) => {
   const query = {
     data: blockMock.base,
-    isPending: false,
+    isLoading: false,
   } as UseQueryResult<Block, ResourceError>;
 
   const component = await mount(
@@ -39,7 +39,7 @@ test('regular block +@mobile +@dark-mode', async({ mount, page }) => {
 test('genesis block', async({ mount, page }) => {
   const query = {
     data: blockMock.genesis,
-    isPending: false,
+    isLoading: false,
   } as UseQueryResult<Block, ResourceError>;
 
   const component = await mount(
@@ -62,7 +62,7 @@ const customFieldsTest = test.extend({
 customFieldsTest('rootstock custom fields', async({ mount, page }) => {
   const query = {
     data: blockMock.rootstock,
-    isPending: false,
+    isLoading: false,
   } as UseQueryResult<Block, ResourceError>;
 
   const component = await mount(

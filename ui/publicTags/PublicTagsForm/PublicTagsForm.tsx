@@ -109,8 +109,7 @@ const PublicTagsForm = ({ changeToDataScreen, data }: Props) => {
     });
   };
 
-  const mutation = useMutation({
-    mutationFn: updatePublicTag,
+  const mutation = useMutation(updatePublicTag, {
     onSuccess: async(data) => {
       const response = data as unknown as PublicTag;
 
@@ -238,7 +237,7 @@ const PublicTagsForm = ({ changeToDataScreen, data }: Props) => {
           size="lg"
           type="submit"
           isDisabled={ !isDirty }
-          isLoading={ mutation.isPending }
+          isLoading={ mutation.isLoading }
         >
           Send request
         </Button>

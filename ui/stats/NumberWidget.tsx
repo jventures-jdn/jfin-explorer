@@ -11,9 +11,10 @@ type Props = {
 }
 
 const NumberWidget = ({ label, value, isLoading, description }: Props) => {
-  const bgColor = useColorModeValue('blue.50', 'blue.800');
+  const bgColor = useColorModeValue('white', 'gray.900');
   const skeletonBgColor = useColorModeValue('blackAlpha.50', 'whiteAlpha.50');
   const hintColor = useColorModeValue('gray.600', 'gray.400');
+  const borderColor = useColorModeValue('divider', 'transparent');
 
   return (
     <Flex
@@ -22,6 +23,8 @@ const NumberWidget = ({ label, value, isLoading, description }: Props) => {
       px={ 3 }
       py={{ base: 2, lg: 3 }}
       borderRadius={ 12 }
+      border="1px solid"
+      borderColor={ borderColor }
       justifyContent="space-between"
       columnGap={ 3 }
     >

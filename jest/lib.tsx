@@ -17,7 +17,6 @@ const PAGE_PROPS = {
   id: '',
   height_or_hash: '',
   hash: '',
-  number: '',
   q: '',
 };
 

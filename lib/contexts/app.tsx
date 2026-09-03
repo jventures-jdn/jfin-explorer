@@ -13,7 +13,6 @@ const AppContext = createContext<PageProps>({
   id: '',
   height_or_hash: '',
   hash: '',
-  number: '',
   q: '',
 });
 

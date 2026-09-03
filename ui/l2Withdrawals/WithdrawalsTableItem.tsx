@@ -10,7 +10,7 @@ import TxEntity from 'ui/shared/entities/tx/TxEntity';
 import TxEntityL1 from 'ui/shared/entities/tx/TxEntityL1';
 import LinkExternal from 'ui/shared/LinkExternal';
 
-const feature = config.features.optimisticRollup;
+const feature = config.features.rollup;
 
  type Props = { item: L2WithdrawalsItem; isLoading?: boolean };
 

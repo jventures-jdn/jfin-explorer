@@ -53,7 +53,9 @@ const NavLink = ({ item, isCollapsed, px, className, onClick }: Props) => {
         gutter={ 20 }
         color={ isInternalLink && item.isActive ? colors.text.active : colors.text.hover }
       >
-        <HStack spacing={ 3 } overflow="hidden">
+        <HStack spacing={ 3 } overflow="hidden" w="100%" sx={{
+
+        }}>
           <NavLinkIcon item={ item }/>
           <Text { ...styleProps.textProps }>
             { item.text }

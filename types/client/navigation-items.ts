@@ -6,6 +6,8 @@ type NavIconOrComponent = {
   icon?: React.FunctionComponent<React.SVGAttributes<SVGElement>>;
 } | {
   iconComponent?: React.FC<{size?: number}>;
+} | {
+  iconImage?: string;
 };
 
 type NavItemCommon = {
@@ -19,7 +21,12 @@ export type NavItemInternal = NavItemCommon & {
 
 export type NavItemExternal = {
   text: string;
-  url: string;
+
+  /* JFIN Mod Start */
+  url?: string;
+  group?: string;
+
+  /* JFIN Mod End */
 }
 
 export type NavItem = NavItemInternal | NavItemExternal

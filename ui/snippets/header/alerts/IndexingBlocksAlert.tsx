@@ -5,7 +5,6 @@ import React from 'react';
 import type { SocketMessage } from 'lib/socket/types';
 import type { IndexingStatus } from 'types/api/indexingStatus';
 
-import config from 'configs/app';
 import useApiQuery, { getResourceKey } from 'lib/api/useApiQuery';
 import { useAppContext } from 'lib/contexts/app';
 import * as cookies from 'lib/cookies';
@@ -18,17 +17,13 @@ const IndexingBlocksAlert = () => {
   const cookiesString = appProps.cookies;
   const [ hasAlertCookie ] = React.useState(cookies.get(cookies.NAMES.INDEXING_ALERT, cookiesString) === 'true');
 
-  const { data, isError, isPending } = useApiQuery('homepage_indexing_status', {
-    queryOptions: {
-      enabled: !config.UI.indexingAlert.blocks.isHidden,
-    },
-  });
+  const { data, isError, isLoading } = useApiQuery('homepage_indexing_status');
 
   React.useEffect(() => {
-    if (!isPending && !isError) {
+    if (!isLoading && !isError) {
       cookies.set(cookies.NAMES.INDEXING_ALERT, data.finished_indexing_blocks ? 'false' : 'true');
     }
-  }, [ data, isError, isPending ]);
+  }, [ data, isError, isLoading ]);
 
   const queryClient = useQueryClient();
 
@@ -45,7 +40,7 @@ const IndexingBlocksAlert = () => {
 
   const blockIndexingChannel = useSocketChannel({
     topic: 'blocks:indexing',
-    isDisabled: !data || data.finished_indexing_blocks || config.UI.indexingAlert.blocks.isHidden,
+    isDisabled: !data || data.finished_indexing_blocks,
   });
 
   useSocketMessage({
@@ -54,16 +49,12 @@ const IndexingBlocksAlert = () => {
     handler: handleBlocksIndexStatus,
   });
 
-  if (config.UI.indexingAlert.blocks.isHidden) {
-    return null;
-  }
-
   if (isError) {
     return null;
   }
 
-  if (isPending) {
-    return hasAlertCookie ? <Skeleton h={{ base: '96px', lg: '48px' }} w="100%"/> : null;
+  if (isLoading) {
+    return hasAlertCookie ? <Skeleton h={{ base: '96px', lg: '48px' }} mb={ 6 } w="100%"/> : null;
   }
 
   if (data.finished_indexing_blocks !== false) {

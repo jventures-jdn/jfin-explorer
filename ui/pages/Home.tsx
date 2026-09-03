@@ -1,10 +1,10 @@
-import { Box, Heading, Flex, LightMode } from '@chakra-ui/react';
+import { Box, Heading, Flex, LightMode, Image } from '@chakra-ui/react';
 import React from 'react';
 
 import config from 'configs/app';
+import useIsMobile from 'lib/hooks/useIsMobile';
 import ChainIndicators from 'ui/home/indicators/ChainIndicators';
 import LatestBlocks from 'ui/home/LatestBlocks';
-import LatestZkEvmL2Batches from 'ui/home/LatestZkEvmL2Batches';
 import Stats from 'ui/home/Stats';
 import Transactions from 'ui/home/Transactions';
 import AdBanner from 'ui/shared/ad/AdBanner';
@@ -12,17 +12,42 @@ import ProfileMenuDesktop from 'ui/snippets/profileMenu/ProfileMenuDesktop';
 import SearchBar from 'ui/snippets/searchBar/SearchBar';
 
 const Home = () => {
+  const isMobile = useIsMobile();
   return (
     <Box as="main">
+      { /* JFIN Mod Start */ }
       <Box
         w="100%"
         background={ config.UI.homepage.plate.background }
         borderRadius="24px"
         padding={{ base: '24px', lg: '48px' }}
         minW={{ base: 'unset', lg: '900px' }}
+        boxShadow="md"
         data-label="hero plate"
+        position="relative"
       >
-        <Flex mb={{ base: 6, lg: 8 }} justifyContent="space-between">
+        <Box
+          overflow="hidden"
+          borderTopRightRadius="24px"
+          borderBottomRightRadius="24px"
+          position="absolute"
+          maxWidth="950px"
+          height="100%"
+          bottom="0"
+          right="0"
+          zIndex={ 0 }
+          opacity={ 0.4 }
+          pointerEvents="none"
+        >
+          <Image
+            src="/static/network-path.png"
+            alt="networks"
+            position="relative"
+            right="-13%"
+            top={ isMobile ? '-30%' : '-100%' }
+          />
+        </Box>
+        <Flex mb={{ base: 3, lg: 3 }} justifyContent="space-between" position="relative" zIndex={ 2 }>
           <Heading
             as="h1"
             size={{ base: 'md', lg: 'xl' }}
@@ -30,21 +55,33 @@ const Home = () => {
             fontWeight={ 600 }
             color={ config.UI.homepage.plate.textColor }
           >
-            Welcome to { config.chain.name } explorer
+            { config.chain.name } Explorer
           </Heading>
           <Box display={{ base: 'none', lg: 'block' }}>
             { config.features.account.isEnabled && <ProfileMenuDesktop/> }
           </Box>
         </Flex>
-        <LightMode>
-          <SearchBar isHomepage/>
-        </LightMode>
+
+        <Heading
+          as="h2"
+          size={{ base: 'xs', lg: 'sm' }}
+          color={ config.UI.homepage.plate.textColor }
+          mb={{ base: 6, lg: 6 }}
+        >
+          Unlocking the Future, Navigating the Blockchain Revolution with Precision and Insight.
+        </Heading>
+        <Box position="relative" zIndex={ 2 } >
+          <LightMode>
+            <SearchBar isHomepage/>
+          </LightMode>
+        </Box>
+        { /* JFIN Mod End */ }
       </Box>
       <Stats/>
       <ChainIndicators/>
       <AdBanner mt={{ base: 6, lg: 8 }} mx="auto" display="flex" justifyContent="center"/>
       <Flex mt={ 8 } direction={{ base: 'column', lg: 'row' }} columnGap={ 12 } rowGap={ 8 }>
-        { config.features.zkEvmRollup.isEnabled ? <LatestZkEvmL2Batches/> : <LatestBlocks/> }
+        <LatestBlocks/>
         <Box flexGrow={ 1 }>
           <Transactions/>
         </Box>

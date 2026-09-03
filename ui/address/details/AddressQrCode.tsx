@@ -49,7 +49,7 @@ const AddressQrCode = ({ address, className, isLoading }: Props) => {
 
   React.useEffect(() => {
     if (isOpen) {
-      QRCode.toString(address.hash, SVG_OPTIONS, (error: Error | null | undefined, svg: string) => {
+      QRCode.toString(address?.hash, SVG_OPTIONS, (error: Error | null | undefined, svg: string) => {
         if (error) {
           setError('We were unable to generate QR code.');
           Sentry.captureException(error, { tags: { source: 'qr_code' } });
@@ -61,7 +61,7 @@ const AddressQrCode = ({ address, className, isLoading }: Props) => {
         mixpanel.logEvent(mixpanel.EventTypes.QR_CODE, { 'Page type': pageType });
       });
     }
-  }, [ address.hash, isOpen, onClose, pageType ]);
+  }, [ address?.hash, isOpen, onClose, pageType ]);
 
   if (isLoading) {
     return <Skeleton className={ className } w="36px" h="32px" borderRadius="base"/>;

@@ -14,6 +14,8 @@ function generateCspPolicy() {
     descriptors.safe(),
     descriptors.sentry(),
     descriptors.walletConnect(),
+    descriptors.coinMarketcap(),
+    descriptors.jfinWorker(),
   );
 
   return makePolicyString(policyDescriptor);

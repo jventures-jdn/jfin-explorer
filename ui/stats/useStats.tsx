@@ -15,6 +15,11 @@ function isChartNameMatches(q: string, chart: StatsChartInfo) {
   return chart.title.toLowerCase().includes(q.toLowerCase());
 }
 
+// JFIN Mod Start
+function replaceETHWithJFIN(text: string) {
+  return text.replace(/ETH/g, 'JFIN');
+}
+
 export default function useStats() {
   const { data, isPlaceholderData, isError } = useApiQuery('stats_lines', {
     queryOptions: {
@@ -29,11 +34,24 @@ export default function useStats() {
 
   const debouncedFilterQuery = useDebounce(filterQuery, 500);
 
-  const displayedCharts = React.useMemo(() => {
-    return data?.sections
-      ?.map((section) => {
-        const charts = section.charts.filter((chart) => isSectionMatches(section, currentSection) && isChartNameMatches(debouncedFilterQuery, chart));
+  const transformData = (sections: Array<StatsChartsSection>) => {
+    return sections.map(section => ({
+      ...section,
+      title: replaceETHWithJFIN(section.title),
+      charts: section.charts.map(chart => ({
+        ...chart,
+        title: replaceETHWithJFIN(chart.title),
+        description: replaceETHWithJFIN(chart.description),
+        units: chart.units ? replaceETHWithJFIN(chart.units) : chart.units,
+      })),
+    }));
+  };
 
+  const displayedCharts = React.useMemo(() => {
+    const transformedSections = transformData(data?.sections || []);
+    return transformedSections
+      .map((section) => {
+        const charts = section.charts.filter((chart) => isSectionMatches(section, currentSection) && isChartNameMatches(debouncedFilterQuery, chart));
         return {
           ...section,
           charts,
@@ -52,6 +70,8 @@ export default function useStats() {
   const handleFilterChange = useCallback((q: string) => {
     setFilterQuery(q);
   }, []);
+
+  // JFIN Mod End
 
   return React.useMemo(() => ({
     sections: data?.sections,

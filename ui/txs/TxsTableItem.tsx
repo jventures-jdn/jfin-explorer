@@ -23,9 +23,9 @@ import AddressEntity from 'ui/shared/entities/address/AddressEntity';
 import BlockEntity from 'ui/shared/entities/block/BlockEntity';
 import TxEntity from 'ui/shared/entities/tx/TxEntity';
 import InOutTag from 'ui/shared/InOutTag';
-import TxStatus from 'ui/shared/statusTag/TxStatus';
 import TxFeeStability from 'ui/shared/tx/TxFeeStability';
 import TxWatchListTags from 'ui/shared/tx/TxWatchListTags';
+import TxStatus from 'ui/shared/TxStatus';
 import TxAdditionalInfo from 'ui/txs/TxAdditionalInfo';
 
 import TxType from './TxType';
@@ -129,7 +129,9 @@ const TxsTableItem = ({ tx, showBlockInfo, currentAddress, enableTimeIncrement, 
           { (isIn || isOut) ?
             <InOutTag isIn={ isIn } isOut={ isOut } width="48px" mr={ 2 } isLoading={ isLoading }/> : (
               <Box mx="6px">
-                <Icon as={ rightArrowIcon } boxSize={ 6 } color="gray.500" isLoading={ isLoading }/>
+                { /* JFIN Mod Start */ }
+                <Icon as={ rightArrowIcon } boxSize={ 6 } color="purple.200" isLoading={ isLoading }/>
+                { /* JFIN Mod End */ }
               </Box>
             ) }
         </Td>
@@ -140,16 +142,18 @@ const TxsTableItem = ({ tx, showBlockInfo, currentAddress, enableTimeIncrement, 
       <Hide above="xl" ssr={ false }>
         <Td colSpan={ 3 }>
           <Flex alignItems="center">
+            { /* JFIN Mod Start */ }
             { (isIn || isOut) ?
               <InOutTag isIn={ isIn } isOut={ isOut } width="48px" isLoading={ isLoading }/> : (
                 <Icon
                   as={ rightArrowIcon }
                   boxSize={ 6 }
-                  color="gray.500"
+                  color="purple.200"
                   transform="rotate(90deg)"
                   isLoading={ isLoading }
                 />
               ) }
+            { /* JFIN Mod End */ }
             <VStack alignItems="start" overflow="hidden" ml={ 1 }>
               { addressFrom }
               { addressTo }
@@ -164,13 +168,13 @@ const TxsTableItem = ({ tx, showBlockInfo, currentAddress, enableTimeIncrement, 
       ) }
       { !config.UI.views.tx.hiddenFields?.tx_fee && (
         <Td isNumeric>
+          { /* JFIN Mod Start */ }
           { tx.stability_fee ? (
             <TxFeeStability data={ tx.stability_fee } isLoading={ isLoading } accuracy={ 8 } justifyContent="end" hideUsd/>
           ) : (
-            <>
-              <CurrencyValue value={ tx.fee.value } accuracy={ 8 } isLoading={ isLoading }/> { config.chain.currency.symbol }
-            </>
+            <><CurrencyValue value={ tx.fee.value } accuracy={ 8 } isLoading={ isLoading }/> { config.chain.currency.symbol }</>
           ) }
+          { /* JFIN Mod End */ }
         </Td>
       ) }
     </Tr>

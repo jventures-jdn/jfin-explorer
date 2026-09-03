@@ -35,13 +35,16 @@ const StatsItem = ({ icon, title, value, className, tooltipLabel, url, isLoading
     [`@media screen and (min-width: ${ breakpoints.lg }) and (max-width: ${ LARGEST_BREAKPOINT })`]: { alignItems: 'center' },
   };
 
-  const bgColor = useColorModeValue('blue.50', 'blue.800');
+  /* JFIN Mod Start */
+  const bgColor = useColorModeValue('white', 'gray.900');
+
   const loadingBgColor = useColorModeValue('blackAlpha.50', 'whiteAlpha.50');
   const infoColor = useColorModeValue('gray.600', 'gray.400');
 
   return (
     <Flex
       backgroundColor={ isLoading ? loadingBgColor : bgColor }
+      boxShadow="md"
       padding={ 3 }
       borderRadius="md"
       flexDirection="row"
@@ -57,7 +60,9 @@ const StatsItem = ({ icon, title, value, className, tooltipLabel, url, isLoading
         href: url,
       } : {}) }
     >
-      <Icon as={ icon } boxSize={ 7 } isLoading={ isLoading } borderRadius="base"/>
+      { /* JFIN Mod Start */ }
+      <Icon as={ icon } boxSize={ 7 } isLoading={ isLoading } borderRadius="base" color="purple.200"/>
+      { /* JFIN Mod End */ }
       <Flex
         flexDirection="column"
         alignItems="start"
@@ -85,6 +90,8 @@ const StatsItem = ({ icon, title, value, className, tooltipLabel, url, isLoading
       ) }
     </Flex>
   );
+
+  /* JFIN Mod End */
 };
 
 export default chakra(StatsItem);
